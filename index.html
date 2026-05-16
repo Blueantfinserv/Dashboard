@@ -13,22 +13,22 @@
   box-sizing:border-box;
 }
 :root{
-  /* Light, slightly warm base with a distinctive accent palette */
-  --bg:#000000;
-  --surface:#ffffff;
-  --card:#f4f8fd;
+  /* Dark canvas with vivid, high-contrast accents */
+  --bg:#07111f;
+  --surface:#f6f8ff;
+  --card:#e6efff;
 
-  --border:rgba(11,27,43,0.06);
+  --border:rgba(8,16,39,0.14);
 
-  --text:#0b1b2b;
-  --text-dim:#3b5966;
-  --text-faint:#8fa6b6;
+  --text:#09112b;
+  --text-dim:#3f5776;
+  --text-faint:#71819c;
 
-  --gold:#ff7a59;   /* coral-orange */
-  --green:#00b48f;  /* teal */
-  --amber:#ffb86b;  /* warm peach */
-  --red:#d8315b;    /* raspberry */
-  --blue:#6e57ff;   /* electric indigo */
+  --gold:#ff724c;   /* vibrant coral */
+  --green:#00b9a0;  /* neon teal */
+  --amber:#ff9a33;  /* saturated amber */
+  --red:#d63f6f;    /* strong magenta */
+  --blue:#4a5dff;   /* crisp electric blue */
 
 }
 
@@ -45,7 +45,7 @@ body{
   justify-content:space-between;
   align-items:center;
   padding:15px 32px;
-  background:#b6e0f9;
+  background:#f0f5ff;
   border-bottom:1px solid var(--border);
 }
 
@@ -86,8 +86,8 @@ color: var(--text-dim);
   display:flex;
   align-items:center;
   gap:8px;
-  background:rgba(25,226,140,0.08);
-  border:1px solid rgba(25,226,140,0.25);
+  background:rgba(0,185,160,0.18);
+  border:1px solid rgba(0,185,160,0.30);
   padding:8px 16px;
   border-radius:30px;
   color:var(--green);
@@ -100,8 +100,8 @@ color: var(--text-dim);
   display:flex;
   align-items:center;
   gap:8px;
-  background:rgba(96,165,250,0.08);
-  border:1px solid rgba(96,165,250,0.25);
+  background:rgba(74,93,255,0.20);
+  border:1px solid rgba(74,93,255,0.30);
   padding:8px 16px;
   border-radius:30px;
   color:var(--blue);
@@ -114,8 +114,8 @@ color: var(--text-dim);
 }
 
 .refresh-btn:hover{
-  background:rgba(96,165,250,0.15);
-  border-color:rgba(96,165,250,0.4);
+  background:rgba(74,93,255,0.30);
+  border-color:rgba(74,93,255,0.45);
 }
 
 .refresh-icon{
@@ -183,7 +183,8 @@ table{
 thead th{
   text-align:left;
   padding:2px 16px;
-  color:var(--text-faint);
+  background:var(--surface);
+  color:var(--text);
   font-size:25px;
   font-weight:bolder;
   letter-spacing:1px;
@@ -222,26 +223,26 @@ tbody td:last-child{
 }
 
 .r1{
-  background:rgba(244,185,66,0.14);
+  background:rgba(255,114,76,0.18);
   color:var(--gold);
   border:1px solid var(--gold);
 }
 
 .r2{
-  background:rgba(77,141,255,0.14);
+  background:rgba(74,93,255,0.18);
   color:var(--blue);
   border:1px solid var(--blue);
 }
 
 .r3{
-  background:rgba(25,226,140,0.14);
+  background:rgba(0,185,160,0.20);
   color:var(--green);
   border:1px solid var(--green);
 }
 
 .rn{
-  background:#e4eafb;
-  color:#7186a7;
+  background:rgba(74,93,255,0.12);
+  color:var(--blue);
   border:1px solid var(--border);
 }
 
@@ -266,20 +267,20 @@ tbody td:last-child{
   font-weight:bolder;
 }
 
-.good{color:green;}
-.ok{color:rgb(189, 123, 1);}
-.bad{color:red;}
-.zero{color:red;}
+.good{color:var(--green);}
+.ok{color:var(--amber);}
+.bad{color:var(--red);}
+.zero{color:var(--red);}
 
 .m-tgt{
-  color:#7b8ba8;
+  color:var(--text-faint);
   font-size:40px;
   font-weight: bolder;
 }
 
 .bar-track{
   height:5px;
-  background:rgba(11,27,43,0.04);
+  background:rgba(9,17,45,0.18);
   border-radius:20px;
   overflow:hidden;
 }
@@ -313,36 +314,36 @@ tbody td:last-child{
 }
 
 .pts-top{
-  background:rgba(244,185,66,0.14);
-  border:1px solid rgba(244,185,66,0.25);
-  color:orangered;
+  background:rgba(255,114,76,0.18);
+  border:1px solid rgba(255,114,76,0.28);
+  color:var(--gold);
   font-size: 45px;
   font-weight: bold;
 }
 
 .pts-mid{
-  background:rgba(77,141,255,0.12);
-  border:1px solid rgba(77,141,255,0.2);
-  color:darkblue;
+  background:rgba(74,93,255,0.18);
+  border:1px solid rgba(74,93,255,0.30);
+  color:var(--blue);
   font-size: 45px;
   font-weight: bold;
 }
 
 .pts-low{
-  background:rgba(255,77,95,0.12);
-  border:1px solid rgba(255,77,95,0.2);
-  color:red;
+  background:rgba(214,63,111,0.18);
+  border:1px solid rgba(214,63,111,0.28);
+  color:var(--red);
   font-size: 45px;
   font-weight: bold;
 }
 
 .total-row td{
-  background:linear-gradient(180deg, #FFC107, #F4B400); !important;
+  background:rgba(255,114,76,0.20) !important;
 }
 
 .total-label{
   font-family:'Bebas Neue',sans-serif;
-  color:rgb(172, 47, 2);
+  color:var(--blue);
   font-size:50px;
   letter-spacing:6px;
   font-weight: bolder;
@@ -671,7 +672,7 @@ function render(rows){
     ${totalRow[12]} - ${totalRow[13]} / ${totalRow[14]}
   </td>
 
-  <td class="center big" style="color:orangered;">
+  <td class="center big" style="color:var(--red);">
     ${totalRow[15]}
   </td>
 
