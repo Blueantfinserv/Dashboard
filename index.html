@@ -14,7 +14,7 @@
 }
 :root{
   /* Light, slightly warm base with a distinctive accent palette */
-  --bg:#fbfbf7;
+  --bg:#000000;
   --surface:#ffffff;
   --card:#f4f8fd;
 
@@ -183,9 +183,9 @@ table{
 thead th{
   text-align:left;
   padding:2px 16px;
-  color:var(--text);
+  color:var(--text-faint);
   font-size:25px;
-  font-weight:700;
+  font-weight:bolder;
   letter-spacing:1px;
   text-transform:uppercase;
 }
@@ -211,8 +211,8 @@ tbody td:last-child{
 }
 
 .rank-circle{
-  width:38px;
-  height:38px;
+  width:45px;
+  height:45px;
   border-radius:50%;
   display:flex;
   align-items:center;
@@ -240,14 +240,14 @@ tbody td:last-child{
 }
 
 .rn{
-  background:#0d1732;
+  background:#e4eafb;
   color:#7186a7;
   border:1px solid var(--border);
 }
 
 .member-name{
-  font-size:42px;
-  font-weight:700;
+  font-size:50px;
+  font-weight:bolder;
 }
 
 .metric{
@@ -262,18 +262,19 @@ tbody td:last-child{
 }
 
 .m-act{
-  font-size:38px;
-  font-weight:700;
+  font-size:45px;
+  font-weight:bolder;
 }
 
-.good{color:var(--green);}
-.ok{color:var(--amber);}
-.bad{color:var(--red);}
-.zero{color:var(--red);}
+.good{color:green;}
+.ok{color:rgb(189, 123, 1);}
+.bad{color:red;}
+.zero{color:red;}
 
 .m-tgt{
   color:#7b8ba8;
-  font-size:33px;
+  font-size:40px;
+  font-weight: bolder;
 }
 
 .bar-track{
@@ -314,33 +315,37 @@ tbody td:last-child{
 .pts-top{
   background:rgba(244,185,66,0.14);
   border:1px solid rgba(244,185,66,0.25);
-  color:var(--gold);
+  color:orangered;
   font-size: 45px;
+  font-weight: bold;
 }
 
 .pts-mid{
   background:rgba(77,141,255,0.12);
   border:1px solid rgba(77,141,255,0.2);
-  color:var(--blue);
+  color:darkblue;
   font-size: 45px;
+  font-weight: bold;
 }
 
 .pts-low{
   background:rgba(255,77,95,0.12);
   border:1px solid rgba(255,77,95,0.2);
-  color:var(--red);
+  color:red;
   font-size: 45px;
+  font-weight: bold;
 }
 
 .total-row td{
-  background:#0c1731 !important;
+  background:#c9d8fa !important;
 }
 
 .total-label{
   font-family:'Bebas Neue',sans-serif;
-  color:var(--gold);
-  font-size:40px;
-  letter-spacing:4px;
+  color:rgb(172, 47, 2);
+  font-size:50px;
+  letter-spacing:6px;
+  font-weight: bolder;
 }
 
 .center{
@@ -348,8 +353,8 @@ tbody td:last-child{
 }
 
 .big{
-  font-size:42px;
-  font-weight:700;
+  font-size:45px;
+  font-weight:bolder;
 }
 
 </style>
@@ -666,7 +671,7 @@ function render(rows){
     ${totalRow[12]} - ${totalRow[13]} / ${totalRow[14]}
   </td>
 
-  <td class="center big" style="color:var(--gold);">
+  <td class="center big" style="color:orangered;">
     ${totalRow[15]}
   </td>
 
