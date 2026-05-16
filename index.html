@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Blueant Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+:root{
+
+  --bg:#050b18;
+  --surface:#0c1731;
+  --card:#122044;
+
+  --border:rgba(255,255,255,0.06);
+
+  --text:white;
+  --text-dim:#7186a7;
+  --text-faint:#3e4f70;
+
+  --gold:#f4b942;
+  --green:#19e28c;
+  --amber:#ffb020;
+  --red:#ff4d5f;
+  --blue:#4d8dff;
+
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  min-height:100vh;
+  overflow-x:auto;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 32px;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+}
+
+.topbar-left{
+  display:flex;
+  align-items:center;
+  gap:42px;
+}
+
+.logo{
+  height:72px;
+  width:auto;
+  object-fit:contain;
+  display:block;
+}
+
+.topbar-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:44px;
+  letter-spacing:2px;
+  color:var(--gold);
+}
+
+.topbar-sub{
+color: var(--text-dim);
+    font-size: 24px;
+    margin-top: 0px;
+    letter-spacing: 3px;
+}
+
+.topbar-right{
+  display:flex;
+  align-items:center;
+  gap:26px;
+}
+
+.live-badge{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(25,226,140,0.08);
+  border:1px solid rgba(25,226,140,0.25);
+  padding:8px 16px;
+  border-radius:30px;
+  color:var(--green);
+  font-size:20px;
+  font-weight:700;
+  letter-spacing:2px;
+}
+
+.refresh-btn{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(96,165,250,0.08);
+  border:1px solid rgba(96,165,250,0.25);
+  padding:8px 16px;
+  border-radius:30px;
+  color:var(--blue);
+  font-size:20px;
+  font-weight:700;
+  letter-spacing:1px;
+  cursor:pointer;
+  transition:all 0.3s ease;
+
+}
+
+.refresh-btn:hover{
+  background:rgba(96,165,250,0.15);
+  border-color:rgba(96,165,250,0.4);
+}
+
+.refresh-icon{
+  display:inline-block;
+  width:16px;
+  height:16px;
+  animation:none;
+}
+
+.refresh-btn:active .refresh-icon{
+  animation:spin 0.6s ease;
+}
+
+@keyframes spin{
+  from{ transform:rotate(0deg); }
+  to{ transform:rotate(360deg); }
+}
+
+.live-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--green);
+  animation:pulse 1.4s infinite;
+}
+
+@keyframes pulse{
+
+  0%,100%{
+    opacity:1;
+    transform:scale(1);
+  }
+
+  50%{
+    opacity:0.3;
+    transform:scale(0.6);
+  }
+
+}
+
+.update-time{
+  color:var(--text-dim);
+  font-size:20px;
+  text-align:right;
+}
+
+.countdown-line{
+  color:var(--gold);
+  margin-top:4px;
+  font-size:18px;
+  font-family:'DM Mono',monospace;
+}
+
+.board-section{
+  padding:18px 24px 30px;
+}
+
+table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0 6px;
+  min-width:1800px;
+}
+
+thead th{
+  text-align:left;
+  padding:12px 16px;
+  color:white;
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+tbody tr{
+  background:var(--card);
+}
+
+tbody td{
+  padding:12px 16px;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+
+tbody td:first-child{
+  border-left:1px solid var(--border);
+  border-radius:12px 0 0 12px;
+}
+
+tbody td:last-child{
+  border-right:1px solid var(--border);
+  border-radius:0 12px 12px 0;
+}
+
+.rank-circle{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'DM Mono',monospace;
+  font-weight:700;
+}
+
+.r1{
+  background:rgba(244,185,66,0.14);
+  color:var(--gold);
+  border:1px solid var(--gold);
+}
+
+.r2{
+  background:rgba(77,141,255,0.14);
+  color:var(--blue);
+  border:1px solid var(--blue);
+}
+
+.r3{
+  background:rgba(25,226,140,0.14);
+  color:var(--green);
+  border:1px solid var(--green);
+}
+
+.rn{
+  background:#0d1732;
+  color:#7186a7;
+  border:1px solid var(--border);
+}
+
+.member-name{
+  font-size:30px;
+  font-weight:700;
+}
+
+.metric{
+  width:160px;
+}
+
+.metric-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:6px;
+}
+
+.m-act{
+  font-size:30px;
+  font-weight:700;
+}
+
+.good{color:var(--green);}
+.ok{color:var(--amber);}
+.bad{color:var(--red);}
+.zero{color:var(--red);}
+
+.m-tgt{
+  color:#7b8ba8;
+  font-size:25px;
+}
+
+.bar-track{
+  height:4px;
+  background:rgba(255,255,255,0.05);
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.bar-fill{
+  height:100%;
+  border-radius:20px;
+}
+
+.bar-fill.good{
+  background:var(--green);
+}
+
+.bar-fill.ok{
+  background:var(--amber);
+}
+
+.bar-fill.bad{
+  background:var(--red);
+}
+
+.pts-badge{
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  min-width:70px;
+  padding:8px 12px;
+  border-radius:8px;
+  font-family:'DM Mono',monospace;
+  font-size:22px;
+}
+
+.pts-top{
+  background:rgba(244,185,66,0.14);
+  border:1px solid rgba(244,185,66,0.25);
+  color:var(--gold);
+  font-size: 30px;
+}
+
+.pts-mid{
+  background:rgba(77,141,255,0.12);
+  border:1px solid rgba(77,141,255,0.2);
+  color:var(--blue);
+  font-size: 30px;
+}
+
+.pts-low{
+  background:rgba(255,77,95,0.12);
+  border:1px solid rgba(255,77,95,0.2);
+  color:var(--red);
+  font-size: 30px;
+}
+
+.total-row td{
+  background:#0c1731 !important;
+}
+
+.total-label{
+  font-family:'Bebas Neue',sans-serif;
+  color:var(--gold);
+  font-size:35px;
+  letter-spacing:4px;
+}
+
+.center{
+  text-align:center;
+}
+
+.big{
+  font-size:30px;
+  font-weight:700;
+}
+
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div>
+    <div class="topbar-left">
+      <img
+  src="blueAnt.png"
+  class="logo"
+/>
+
+      <div>
+        <div class="topbar-title">
+          DASHBOARD
+        </div>
+        <div class="topbar-sub">
+          MUTUAL FUND TEAM
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topbar-right">
+    <div class="live-badge">
+      <div class="live-dot"></div>
+      LIVE
+    </div>
+    <button class="refresh-btn" onclick="location.reload(true);" title="Force Refresh">
+      <span class="refresh-icon">↻</span>
+      REFRESH
+    </button>
+
+    <div>
+      <div class="update-time" id="lastUpdated">
+        Connecting...
+      </div>
+      <div class="countdown-line">
+        ↻ Next update in <span id="cdNum">10</span>s
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="board-section">
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:90px;">Rank</th>
+        <th style="width:260px;">Name</th>
+        <th class="center">Yesterday I&M</th>
+        <th class="center">Yesterday Client</th>
+        <th class="center">Today I&M</th>
+        <th class="center">Today Client</th>
+        <th>Leads</th>
+        <th>Intro</th>
+        <th>Meetings</th>
+        <th class="center">Tgt-Rpt / Doc</th>
+        <th class="center">Points</th>
+      </tr>
+    </thead>
+
+    <tbody id="tableBody"></tbody>
+  </table>
+</div>
+<script>
+
+const SHEET_ID = '1XX5Io8gpJPmcALPS217MB1j33FMpGMdoFAg80I-cbmA';
+const GID = '806469274';
+
+const CSV_URL =
+`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
+
+const REFRESH = 10;
+let cdVal = REFRESH;
+let cdTimer;
+
+function parseCSV(text){
+  const rows = [];
+  const lines = text.trim().split('\n');
+  for(const line of lines){
+    const cols = [];
+    let current = '';
+    let insideQuotes = false;
+    for(let i=0;i<line.length;i++){
+      const char = line[i];
+      if(char === '"'){
+        insideQuotes = !insideQuotes;
+      }
+      else if(char === ',' && !insideQuotes){
+        cols.push(current.trim());
+        current = '';
+      }
+      else{
+        current += char;
+      }
+    }
+    cols.push(current.trim());
+    rows.push(cols);
+  }
+  return rows;
+
+}
+
+function pct(a,t){
+  return t
+    ? Math.min((a/t)*100,100)
+    : 0;
+
+}
+
+function cls(a,t){
+
+  if(a===0) return 'zero';
+  const p = (a/t)*100;
+  if(p>=100) return 'good';
+  if(p>=60) return 'ok';
+  return 'bad';
+
+}
+
+function metricHTML(act,tgt){
+  const c = cls(act,tgt);
+  const p = pct(act,tgt);
+
+  return `
+  <div class="metric">
+    <div class="metric-top">
+      <span class="m-act ${c}">
+        ${act}
+      </span>
+      <span class="m-tgt">
+        / ${tgt}
+      </span>
+    </div>
+    <div class="bar-track">
+      <div
+        class="bar-fill ${c}"
+        style="width:${p}%"
+      ></div>
+    </div>
+  </div>
+  `;
+
+}
+
+function rankCircle(i){
+  const c =
+    i===0 ? 'r1' :
+    i===1 ? 'r2' :
+    i===2 ? 'r3' : 'rn';
+  return `
+    <div class="rank-circle ${c}">
+      ${i+1}
+    </div>
+  `;
+}
+function ptsClass(p,max){
+  if(p >= max*0.75) return 'pts-top';
+  if(p >= max*0.4) return 'pts-mid';
+  return 'pts-low';
+}
+function extractData(rows){
+
+  const members = rows
+    .slice(4)
+    .filter(r =>
+      r[5] &&
+      r[5].trim() !== '' &&
+      !r[5].toLowerCase().includes('week total')
+    )
+    .map(r => ({
+
+      yIM:Number(r[1]) || 0,
+      yClient:Number(r[2]) || 0,
+
+      tIM:Number(r[3]) || 0,
+      tClient:Number(r[4]) || 0,
+
+      name:r[5],
+
+      lTgt:Number(r[6]) || 0,
+      lAct:Number(r[7]) || 0,
+
+      imTgt:Number(r[8]) || 0,
+      imAct:Number(r[9]) || 0,
+
+      mtTgt:Number(r[10]) || 0,
+      mtAct:Number(r[11]) || 0,
+
+      ccTgt:Number(r[12]) || 0,
+      ccRpt:Number(r[13]) || 0,
+      ccDoc:Number(r[14]) || 0,
+
+      pts:Number(r[15]) || 0
+
+    }));
+
+  const totalRow = rows.find(r =>
+    r[5] &&
+    r[5].toLowerCase().includes('week total')
+  );
+
+  return {
+    members,
+    totalRow
+  };
+
+}
+
+function render(rows){
+  const {members,totalRow} = extractData(rows);
+  const sorted =
+    [...members]
+    .sort((a,b)=>b.pts-a.pts);
+  const maxPts = sorted[0]?.pts || 1;
+  const rowsHTML = sorted.map((m,i)=>`
+
+    <tr>
+      <td class="center">
+        ${rankCircle(i)}
+      </td>
+      <td>
+        <div class="member-name">
+          ${m.name}
+        </div>
+      </td>
+      <td class="center big">
+        ${m.yIM}
+      </td>
+      <td class="center big">
+        ${m.yClient}
+      </td>
+      <td class="center big">
+        ${m.tIM}
+      </td>
+      <td class="center big">
+        ${m.tClient}
+      </td>
+      <td>
+        ${metricHTML(m.lAct,m.lTgt)}
+      </td>
+      <td>
+        ${metricHTML(m.imAct,m.imTgt)}
+      </td>
+      <td>
+        ${metricHTML(m.mtAct,m.mtTgt)}
+      </td>
+      <td class="center big">
+        ${m.ccTgt} - ${m.ccRpt} / ${m.ccDoc}
+      </td>
+      <td class="center">
+        <div class="
+          pts-badge
+          ${ptsClass(m.pts,maxPts)}
+        ">
+          ${m.pts}
+        </div>
+      </td>
+    </tr>
+  `).join('');
+  let totalHTML = '';
+  if(totalRow){
+    totalHTML = `
+
+<tr class="total-row">
+
+  <td></td>
+
+  <td class="total-label">
+    WEEK TOTAL
+  </td>
+
+  <td class="center big">
+    ${totalRow[1]}
+  </td>
+
+  <td class="center big">
+    ${totalRow[2]}
+  </td>
+
+  <td class="center big">
+    ${totalRow[3]}
+  </td>
+
+  <td class="center big">
+    ${totalRow[4]}
+  </td>
+
+  <td>
+    ${metricHTML(
+      Number(totalRow[7]),
+      Number(totalRow[6])
+    )}
+  </td>
+
+  <td>
+    ${metricHTML(
+      Number(totalRow[9]),
+      Number(totalRow[8])
+    )}
+  </td>
+
+  <td>
+    ${metricHTML(
+      Number(totalRow[11]),
+      Number(totalRow[10])
+    )}
+  </td>
+
+  <td class="center big">
+    ${totalRow[12]} - ${totalRow[13]} / ${totalRow[14]}
+  </td>
+
+  <td class="center big" style="color:var(--gold);">
+    ${totalRow[15]}
+  </td>
+
+</tr>
+
+`;
+  }
+  document.getElementById('tableBody').innerHTML =
+    rowsHTML + totalHTML;
+}
+
+async function load(){
+  try{
+    const res =
+      await fetch(
+        CSV_URL + '&t=' + Date.now()
+      );
+    const text =
+      await res.text();
+    const rows =
+      parseCSV(text);
+    render(rows);
+    document.getElementById('lastUpdated')
+      .textContent =
+      'Last updated ' +
+      new Date().toLocaleTimeString();
+
+    startCountdown();
+  }catch(err){
+    console.error(err);
+  }
+}
+function startCountdown(){
+  clearInterval(cdTimer);
+  cdVal = REFRESH;
+  document.getElementById('cdNum')
+    .textContent = cdVal;
+  cdTimer = setInterval(()=>{
+    cdVal--;
+    document.getElementById('cdNum')
+      .textContent = cdVal;
+    if(cdVal <= 0){
+      clearInterval(cdTimer);
+      load();
+    }
+  },1000);
+
+}
+load();
+</script>
+</body>
+</html>
