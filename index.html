@@ -13,22 +13,22 @@
   box-sizing:border-box;
 }
 :root{
+  /* Light, slightly warm base with a distinctive accent palette */
+  --bg:#fbfbf7;
+  --surface:#ffffff;
+  --card:#f4f8fd;
 
-  --bg:#050b18;
-  --surface:#0c1731;
-  --card:#122044;
+  --border:rgba(11,27,43,0.06);
 
-  --border:rgba(255,255,255,0.06);
+  --text:#0b1b2b;
+  --text-dim:#3b5966;
+  --text-faint:#8fa6b6;
 
-  --text:white;
-  --text-dim:#7186a7;
-  --text-faint:#3e4f70;
-
-  --gold:#f4b942;
-  --green:#19e28c;
-  --amber:#ffb020;
-  --red:#ff4d5f;
-  --blue:#4d8dff;
+  --gold:#ff7a59;   /* coral-orange */
+  --green:#00b48f;  /* teal */
+  --amber:#ffb86b;  /* warm peach */
+  --red:#d8315b;    /* raspberry */
+  --blue:#6e57ff;   /* electric indigo */
 
 }
 
@@ -44,7 +44,7 @@ body{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:18px 32px;
+  padding:15px 32px;
   background:var(--surface);
   border-bottom:1px solid var(--border);
 }
@@ -182,8 +182,8 @@ table{
 
 thead th{
   text-align:left;
-  padding:3px 16px;
-  color:white;
+  padding:2px 16px;
+  color:var(--text);
   font-size:25px;
   font-weight:700;
   letter-spacing:1px;
@@ -278,7 +278,7 @@ tbody td:last-child{
 
 .bar-track{
   height:5px;
-  background:rgba(255,255,255,0.05);
+  background:rgba(11,27,43,0.04);
   border-radius:20px;
   overflow:hidden;
 }
@@ -340,7 +340,7 @@ tbody td:last-child{
   font-family:'Bebas Neue',sans-serif;
   color:var(--gold);
   font-size:40px;
-  letter-spacing:6px;
+  letter-spacing:4px;
 }
 
 .center{
