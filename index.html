@@ -29,46 +29,38 @@
         <div class="topbar-sub">MUTUAL FUND TEAM</div>
       </div>
     </div>
-
     <div class="topbar-right">
       <div class="live-badge">
         <div class="live-dot"></div>
         LIVE
       </div>
-
       <button class="refresh-btn" onclick="location.reload(true);" title="Force Refresh">
         <span class="refresh-icon">↻</span> REFRESH
       </button>
-
       <div class="filter-group">
         <button class="fbtn" data-range="custom" onclick="toggleCustomPanel()">Custom Range &#9662;</button>
       </div>
-
       <div>
         <div class="update-time" id="lastUpdated">Connecting...</div>
         <div class="countdown-line">↻ Next update in <span id="cdNum">10</span>s</div>
       </div>
     </div>
   </div>
-
-  <!-- Filter Strip -->
   <div class="filter-strip">
     <span class="filter-label">DATE RANGE</span>
     <div class="filter-divider"></div>
-
     <div class="custom-panel" id="customPanel">
       <input type="date" class="date-input" id="fromDate" />
       <span class="range-arrow">&#8594;</span>
       <input type="date" class="date-input" id="toDate" />
-      <button class="apply-btn"       onclick="applyCustom()">Apply</button>
+      <button class="apply-btn" onclick="applyCustom()">Apply</button>
       <button class="close-panel-btn" onclick="closeCustomPanel()">&#10005;</button>
     </div>
-
     <div class="active-range-lbl" id="activeRangeLbl"></div>
   </div>
 </div>
 
-<!-- ══ BOARD — flex row ════════════════════════════ -->
+<!-- ══ BOARD ════════════════════════════════════════════════ -->
 <div class="board-outer">
 
   <!-- Main Table -->
@@ -95,663 +87,601 @@
 
   <!-- Right Panel -->
   <div class="right-panel">
-<div class="perf-card" id="perfCard">
 
-  <!-- Rank badge -->
-  <div class="perf-rank-badge" id="perfRankBadge">1</div>
-
-  <!-- Title -->
-  <div class="perf-card-title">BEST PERFORMER-LAST WEEK</div>
-
-  <!-- Avatar circle -->
-  <div class="perf-avatar-ring">
-    <div class="perf-avatar-inner">
-      <span class="perf-avatar-icon">👤</span>
+    <!-- BEST PERFORMER CARD -->
+    <div class="perf-card" id="perfCard">
+      <div class="perf-rank-badge" id="perfRankBadge">1</div>
+      <div class="perf-card-title">BEST PERFORMER-LAST WEEK</div>
+      <div class="perf-avatar-ring">
+        <div class="perf-avatar-inner">
+          <span class="perf-avatar-icon">👤</span>
+        </div>
+        <div class="perf-sparkle s1">✦</div>
+        <div class="perf-sparkle s2">✦</div>
+        <div class="perf-sparkle s3">✦</div>
+        <div class="perf-sparkle s4">✦</div>
+      </div>
+      <div class="perf-ribbon-wrap">
+        <div class="perf-ribbon-left"></div>
+        <div class="perf-ribbon-body">
+          <div class="perf-name loading-shimmer" id="perfName">Loading</div>
+        </div>
+        <div class="perf-ribbon-right"></div>
+      </div>
+      <div class="perf-metrics-row">
+        <div class="perf-metric-item">
+          <div class="perf-metric-icon">👥</div>
+          <div class="perf-metric-label">LEADS</div>
+          <div class="perf-metric-val" id="ps-leads-act">—</div>
+        </div>
+        <div class="perf-metric-item">
+          <div class="perf-metric-icon">🤝</div>
+          <div class="perf-metric-label">INTRO</div>
+          <div class="perf-metric-val" id="ps-intro-act">—</div>
+        </div>
+        <div class="perf-metric-item">
+          <div class="perf-metric-icon">📅</div>
+          <div class="perf-metric-label">MEETINGS</div>
+          <div class="perf-metric-val" id="ps-meet-act">—</div>
+        </div>
+        <div class="perf-metric-item">
+          <div class="perf-metric-icon">✅</div>
+          <div class="perf-metric-label">CONVERTED</div>
+          <div class="perf-metric-val" id="ps-conv-act">—</div>
+        </div>
+        <div class="perf-metric-item">
+          <div class="perf-metric-icon">📄</div>
+          <div class="perf-metric-label">DOCUMENTED</div>
+          <div class="perf-metric-val" id="ps-doc-act">—</div>
+        </div>
+      </div>
+      <div class="perf-points-section">
+        <div class="perf-points-label">POINTS EARNED</div>
+        <div class="perf-laurel-wrap">
+          <div class="perf-laurel left">🏅</div>
+          <div class="perf-pts" id="perfPts">—</div>
+          <div class="perf-laurel right">🏅</div>
+        </div>
+      </div>
+      <div class="perf-team-dot" id="perfTeamDot"></div>
     </div>
-    <!-- Sparkle dots around ring -->
-    <div class="perf-sparkle s1">✦</div>
-    <div class="perf-sparkle s2">✦</div>
-    <div class="perf-sparkle s3">✦</div>
-    <div class="perf-sparkle s4">✦</div>
-  </div>
+    <!-- /perf-card -->
 
-  <!-- Gold ribbon / banner name -->
-  <div class="perf-ribbon-wrap">
-    <div class="perf-ribbon-left"></div>
-    <div class="perf-ribbon-body">
-      <div class="perf-name loading-shimmer" id="perfName">Loading</div>
+    <!-- BEST TEAM CARD -->
+    <div class="team-card" id="teamCard">
+      <div class="team-card-title">BEST TEAM — LAST WEEK</div>
+      <div class="team-trophy">🏆</div>
+      <div class="perf-ribbon-wrap">
+        <div class="perf-ribbon-left"></div>
+        <div class="perf-ribbon-body team-ribbon-body" id="teamRibbonBody">
+          <div class="perf-name loading-shimmer" id="teamName">Loading</div>
+        </div>
+        <div class="perf-ribbon-right"></div>
+      </div>
+      <div class="team-members-row" id="teamMembersList"></div>
+      <div class="perf-metrics-row">
+        <div class="perf-metric-item">
+          <div class="perf-metric-icon">👥</div>
+          <div class="perf-metric-label">LEADS</div>
+          <div class="perf-metric-val" id="tm-leads">—</div>
+        </div>
+        <div class="perf-metric-item">
+          <div class="perf-metric-icon">🤝</div>
+          <div class="perf-metric-label">INTRO</div>
+          <div class="perf-metric-val" id="tm-intro">—</div>
+        </div>
+        <div class="perf-metric-item">
+          <div class="perf-metric-icon">📅</div>
+          <div class="perf-metric-label">MEETINGS</div>
+          <div class="perf-metric-val" id="tm-meet">—</div>
+        </div>
+        <div class="perf-metric-item">
+          <div class="perf-metric-icon">✅</div>
+          <div class="perf-metric-label">CONVERTED</div>
+          <div class="perf-metric-val" id="tm-conv">—</div>
+        </div>
+        <div class="perf-metric-item">
+          <div class="perf-metric-icon">📄</div>
+          <div class="perf-metric-label">DOCUMENTED</div>
+          <div class="perf-metric-val" id="tm-doc">—</div>
+        </div>
+      </div>
+      <div class="perf-points-section">
+        <div class="perf-points-label">TOTAL POINTS EARNED</div>
+        <div class="perf-laurel-wrap">
+          <div class="perf-laurel left">🏅</div>
+          <div class="perf-pts" id="teamPts">—</div>
+          <div class="perf-laurel right">🏅</div>
+        </div>
+      </div>
     </div>
-    <div class="perf-ribbon-right"></div>
-  </div>
-
-  <!-- Metric icons row -->
-  <div class="perf-metrics-row">
-
-    <div class="perf-metric-item">
-      <div class="perf-metric-icon">👥</div>
-      <div class="perf-metric-label">LEADS</div>
-      <div class="perf-metric-val" id="ps-leads-act">—</div>
-    </div>
-
-    <div class="perf-metric-item">
-      <div class="perf-metric-icon">🤝</div>
-      <div class="perf-metric-label">INTRO</div>
-      <div class="perf-metric-val" id="ps-intro-act">—</div>
-    </div>
-
-    <div class="perf-metric-item">
-      <div class="perf-metric-icon">📅</div>
-      <div class="perf-metric-label">MEETINGS</div>
-      <div class="perf-metric-val" id="ps-meet-act">—</div>
-    </div>
-
-    <div class="perf-metric-item">
-      <div class="perf-metric-icon">✅</div>
-      <div class="perf-metric-label">CONVERTED</div>
-      <div class="perf-metric-val" id="ps-conv-act">—</div>
-    </div>
-
-    <div class="perf-metric-item">
-      <div class="perf-metric-icon">📄</div>
-      <div class="perf-metric-label">DOCUMENTED</div>
-      <div class="perf-metric-val" id="ps-doc-act">—</div>
-    </div>
-
-  </div>
-
-  <!-- Laurel + Points -->
-  <div class="perf-points-section">
-    <div class="perf-points-label">POINTS EARNED</div>
-    <div class="perf-laurel-wrap">
-      <div class="perf-laurel left">🏅</div>
-      <div class="perf-pts" id="perfPts">—</div>
-      <div class="perf-laurel right">🏅</div>
-    </div>
-  </div>
-
-  <!-- Team colour dot (keep for team lookup) -->
-  <div class="perf-team-dot" id="perfTeamDot"></div>
-
-</div>
-<!-- /perf-card -->
-
-<div class="team-card" id="teamCard">
-
-  <!-- Gold top label -->
-  <div class="team-card-title">BEST TEAM — LAST WEEK</div>
-
-  <!-- Trophy -->
-  <div class="team-trophy">🏆</div>
-
-  <!-- Team name ribbon -->
-  <div class="perf-ribbon-wrap">
-    <div class="perf-ribbon-left"></div>
-    <div class="perf-ribbon-body team-ribbon-body" id="teamRibbonBody">
-      <div class="perf-name loading-shimmer" id="teamName">Loading</div>
-    </div>
-    <div class="perf-ribbon-right"></div>
-  </div>
-
-  <!-- Team members list -->
-  <div class="team-members-row" id="teamMembersList"></div>
-
-  <!-- Metric icons row -->
-  <div class="perf-metrics-row">
-
-    <div class="perf-metric-item">
-      <div class="perf-metric-icon">👥</div>
-      <div class="perf-metric-label">LEADS</div>
-      <div class="perf-metric-val" id="tm-leads">—</div>
-    </div>
-
-    <div class="perf-metric-item">
-      <div class="perf-metric-icon">🤝</div>
-      <div class="perf-metric-label">INTRO</div>
-      <div class="perf-metric-val" id="tm-intro">—</div>
-    </div>
-
-    <div class="perf-metric-item">
-      <div class="perf-metric-icon">📅</div>
-      <div class="perf-metric-label">MEETINGS</div>
-      <div class="perf-metric-val" id="tm-meet">—</div>
-    </div>
-
-    <div class="perf-metric-item">
-      <div class="perf-metric-icon">✅</div>
-      <div class="perf-metric-label">CONVERTED</div>
-      <div class="perf-metric-val" id="tm-conv">—</div>
-    </div>
-
-    <div class="perf-metric-item">
-      <div class="perf-metric-icon">📄</div>
-      <div class="perf-metric-label">DOCUMENTED</div>
-      <div class="perf-metric-val" id="tm-doc">—</div>
-    </div>
+    <!-- /team-card -->
 
   </div>
-
-  <!-- Points -->
-  <div class="perf-points-section">
-    <div class="perf-points-label">TOTAL POINTS EARNED</div>
-    <div class="perf-laurel-wrap">
-      <div class="perf-laurel left">🏅</div>
-      <div class="perf-pts" id="teamPts">—</div>
-      <div class="perf-laurel right">🏅</div>
-    </div>
-  </div>
-
-</div>
-<!-- /team-card -->
   <!-- /right-panel -->
 
 </div>
 <!-- /board-outer -->
 
+<!-- ══ BOTTOM ANALYTICS SECTION ════════════════════════════ -->
+<div class="analytics-section">
+
+  <!-- LEFT: KPI Cards -->
+  <div class="analytics-left">
+    <div class="analytics-header">
+      <span class="analytics-header-line"></span>
+      <span class="analytics-header-line"></span>
+    </div>
+    <div class="kpi-cards-row">
+
+<!-- TOP INTRO -->
+<div class="kpi-card kpi-intro" id="kpi-intro-card">
+  <div class="kpi-card-top-bar"></div>
+  <div class="kpi-icon-wrap">
+    <span class="kpi-icon">🤝</span>
+  </div>
+  <div class="kpi-text-block">
+    <div class="kpi-label">TOP INTRO</div>
+    <div class="kpi-value-name-row">
+      <div class="kpi-value" id="kpi-intro-val">—</div>
+      <div class="kpi-name" id="kpi-intro-name">—</div>
+    </div>
+  </div>
+  <div class="kpi-team-bar" id="kpi-intro-bar"></div>
+</div>
+
+<!-- TOP MEETINGS -->
+<div class="kpi-card kpi-meet" id="kpi-meet-card">
+  <div class="kpi-card-top-bar"></div>
+  <div class="kpi-icon-wrap">
+    <span class="kpi-icon">📅</span>
+  </div>
+  <div class="kpi-text-block">
+    <div class="kpi-label">TOP MEETINGS</div>
+    <div class="kpi-value-name-row">
+      <div class="kpi-value" id="kpi-meet-val">—</div>
+      <div class="kpi-name" id="kpi-meet-name">—</div>
+    </div>
+  </div>
+  <div class="kpi-team-bar" id="kpi-meet-bar"></div>
+</div>
+
+<!-- TOP CONVERTED -->
+<div class="kpi-card kpi-conv" id="kpi-conv-card">
+  <div class="kpi-card-top-bar"></div>
+  <div class="kpi-icon-wrap">
+    <span class="kpi-icon">✅</span>
+  </div>
+  <div class="kpi-text-block">
+    <div class="kpi-label">TOP CONVERTED</div>
+    <div class="kpi-value-name-row">
+      <div class="kpi-value" id="kpi-conv-val">—</div>
+      <div class="kpi-name" id="kpi-conv-name">—</div>
+    </div>
+  </div>
+  <div class="kpi-team-bar" id="kpi-conv-bar"></div>
+</div>
+  <!-- RIGHT: Future placeholder -->
+  <div class="analytics-right">
+    <div class="analytics-header">
+      <span class="analytics-header-line"></span>
+      <span class="analytics-header-line"></span>
+    </div>
+    <div class="future-analytics-wrap">
+      <div class="future-analytics-inner">
+        <div class="future-analytics-icon">📊</div>
+        <div class="future-analytics-title">Analytics Coming Soon</div>
+        <div class="future-analytics-sub">Charts · Trends · Forecasts</div>
+        <div class="future-analytics-dots">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- /analytics-section -->
+
 <script>
 
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZyLPhCRB7pQ5ivX-9FltXfKNhw-CXGqHDAkW3dyzC4EXQ4haFfxEkoD7bniygkugPRA/exec';
-
 const SHEET_ID = '1XX5Io8gpJPmcALPS217MB1j33FMpGMdoFAg80I-cbmA';
 const GID      = '806469274';
 const CSV_URL  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
 const REFRESH  = 10;
 
-/* ── Last-week row config (0-indexed, adjust if sheet changes) ── */
-const LAST_WEEK_MEMBER_START = 17;   // Row 18 in sheet
-const LAST_WEEK_MEMBER_END   = 28;   // Row 29 in sheet (exclusive)
+const LAST_WEEK_MEMBER_START = 17;
+const LAST_WEEK_MEMBER_END   = 28;
 
 const TEAMS = [
-  { key:'harsh',    rowClass:'row-harsh',    members:['Rajat','Atul','Ameet','Rakesh'],              dotColor:'#1d4ed8' },
-  { key:'alok',     rowClass:'row-alok',     members:['Abhijeet','Amit','Harsh.P','Tejprakash'],     dotColor:'#047857' },
-  { key:'ashutosh', rowClass:'row-ashutosh', members:['Saket','Umakant','Mukul'],                    dotColor:'#7c2d12' }
+  { key:'harsh',    rowClass:'row-harsh',    members:['Rajat','Atul','Ameet','Rakesh'],           dotColor:'#1d4ed8' },
+  { key:'alok',     rowClass:'row-alok',     members:['Abhijeet','Amit','Harsh.P','Tejprakash'],  dotColor:'#047857' },
+  { key:'ashutosh', rowClass:'row-ashutosh', members:['Saket','Umakant','Mukul'],                 dotColor:'#7c2d12' }
 ];
 
-let cdVal        = REFRESH;
-let cdTimer      = null;
-let activeFilter = null;
-let toastTimer   = null;
+const TEAM_DISPLAY_NAMES = { harsh:'HARSH', alok:'ALOK', ashutosh:'ASHUTOSH' };
 
-/* ── Utilities ─────────────────────────────────────────────── */
-function todayMidnight() {
-  const d = new Date();
-  d.setHours(0, 0, 0, 0);
-  return d;
-}
+let cdVal = REFRESH, cdTimer = null, activeFilter = null, toastTimer = null;
+
+/* ── Utilities ── */
+function todayMidnight() { const d=new Date(); d.setHours(0,0,0,0); return d; }
 function isoDate(d) {
-  const y  = d.getFullYear();
-  const mo = String(d.getMonth() + 1).padStart(2, '0');
-  const da = String(d.getDate()).padStart(2, '0');
-  return `${y}-${mo}-${da}`;
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
 function displayDate(iso) {
-  return new Date(iso + 'T00:00:00').toLocaleDateString('en-IN', {
-    day: '2-digit', month: 'short', year: 'numeric'
-  });
+  return new Date(iso+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
 }
 function presetRange(preset) {
   const today = todayMidnight();
-  switch (preset) {
-    case 'today':
-      return { from: isoDate(today), to: isoDate(today) };
-    case 'yesterday': {
-      const y = new Date(today); y.setDate(today.getDate() - 1);
-      return { from: isoDate(y), to: isoDate(y) };
-    }
-    case '7d': {
-      const f = new Date(today); f.setDate(today.getDate() - 6);
-      return { from: isoDate(f), to: isoDate(today) };
-    }
-    case '30d': {
-      const f = new Date(today); f.setDate(today.getDate() - 29);
-      return { from: isoDate(f), to: isoDate(today) };
-    }
+  switch(preset) {
+    case 'today': return { from:isoDate(today), to:isoDate(today) };
+    case 'yesterday': { const y=new Date(today); y.setDate(today.getDate()-1); return {from:isoDate(y),to:isoDate(y)}; }
+    case '7d':  { const f=new Date(today); f.setDate(today.getDate()-6);  return {from:isoDate(f),to:isoDate(today)}; }
+    case '30d': { const f=new Date(today); f.setDate(today.getDate()-29); return {from:isoDate(f),to:isoDate(today)}; }
     default: return null;
   }
 }
-function showToast(msg, type = '') {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.className   = `toast show ${type}`;
+function showToast(msg, type='') {
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.className=`toast show ${type}`;
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { el.className = 'toast'; }, 3500);
+  toastTimer=setTimeout(()=>{el.className='toast';},3500);
 }
-function showLoading(headline, detail, progress = 0) {
-  document.getElementById('loadingHeadline').textContent = headline;
-  document.getElementById('loadingDetail').textContent   = detail;
-  document.getElementById('loadingBar').style.width      = progress + '%';
+function showLoading(headline,detail,progress=0) {
+  document.getElementById('loadingHeadline').textContent=headline;
+  document.getElementById('loadingDetail').textContent=detail;
+  document.getElementById('loadingBar').style.width=progress+'%';
   document.getElementById('loadingOverlay').classList.add('active');
 }
-function setLoadingProgress(pct, detail) {
-  document.getElementById('loadingBar').style.width    = pct + '%';
-  document.getElementById('loadingDetail').textContent = detail;
+function setLoadingProgress(pct,detail) {
+  document.getElementById('loadingBar').style.width=pct+'%';
+  document.getElementById('loadingDetail').textContent=detail;
 }
 function hideLoading() {
   document.getElementById('loadingOverlay').classList.remove('active');
-  document.getElementById('loadingBar').style.width = '0%';
+  document.getElementById('loadingBar').style.width='0%';
 }
 function setActiveBtn(range) {
-  document.querySelectorAll('.fbtn').forEach(btn =>
-    btn.classList.toggle('active', btn.dataset.range === range)
-  );
-  activeFilter = range;
+  document.querySelectorAll('.fbtn').forEach(btn=>btn.classList.toggle('active',btn.dataset.range===range));
+  activeFilter=range;
 }
-function showActiveLabel(from, to) {
-  const el = document.getElementById('activeRangeLbl');
-  el.textContent = from === to
-    ? displayDate(from)
-    : `${displayDate(from)}  →  ${displayDate(to)}`;
-  el.style.display = '';
+function showActiveLabel(from,to) {
+  const el=document.getElementById('activeRangeLbl');
+  el.textContent=from===to?displayDate(from):`${displayDate(from)}  →  ${displayDate(to)}`;
+  el.style.display='';
 }
 function toggleCustomPanel() {
-  const panel  = document.getElementById('customPanel');
-  const isOpen = panel.classList.contains('open');
-  if (isOpen) {
-    closeCustomPanel();
-  } else {
-    const today = isoDate(todayMidnight());
-    document.getElementById('fromDate').value = today;
-    document.getElementById('toDate').value   = today;
-    panel.classList.add('open');
-    setActiveBtn('custom');
+  const panel=document.getElementById('customPanel');
+  if(panel.classList.contains('open')) { closeCustomPanel(); }
+  else {
+    const today=isoDate(todayMidnight());
+    document.getElementById('fromDate').value=today;
+    document.getElementById('toDate').value=today;
+    panel.classList.add('open'); setActiveBtn('custom');
   }
 }
 function closeCustomPanel() {
   document.getElementById('customPanel').classList.remove('open');
-  if (activeFilter === 'custom') {
+  if(activeFilter==='custom') {
     document.querySelector('.fbtn[data-range="custom"]').classList.remove('active');
-    activeFilter = null;
+    activeFilter=null;
   }
 }
-async function writeSheetDates(from, to) {
-  if (!APPS_SCRIPT_URL) {
-    showToast('⚠ Apps Script not configured — sheet dates unchanged.', 'toast-warn');
-    return false;
-  }
-  const url = `${APPS_SCRIPT_URL}?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`;
-  try {
-    await fetch(url, { method: 'GET', mode: 'no-cors' });
-  } catch (e) {}
+async function writeSheetDates(from,to) {
+  if(!APPS_SCRIPT_URL) { showToast('⚠ Apps Script not configured.','toast-warn'); return false; }
+  const url=`${APPS_SCRIPT_URL}?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`;
+  try { await fetch(url,{method:'GET',mode:'no-cors'}); } catch(e) {}
   return true;
 }
-function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+function sleep(ms) { return new Promise(r=>setTimeout(r,ms)); }
 
 async function applyPreset(preset) {
-  const range = presetRange(preset);
-  if (!range) return;
-  setActiveBtn(preset);
-  closeCustomPanel();
-  clearInterval(cdTimer);
-  showLoading('UPDATING DATE RANGE', 'Writing to Google Sheets…', 10);
-  await writeSheetDates(range.from, range.to);
-  setLoadingProgress(35, 'Waiting for formulas to recalculate…');
-  await sleep(1500);
-  setLoadingProgress(65, 'Recalculating…');
-  await sleep(1500);
-  setLoadingProgress(85, 'Fetching updated data…');
+  const range=presetRange(preset); if(!range) return;
+  setActiveBtn(preset); closeCustomPanel(); clearInterval(cdTimer);
+  showLoading('UPDATING DATE RANGE','Writing to Google Sheets…',10);
+  await writeSheetDates(range.from,range.to);
+  setLoadingProgress(35,'Waiting for formulas to recalculate…'); await sleep(1500);
+  setLoadingProgress(65,'Recalculating…'); await sleep(1500);
+  setLoadingProgress(85,'Fetching updated data…');
   await load(false);
-  setLoadingProgress(100, 'Done!');
-  await sleep(300);
-  hideLoading();
-  showActiveLabel(range.from, range.to);
-  showToast(`✓ Range applied: ${range.from === range.to ? displayDate(range.from) : `${displayDate(range.from)} → ${displayDate(range.to)}`}`, 'toast-success');
+  setLoadingProgress(100,'Done!'); await sleep(300);
+  hideLoading(); showActiveLabel(range.from,range.to);
+  showToast(`✓ Range applied: ${range.from===range.to?displayDate(range.from):`${displayDate(range.from)} → ${displayDate(range.to)}`}`,'toast-success');
   startCountdown();
 }
 async function applyCustom() {
-  const from = document.getElementById('fromDate').value;
-  const to   = document.getElementById('toDate').value;
-  if (!from || !to) { showToast('Please select both From and To dates.', 'toast-warn'); return; }
-  if (from > to)    { showToast('From date cannot be later than To date.', 'toast-error'); return; }
-  closeCustomPanel();
-  setActiveBtn('custom');
-  clearInterval(cdTimer);
-  showLoading('APPLYING CUSTOM RANGE', 'Writing dates to Google Sheets…', 10);
-  await writeSheetDates(from, to);
-  setLoadingProgress(35, 'Waiting for formulas to recalculate…');
-  await sleep(1500);
-  setLoadingProgress(65, 'Recalculating…');
-  await sleep(1500);
-  setLoadingProgress(85, 'Fetching updated data…');
+  const from=document.getElementById('fromDate').value;
+  const to=document.getElementById('toDate').value;
+  if(!from||!to){showToast('Please select both From and To dates.','toast-warn');return;}
+  if(from>to){showToast('From date cannot be later than To date.','toast-error');return;}
+  closeCustomPanel(); setActiveBtn('custom'); clearInterval(cdTimer);
+  showLoading('APPLYING CUSTOM RANGE','Writing dates to Google Sheets…',10);
+  await writeSheetDates(from,to);
+  setLoadingProgress(35,'Waiting for formulas to recalculate…'); await sleep(1500);
+  setLoadingProgress(65,'Recalculating…'); await sleep(1500);
+  setLoadingProgress(85,'Fetching updated data…');
   await load(false);
-  setLoadingProgress(100, 'Done!');
-  await sleep(300);
-  hideLoading();
-  showActiveLabel(from, to);
-  showToast(`✓ Custom range: ${displayDate(from)} → ${displayDate(to)}`, 'toast-success');
+  setLoadingProgress(100,'Done!'); await sleep(300);
+  hideLoading(); showActiveLabel(from,to);
+  showToast(`✓ Custom range: ${displayDate(from)} → ${displayDate(to)}`,'toast-success');
   startCountdown();
 }
 
-/* ── CSV parser ─────────────────────────────────────────────── */
+/* ── CSV parser ── */
 function parseCSV(text) {
-  const rows  = [];
-  const lines = text.trim().split('\n');
-  for (const line of lines) {
-    const cols = [];
-    let current = '', insideQuotes = false;
-    for (let i = 0; i < line.length; i++) {
-      const char = line[i];
-      if (char === '"') {
-        insideQuotes = !insideQuotes;
-      } else if (char === ',' && !insideQuotes) {
-        cols.push(current.trim());
-        current = '';
-      } else {
-        current += char;
-      }
+  const rows=[]; const lines=text.trim().split('\n');
+  for(const line of lines) {
+    const cols=[]; let current='', insideQuotes=false;
+    for(let i=0;i<line.length;i++) {
+      const char=line[i];
+      if(char==='"') insideQuotes=!insideQuotes;
+      else if(char===','&&!insideQuotes){cols.push(current.trim());current='';}
+      else current+=char;
     }
-    cols.push(current.trim());
-    rows.push(cols);
+    cols.push(current.trim()); rows.push(cols);
   }
   return rows;
 }
 
-/* ── Helpers ────────────────────────────────────────────────── */
-function pct(a, t) { return t ? Math.min((a / t) * 100, 100) : 0; }
-function cls(a, t) {
-  if (a === 0) return 'zero';
-  const p = (a / t) * 100;
-  return p >= 100 ? 'good' : p >= 60 ? 'ok' : 'bad';
+/* ── Helpers ── */
+function pct(a,t){return t?Math.min((a/t)*100,100):0;}
+function cls(a,t){if(a===0)return'zero';const p=(a/t)*100;return p>=100?'good':p>=60?'ok':'bad';}
+function metricHTML(act,tgt){
+  const c=cls(act,tgt),p=pct(act,tgt);
+  return `<div class="metric"><div class="metric-top"><span class="m-act ${c}">${act}</span><span class="m-tgt">/ ${tgt}</span></div><div class="bar-track"><div class="bar-fill ${c}" style="width:${p}%"></div></div></div>`;
 }
-function metricHTML(act, tgt) {
-  const c = cls(act, tgt);
-  const p = pct(act, tgt);
-  return `
-    <div class="metric">
-      <div class="metric-top">
-        <span class="m-act ${c}">${act}</span>
-        <span class="m-tgt">/ ${tgt}</span>
-      </div>
-      <div class="bar-track">
-        <div class="bar-fill ${c}" style="width:${p}%"></div>
-      </div>
-    </div>`;
-}
-function rankCircle(i) {
-  const c = i===0?'r1': i===1?'r2': i===2?'r3':'rn';
-  return `<div class="rank-circle ${c}">${i + 1}</div>`;
-}
-function ptsClass(p, max) {
-  return p >= max * 0.75 ? 'pts-top' : p >= max * 0.4 ? 'pts-mid' : 'pts-low';
-}
-function rowKey(prefix, name) {
-  return `${prefix}-${String(name).trim().toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
-}
-
-/* ── Team lookup ─────────────────────────────────────────────── */
-function buildTeamLookup() {
-  const lookup = new Map();
-  TEAMS.forEach((team, ti) => {
-    team.members.forEach(name => lookup.set(name.trim().toLowerCase(), ti));
-  });
+function rankCircle(i){const c=i===0?'r1':i===1?'r2':i===2?'r3':'rn';return `<div class="rank-circle ${c}">${i+1}</div>`;}
+function ptsClass(p,max){return p>=max*0.75?'pts-top':p>=max*0.4?'pts-mid':'pts-low';}
+function rowKey(prefix,name){return `${prefix}-${String(name).trim().toLowerCase().replace(/[^a-z0-9]+/g,'-')}`;}
+function buildTeamLookup(){
+  const lookup=new Map();
+  TEAMS.forEach((team,ti)=>team.members.forEach(name=>lookup.set(name.trim().toLowerCase(),ti)));
   return lookup;
 }
 
-/* ── Animation helpers ──────────────────────────────────────── */
-function captureRowPositions() {
-  const positions = new Map();
-  document.querySelectorAll('#tableBody tr[data-row-key]').forEach(row => {
-    positions.set(row.dataset.rowKey, row.getBoundingClientRect().top);
-  });
+/* ── Animation helpers ── */
+function captureRowPositions(){
+  const positions=new Map();
+  document.querySelectorAll('#tableBody tr[data-row-key]').forEach(row=>positions.set(row.dataset.rowKey,row.getBoundingClientRect().top));
   return positions;
 }
-function animateRowMoves(oldPositions) {
-  requestAnimationFrame(() => {
-    document.querySelectorAll('#tableBody tr[data-row-key]').forEach(row => {
-      const oldTop = oldPositions.get(row.dataset.rowKey);
-      if (oldTop === undefined) return;
-      const delta = oldTop - row.getBoundingClientRect().top;
-      if (Math.abs(delta) < 2) return;
-      row.animate(
-        [{ transform: `translateY(${delta}px)` }, { transform: 'translateY(0)' }],
-        { duration: 620, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
-      );
+function animateRowMoves(oldPositions){
+  requestAnimationFrame(()=>{
+    document.querySelectorAll('#tableBody tr[data-row-key]').forEach(row=>{
+      const oldTop=oldPositions.get(row.dataset.rowKey); if(oldTop===undefined) return;
+      const delta=oldTop-row.getBoundingClientRect().top; if(Math.abs(delta)<2) return;
+      row.animate([{transform:`translateY(${delta}px)`},{transform:'translateY(0)'}],{duration:620,easing:'cubic-bezier(0.22,1,0.36,1)'});
     });
   });
 }
 
-/* ── Extract current-week data ──────────────────────────────── */
-function extractData(rows) {
-  const members = rows
-    .slice(4, 15)
-    .filter(r => r[5] && r[5].trim() !== '')
-    .map(r => ({
-      yIM:     Number(r[1])  || 0,
-      yClient: Number(r[2])  || 0,
-      tIM:     Number(r[3])  || 0,
-      tClient: Number(r[4])  || 0,
-      name:    r[5],
-      lTgt:    Number(r[6])  || 0,
-      lAct:    Number(r[7])  || 0,
-      imTgt:   Number(r[8])  || 0,
-      imAct:   Number(r[9])  || 0,
-      mtTgt:   Number(r[10]) || 0,
-      mtAct:   Number(r[11]) || 0,
-      ccTgt:   Number(r[12]) || 0,
-      ccRpt:   Number(r[13]) || 0,
-      ccDoc:   Number(r[14]) || 0,
-      pts:     Number(r[15]) || 0
-    }));
-  const totalRow = rows[15];
-  return { members, totalRow };
+/* ── Count-up ── */
+function countUp(el,target){
+  if(!el) return;
+  const start=parseInt(el.textContent)||0;
+  const steps=56,step=16,inc=(target-start)/steps;
+  let current=start,count=0;
+  const timer=setInterval(()=>{
+    count++;current+=inc;el.textContent=Math.round(current);
+    if(count>=steps){clearInterval(timer);el.textContent=target;}
+  },step);
 }
 
-/* ── Extract last-week top performer ───────────────────────── */
-function extractLastWeekTopPerformer(rows) {
-  function parseRow(r) {
-    return {
-      name:  r[5],
-      lTgt:  Number(r[6])  || 0,
-      lAct:  Number(r[7])  || 0,
-      imTgt: Number(r[8])  || 0,
-      imAct: Number(r[9])  || 0,
-      mtTgt: Number(r[10]) || 0,
-      mtAct: Number(r[11]) || 0,
-      ccTgt: Number(r[12]) || 0,
-      ccRpt: Number(r[13]) || 0,
-      ccDoc: Number(r[14]) || 0,
-      pts:   Number(r[15]) || 0
-    };
-  }
+/* ── Extract current-week data ── */
+function extractData(rows){
+  const members=rows.slice(4,15).filter(r=>r[5]&&r[5].trim()!=='').map(r=>({
+    yIM:Number(r[1])||0, yClient:Number(r[2])||0, tIM:Number(r[3])||0, tClient:Number(r[4])||0,
+    name:r[5],
+    lTgt:Number(r[6])||0,  lAct:Number(r[7])||0,
+    imTgt:Number(r[8])||0, imAct:Number(r[9])||0,
+    mtTgt:Number(r[10])||0,mtAct:Number(r[11])||0,
+    ccTgt:Number(r[12])||0,ccRpt:Number(r[13])||0,ccDoc:Number(r[14])||0,
+    pts:Number(r[15])||0
+  }));
+  const totalRow=rows[15];
+  return {members,totalRow};
+}
 
-  /* Try dedicated last-week rows first */
-  if (rows.length > LAST_WEEK_MEMBER_START) {
-    const slice = rows.slice(LAST_WEEK_MEMBER_START, LAST_WEEK_MEMBER_END);
-    let top = null, maxPts = -Infinity;
-    for (const r of slice) {
-      if (!r[5] || r[5].trim() === '') continue;
-      const pts = Number(r[15]) || 0;
-      if (pts > maxPts) { maxPts = pts; top = parseRow(r); }
-    }
-    if (top) return top;
+/* ── Extract last-week top performer ── */
+function extractLastWeekTopPerformer(rows){
+  function parseRow(r){return{name:r[5],lTgt:Number(r[6])||0,lAct:Number(r[7])||0,imTgt:Number(r[8])||0,imAct:Number(r[9])||0,mtTgt:Number(r[10])||0,mtAct:Number(r[11])||0,ccTgt:Number(r[12])||0,ccRpt:Number(r[13])||0,ccDoc:Number(r[14])||0,pts:Number(r[15])||0};}
+  if(rows.length>LAST_WEEK_MEMBER_START){
+    const slice=rows.slice(LAST_WEEK_MEMBER_START,LAST_WEEK_MEMBER_END);
+    let top=null,maxPts=-Infinity;
+    for(const r of slice){if(!r[5]||r[5].trim()==='')continue;const pts=Number(r[15])||0;if(pts>maxPts){maxPts=pts;top=parseRow(r);}}
+    if(top) return top;
   }
-  /* Fallback: current week's best */
-  if (rows.length > 4) {
-    const slice = rows.slice(4, 15).filter(r => r[5] && r[5].trim() !== '');
-    let top = null, maxPts = -Infinity;
-    for (const r of slice) {
-      const pts = Number(r[15]) || 0;
-      if (pts > maxPts) { maxPts = pts; top = { ...parseRow(r), isFallback: true }; }
-    }
+  if(rows.length>4){
+    const slice=rows.slice(4,15).filter(r=>r[5]&&r[5].trim()!=='');
+    let top=null,maxPts=-Infinity;
+    for(const r of slice){const pts=Number(r[15])||0;if(pts>maxPts){maxPts=pts;top={...parseRow(r),isFallback:true};}}
     return top;
   }
   return null;
 }
 
-/* ── Render top performer card ──────────────────────────────── */
-function renderPerfCard(top) {
-  const nameEl = document.getElementById('perfName');
-  const ptsEl  = document.getElementById('perfPts');
-  const dotEl  = document.getElementById('perfTeamDot');
+/* ── Render performer card ── */
+function renderPerfCard(top){
+  const nameEl=document.getElementById('perfName');
+  const ptsEl=document.getElementById('perfPts');
+  const dotEl=document.getElementById('perfTeamDot');
 
-  /* Helper: set a single stat cell */
-  function setStat(prefix, act, tgt, showBar = true) {
-    const actEl = document.getElementById(`ps-${prefix}-act`);
-    const tgtEl = document.getElementById(`ps-${prefix}-tgt`);
-    const barEl = document.getElementById(`ps-${prefix}-bar`);
-
-    if (!actEl) return;
-
-    const pctVal  = tgt ? Math.min((act / tgt) * 100, 100) : 0;
-    const clsName = act === 0 ? 'c-bad'
-                  : pctVal >= 100 ? 'c-good'
-                  : pctVal >= 60  ? 'c-ok'
-                  : 'c-bad';
-
-    actEl.textContent = act;
-    actEl.className   = `perf-stat-act ${clsName}`;
-    if (tgtEl) tgtEl.textContent = tgt ? `/ ${tgt}` : '';
-    if (barEl && showBar) {
-      barEl.style.width = pctVal + '%';
-      barEl.className   = `perf-stat-bar-fill ${clsName}`;
-    }
+  function setStat(prefix,act,tgt){
+    const actEl=document.getElementById(`ps-${prefix}-act`);
+    const tgtEl=document.getElementById(`ps-${prefix}-tgt`);
+    const barEl=document.getElementById(`ps-${prefix}-bar`);
+    if(!actEl) return;
+    const pctVal=tgt?Math.min((act/tgt)*100,100):0;
+    const clsName=act===0?'c-bad':pctVal>=100?'c-good':pctVal>=60?'c-ok':'c-bad';
+    actEl.textContent=act; actEl.className=`perf-stat-act ${clsName}`;
+    if(tgtEl) tgtEl.textContent=tgt?`/ ${tgt}`:'';
+    if(barEl){barEl.style.width=pctVal+'%';barEl.className=`perf-stat-bar-fill ${clsName}`;}
   }
 
-  /* Helper: count-up animation */
-  function countUp(el, target) {
-    const start = parseInt(el.textContent) || 0;
-    const dur = 900, step = 16;
-    const steps = Math.ceil(dur / step);
-    const inc = (target - start) / steps;
-    let current = start, count = 0;
-    const timer = setInterval(() => {
-      count++;
-      current += inc;
-      el.textContent = Math.round(current);
-      if (count >= steps) { clearInterval(timer); el.textContent = target; }
-    }, step);
-  }
-
-  if (!top) {
-    nameEl.textContent = '—';
-    nameEl.classList.remove('loading-shimmer');
-    ptsEl.textContent  = '—';
-    dotEl.classList.remove('visible');
-    ['leads','intro','meet','conv'].forEach(k => {
-      const a = document.getElementById(`ps-${k}-act`);
-      const t = document.getElementById(`ps-${k}-tgt`);
-      const b = document.getElementById(`ps-${k}-bar`);
-      if (a) a.textContent = '—';
-      if (t) t.textContent = '';
-      if (b) b.style.width = '0%';
+  if(!top){
+    nameEl.textContent='—'; nameEl.classList.remove('loading-shimmer');
+    ptsEl.textContent='—'; dotEl.classList.remove('visible');
+    ['leads','intro','meet','conv'].forEach(k=>{
+      const a=document.getElementById(`ps-${k}-act`);
+      const t=document.getElementById(`ps-${k}-tgt`);
+      const b=document.getElementById(`ps-${k}-bar`);
+      if(a)a.textContent='—'; if(t)t.textContent=''; if(b)b.style.width='0%';
     });
-    const docA = document.getElementById('ps-doc-act');
-    const docT = document.getElementById('ps-doc-tgt');
-    if (docA) docA.textContent = '—';
-    if (docT) docT.textContent = '';
+    const docA=document.getElementById('ps-doc-act'); const docT=document.getElementById('ps-doc-tgt');
+    if(docA)docA.textContent='—'; if(docT)docT.textContent='';
     return;
   }
 
-  /* Animate name */
   nameEl.classList.add('loading-shimmer');
-  setTimeout(() => {
-    nameEl.textContent = top.name;
-    nameEl.classList.remove('loading-shimmer');
+  setTimeout(()=>{
+    nameEl.textContent=top.name; nameEl.classList.remove('loading-shimmer');
+    const lookup=buildTeamLookup();
+    const ti=lookup.get(top.name.trim().toLowerCase());
+    if(ti!==undefined){dotEl.style.background=TEAMS[ti].dotColor;dotEl.classList.add('visible');}
+    else dotEl.classList.remove('visible');
+  },320);
 
-    const lookup = buildTeamLookup();
-    const ti = lookup.get(top.name.trim().toLowerCase());
-    if (ti !== undefined) {
-      dotEl.style.background = TEAMS[ti].dotColor;
-      dotEl.classList.add('visible');
-    } else {
-      dotEl.classList.remove('visible');
-    }
-  }, 320);
+  countUp(ptsEl,top.pts);
 
-  /* Animate points */
-  countUp(ptsEl, top.pts);
-
-  /* Populate stats (slight delay for visual rhythm) */
-  setTimeout(() => {
-    setStat('leads', top.lAct,  top.lTgt);
-    setStat('intro', top.imAct, top.imTgt);
-    setStat('meet',  top.mtAct, top.mtTgt);
-
-    /* Converted: act = ccRpt, tgt = ccTgt */
-    setStat('conv', top.ccRpt, top.ccTgt);
-
-    /* Document: no target bar — just show the count vs target label */
-    const docActEl = document.getElementById('ps-doc-act');
-    const docTgtEl = document.getElementById('ps-doc-tgt');
-    if (docActEl) {
-      docActEl.textContent = top.ccDoc;
-      docActEl.className   = 'perf-stat-act';
-    }
-    if (docTgtEl) docTgtEl.textContent = top.ccTgt ? `tgt ${top.ccTgt}` : '';
-  }, 200);
+  setTimeout(()=>{
+    setStat('leads',top.lAct,top.lTgt);
+    setStat('intro',top.imAct,top.imTgt);
+    setStat('meet',top.mtAct,top.mtTgt);
+    setStat('conv',top.ccRpt,top.ccTgt);
+    const docActEl=document.getElementById('ps-doc-act');
+    const docTgtEl=document.getElementById('ps-doc-tgt');
+    if(docActEl){docActEl.textContent=top.ccDoc;docActEl.className='perf-stat-act';}
+    if(docTgtEl)docTgtEl.textContent=top.ccTgt?`tgt ${top.ccTgt}`:'';
+  },200);
 }
 
-/* ── Group by team ──────────────────────────────────────────── */
-function groupByTeam(members) {
-  const lookup  = buildTeamLookup();
-  const buckets = TEAMS.map(() => []);
-  const others  = [];
-  members.forEach(m => {
-    const ti = lookup.get(m.name.trim().toLowerCase());
-    ti !== undefined ? buckets[ti].push(m) : others.push(m);
-  });
-  buckets.forEach(b => b.sort((a, b_) => b_.pts - a.pts));
-  others.sort((a, b_) => b_.pts - a.pts);
-  return { buckets, others };
+/* ── Extract last-week team stats ── */
+function extractLastWeekTeamStats(rows){
+  const slice=rows.length>LAST_WEEK_MEMBER_START?rows.slice(LAST_WEEK_MEMBER_START,LAST_WEEK_MEMBER_END):rows.slice(4,15);
+  const lookup=buildTeamLookup();
+  const teamStats=TEAMS.map(team=>({key:team.key,name:TEAM_DISPLAY_NAMES[team.key]||team.key.toUpperCase(),members:team.members,pts:0,lAct:0,imAct:0,mtAct:0,ccRpt:0,ccDoc:0}));
+  for(const r of slice){
+    if(!r[5]||r[5].trim()==='') continue;
+    const ti=lookup.get(r[5].trim().toLowerCase()); if(ti===undefined) continue;
+    const t=teamStats[ti];
+    t.pts+=Number(r[15])||0; t.lAct+=Number(r[7])||0; t.imAct+=Number(r[9])||0;
+    t.mtAct+=Number(r[11])||0; t.ccRpt+=Number(r[13])||0; t.ccDoc+=Number(r[14])||0;
+  }
+  return teamStats.reduce((best,t)=>t.pts>best.pts?t:best,teamStats[0]);
 }
 
-/* ── Render table ───────────────────────────────────────────── */
-function render(rows) {
-  const { members, totalRow } = extractData(rows);
-  const { buckets, others }   = groupByTeam(members);
-  const oldPositions          = captureRowPositions();
+/* ── Render team card ── */
+function renderTeamCard(rows){
+  const card=document.getElementById('teamCard');
+  const nameEl=document.getElementById('teamName');
+  const ptsEl=document.getElementById('teamPts');
+  const membersEl=document.getElementById('teamMembersList');
+  if(!card) return;
+  const top=extractLastWeekTeamStats(rows);
+  if(!top) return;
+  card.className=`team-card team-${top.key}`;
+  nameEl.classList.add('loading-shimmer');
+  setTimeout(()=>{nameEl.textContent=top.name;nameEl.classList.remove('loading-shimmer');},320);
+  countUp(ptsEl,top.pts);
+  membersEl.innerHTML=top.members.map(m=>`<div class="team-member-pill">${m}</div>`).join('');
+  setTimeout(()=>{
+    document.getElementById('tm-leads').textContent=top.lAct;
+    document.getElementById('tm-intro').textContent=top.imAct;
+    document.getElementById('tm-meet').textContent=top.mtAct;
+    document.getElementById('tm-conv').textContent=top.ccRpt;
+    document.getElementById('tm-doc').textContent=top.ccDoc;
+  },200);
+}
 
-  const teamOrder = TEAMS
-    .map((team, ti) => ({
-      team, ti,
-      totalPts: buckets[ti].reduce((s, m) => s + (Number(m.pts) || 0), 0)
-    }))
-    .filter(item => buckets[item.ti].length)
-    .sort((a, b) => b.totalPts - a.totalPts);
+/* ── Render KPI cards ── */
+function renderKpiCards(members){
+  if(!members||!members.length) return;
+  const lookup=buildTeamLookup();
+  function getTeamColor(name){
+    const ti=lookup.get(name.trim().toLowerCase());
+    return ti!==undefined?TEAMS[ti].dotColor:'#8390a5';
+  }
+  const topIntro=members.reduce((a,b)=>b.imAct>a.imAct?b:a,members[0]);
+  const topMeet=members.reduce((a,b)=>b.mtAct>a.mtAct?b:a,members[0]);
+  const topConv=members.reduce((a,b)=>b.ccRpt>a.ccRpt?b:a,members[0]);
 
-  let bodyHTML = '';
+  function setCard(valId,nameId,barId,value,name){
+    countUp(document.getElementById(valId),value);
+    const nameEl=document.getElementById(nameId); if(nameEl) nameEl.textContent=name;
+    const barEl=document.getElementById(barId);
+    if(barEl){barEl.style.background=getTeamColor(name);barEl.classList.add('visible');}
+  }
+  setCard('kpi-intro-val','kpi-intro-name','kpi-intro-bar',topIntro.imAct,topIntro.name);
+  setCard('kpi-meet-val','kpi-meet-name','kpi-meet-bar',topMeet.mtAct,topMeet.name);
+  setCard('kpi-conv-val','kpi-conv-name','kpi-conv-bar',topConv.ccRpt,topConv.name);
+}
 
-  teamOrder.forEach(({ team, ti }) => {
-    const group  = buckets[ti];
-    const maxPts = group[0].pts || 1;
-    group.forEach((m, i) => {
-      bodyHTML += `
-        <tr class="${team.rowClass}" data-row-key="${rowKey(team.key, m.name)}">
+/* ── Group by team ── */
+function groupByTeam(members){
+  const lookup=buildTeamLookup();
+  const buckets=TEAMS.map(()=>[]);
+  const others=[];
+  members.forEach(m=>{const ti=lookup.get(m.name.trim().toLowerCase());ti!==undefined?buckets[ti].push(m):others.push(m);});
+  buckets.forEach(b=>b.sort((a,b_)=>b_.pts-a.pts));
+  others.sort((a,b_)=>b_.pts-a.pts);
+  return {buckets,others};
+}
+
+/* ── Render table ── */
+function render(rows){
+  const {members,totalRow}=extractData(rows);
+  const {buckets,others}=groupByTeam(members);
+  const oldPositions=captureRowPositions();
+
+  const teamOrder=TEAMS
+    .map((team,ti)=>({team,ti,totalPts:buckets[ti].reduce((s,m)=>s+(Number(m.pts)||0),0)}))
+    .filter(item=>buckets[item.ti].length)
+    .sort((a,b)=>b.totalPts-a.totalPts);
+
+  let bodyHTML='';
+
+  teamOrder.forEach(({team,ti})=>{
+    const group=buckets[ti]; const maxPts=group[0].pts||1;
+    group.forEach((m,i)=>{
+      bodyHTML+=`
+        <tr class="${team.rowClass}" data-row-key="${rowKey(team.key,m.name)}">
           <td class="center">${rankCircle(i)}</td>
           <td><div class="member-name">${m.name}</div></td>
           <td class="center big">${m.yIM}</td>
           <td class="center big">${m.yClient}</td>
           <td class="center big">${m.tIM}</td>
           <td class="center big">${m.tClient}</td>
-          <td>${metricHTML(m.lAct, m.lTgt)}</td>
-          <td>${metricHTML(m.imAct, m.imTgt)}</td>
-          <td>${metricHTML(m.mtAct, m.mtTgt)}</td>
+          <td>${metricHTML(m.lAct,m.lTgt)}</td>
+          <td>${metricHTML(m.imAct,m.imTgt)}</td>
+          <td>${metricHTML(m.mtAct,m.mtTgt)}</td>
           <td class="center big">${m.ccTgt} - ${m.ccRpt} / ${m.ccDoc}</td>
-          <td class="center"><div class="pts-badge ${ptsClass(m.pts, maxPts)}">${m.pts}</div></td>
+          <td class="center"><div class="pts-badge ${ptsClass(m.pts,maxPts)}">${m.pts}</div></td>
         </tr>`;
     });
   });
 
-  if (others.length) {
-    const maxPts = others[0].pts || 1;
-    others.forEach((m, i) => {
-      bodyHTML += `
-        <tr data-row-key="${rowKey('other', m.name)}">
+  if(others.length){
+    const maxPts=others[0].pts||1;
+    others.forEach((m,i)=>{
+      bodyHTML+=`
+        <tr data-row-key="${rowKey('other',m.name)}">
           <td class="center">${rankCircle(i)}</td>
           <td><div class="member-name">${m.name}</div></td>
           <td class="center big">${m.yIM}</td>
           <td class="center big">${m.yClient}</td>
           <td class="center big">${m.tIM}</td>
           <td class="center big">${m.tClient}</td>
-          <td>${metricHTML(m.lAct, m.lTgt)}</td>
-          <td>${metricHTML(m.imAct, m.imTgt)}</td>
-          <td>${metricHTML(m.mtAct, m.mtTgt)}</td>
+          <td>${metricHTML(m.lAct,m.lTgt)}</td>
+          <td>${metricHTML(m.imAct,m.imTgt)}</td>
+          <td>${metricHTML(m.mtAct,m.mtTgt)}</td>
           <td class="center big">${m.ccTgt} - ${m.ccRpt} / ${m.ccDoc}</td>
-          <td class="center"><div class="pts-badge ${ptsClass(m.pts, maxPts)}">${m.pts}</div></td>
+          <td class="center"><div class="pts-badge ${ptsClass(m.pts,maxPts)}">${m.pts}</div></td>
         </tr>`;
     });
   }
 
-  if (totalRow) {
-    bodyHTML += `
+  if(totalRow){
+    bodyHTML+=`
       <tr class="total-row" data-row-key="week-total">
         <td></td>
         <td class="total-label">WEEK TOTAL</td>
@@ -759,146 +689,45 @@ function render(rows) {
         <td class="center big">${totalRow[2]}</td>
         <td class="center big">${totalRow[3]}</td>
         <td class="center big">${totalRow[4]}</td>
-        <td>${metricHTML(Number(totalRow[7]), Number(totalRow[6]))}</td>
-        <td>${metricHTML(Number(totalRow[9]), Number(totalRow[8]))}</td>
-        <td>${metricHTML(Number(totalRow[11]), Number(totalRow[10]))}</td>
+        <td>${metricHTML(Number(totalRow[7]),Number(totalRow[6]))}</td>
+        <td>${metricHTML(Number(totalRow[9]),Number(totalRow[8]))}</td>
+        <td>${metricHTML(Number(totalRow[11]),Number(totalRow[10]))}</td>
         <td class="center big">${totalRow[12]} - ${totalRow[13]} / ${totalRow[14]}</td>
         <td class="center big" style="color:var(--gold);">${totalRow[15]}</td>
       </tr>`;
   }
 
-  document.getElementById('tableBody').innerHTML = bodyHTML;
+  document.getElementById('tableBody').innerHTML=bodyHTML;
   animateRowMoves(oldPositions);
 
-  /* ── Update performer card ── */
-  const top = extractLastWeekTopPerformer(rows);
+  const top=extractLastWeekTopPerformer(rows);
   renderPerfCard(top);
-  renderTeamCard(rows);  // ← add this
+  renderTeamCard(rows);
+  renderKpiCards(members);
 }
 
-
-/* ── Load & countdown ───────────────────────────────────────── */
-async function load(restartCountdown = true) {
-  try {
-    const res  = await fetch(CSV_URL + '&t=' + Date.now());
-    const text = await res.text();
-    const rows = parseCSV(text);
+/* ── Load & countdown ── */
+async function load(restartCountdown=true){
+  try{
+    const res=await fetch(CSV_URL+'&t='+Date.now());
+    const text=await res.text();
+    const rows=parseCSV(text);
     render(rows);
-    document.getElementById('lastUpdated').textContent =
-      'Last updated ' + new Date().toLocaleTimeString();
-    if (restartCountdown) startCountdown();
-  } catch (err) {
-    console.error('Load error:', err);
-    if (restartCountdown) startCountdown();
+    document.getElementById('lastUpdated').textContent='Last updated '+new Date().toLocaleTimeString();
+    if(restartCountdown) startCountdown();
+  }catch(err){
+    console.error('Load error:',err);
+    if(restartCountdown) startCountdown();
   }
 }
 
-function startCountdown() {
-  clearInterval(cdTimer);
-  cdVal = REFRESH;
-  document.getElementById('cdNum').textContent = cdVal;
-  cdTimer = setInterval(() => {
-    cdVal--;
-    document.getElementById('cdNum').textContent = cdVal;
-    if (cdVal <= 0) {
-      clearInterval(cdTimer);
-      load();
-    }
-  }, 1000);
-}
-
-/* Team display names (shown on ribbon) */
-const TEAM_DISPLAY_NAMES = {
-  harsh:    'HARSH',
-  alok:     'ALOK',
-  ashutosh: 'ASHUTOSH'
-};
-
-function extractLastWeekTeamStats(rows) {
-  /* Uses the same last-week rows as the performer card */
-  const slice = rows.length > LAST_WEEK_MEMBER_START
-    ? rows.slice(LAST_WEEK_MEMBER_START, LAST_WEEK_MEMBER_END)
-    : rows.slice(4, 15);
-
-  const lookup = buildTeamLookup();
-
-  /* Aggregate per team */
-  const teamStats = TEAMS.map(team => ({
-    key:     team.key,
-    name:    TEAM_DISPLAY_NAMES[team.key] || team.key.toUpperCase(),
-    members: team.members,
-    pts:     0,
-    lAct:    0,
-    imAct:   0,
-    mtAct:   0,
-    ccRpt:   0,
-    ccDoc:   0
-  }));
-
-  for (const r of slice) {
-    if (!r[5] || r[5].trim() === '') continue;
-    const ti = lookup.get(r[5].trim().toLowerCase());
-    if (ti === undefined) continue;
-    const t = teamStats[ti];
-    t.pts   += Number(r[15]) || 0;
-    t.lAct  += Number(r[7])  || 0;
-    t.imAct += Number(r[9])  || 0;
-    t.mtAct += Number(r[11]) || 0;
-    t.ccRpt += Number(r[13]) || 0;
-    t.ccDoc += Number(r[14]) || 0;
-  }
-
-  /* Return team with most points */
-  return teamStats.reduce((best, t) => t.pts > best.pts ? t : best, teamStats[0]);
-}
-
-function renderTeamCard(rows) {
-  const card       = document.getElementById('teamCard');
-  const nameEl     = document.getElementById('teamName');
-  const ptsEl      = document.getElementById('teamPts');
-  const membersEl  = document.getElementById('teamMembersList');
-  if (!card) return;
-
-  const top = extractLastWeekTeamStats(rows);
-  if (!top) return;
-
-  /* Apply team colour class */
-  card.className = `team-card team-${top.key}`;
-
-  /* Animate name */
-  nameEl.classList.add('loading-shimmer');
-  setTimeout(() => {
-    nameEl.textContent = top.name;
-    nameEl.classList.remove('loading-shimmer');
-  }, 320);
-
-  /* Count-up points */
-  function countUp(el, target) {
-    const start = parseInt(el.textContent) || 0;
-    const dur = 900, step = 16, steps = Math.ceil(dur / step);
-    const inc = (target - start) / steps;
-    let current = start, count = 0;
-    const timer = setInterval(() => {
-      count++; current += inc;
-      el.textContent = Math.round(current);
-      if (count >= steps) { clearInterval(timer); el.textContent = target; }
-    }, step);
-  }
-  countUp(ptsEl, top.pts);
-
-  /* Members pills */
-  membersEl.innerHTML = top.members
-    .map(m => `<div class="team-member-pill">${m}</div>`)
-    .join('');
-
-  /* Metrics */
-  setTimeout(() => {
-    document.getElementById('tm-leads').textContent = top.lAct;
-    document.getElementById('tm-intro').textContent = top.imAct;
-    document.getElementById('tm-meet').textContent  = top.mtAct;
-    document.getElementById('tm-conv').textContent  = top.ccRpt;
-    document.getElementById('tm-doc').textContent   = top.ccDoc;
-  }, 200);
+function startCountdown(){
+  clearInterval(cdTimer); cdVal=REFRESH;
+  document.getElementById('cdNum').textContent=cdVal;
+  cdTimer=setInterval(()=>{
+    cdVal--; document.getElementById('cdNum').textContent=cdVal;
+    if(cdVal<=0){clearInterval(cdTimer);load();}
+  },1000);
 }
 
 load();
