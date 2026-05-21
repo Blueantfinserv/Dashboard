@@ -122,7 +122,7 @@ const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZyLPhCRB7pQ5i
 const SHEET_ID = '1XX5Io8gpJPmcALPS217MB1j33FMpGMdoFAg80I-cbmA';
 const GID      = '806469274';
 const CSV_URL  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
-const REFRESH  = 100000000;
+const REFRESH  = 10;
 
 const TEAMS = [
   { key:'harsh',    rowClass:'row-harsh',    members:['Rajat','Atul','Ameet','Rakesh'],          dotColor:'#1d4ed8' },
@@ -445,7 +445,7 @@ function syncCardHeightsToTableRows(teamOrder){
   const tbody = document.getElementById('tableBody');
   if(!cardsContainer || !tbody) return;
 
-  const BETWEEN_TEAMS_GAP = 40;
+  const BETWEEN_TEAMS_GAP = 12;
   cardsContainer.style.gap = BETWEEN_TEAMS_GAP + 'px';
 
   const teamRowMap = new Map();
