@@ -122,7 +122,7 @@ const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZyLPhCRB7pQ5i
 const SHEET_ID = '1XX5Io8gpJPmcALPS217MB1j33FMpGMdoFAg80I-cbmA';
 const GID      = '806469274';
 const CSV_URL  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
-const REFRESH  = 10;
+const REFRESH  = 100000000;
 
 const TEAMS = [
   { key:'harsh',    rowClass:'row-harsh',    members:['Rajat','Atul','Ameet','Rakesh'],          dotColor:'#1d4ed8' },
@@ -377,12 +377,12 @@ function renderPastWeekCards(rows) {
         <div class="pw-stats">
           <div class="pw-stat-divider"></div>
           <div class="pw-stat">
-            <div class="pw-stat-val">${m.imAct}<span style="font-size:20px;opacity:0.5">/${m.imTgt}</span></div>
+            <div class="pw-stat-val">${m.imAct}<span style="font-size:30px;opacity:0.5">/${m.imTgt}</span></div>
             <div class="pw-stat-lbl">Intro</div>
           </div>
           <div class="pw-stat-divider"></div>
           <div class="pw-stat">
-            <div class="pw-stat-val">${m.mtAct}<span style="font-size:20px;opacity:0.5">/${m.mtTgt}</span></div>
+            <div class="pw-stat-val">${m.mtAct}<span style="font-size:30px;opacity:0.5">/${m.mtTgt}</span></div>
             <div class="pw-stat-lbl">Meetings</div>
           </div>
           <div class="pw-stat-divider"></div>
@@ -445,7 +445,7 @@ function syncCardHeightsToTableRows(teamOrder){
   const tbody = document.getElementById('tableBody');
   if(!cardsContainer || !tbody) return;
 
-  const BETWEEN_TEAMS_GAP = 12;
+  const BETWEEN_TEAMS_GAP = 40;
   cardsContainer.style.gap = BETWEEN_TEAMS_GAP + 'px';
 
   const teamRowMap = new Map();
