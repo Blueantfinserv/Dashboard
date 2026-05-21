@@ -370,42 +370,62 @@ function renderPastWeekCards(rows) {
   let html = '';
   top3.forEach((m, i) => {
     const mtPct = m.mtTgt ? Math.min(Math.round((m.mtAct / m.mtTgt) * 100), 100) : 0;
-    html += `
-    <div class="pw-card ${cardClasses[i]}">
-      <div class="pw-card-stripe"></div>
-      <div class="pw-card-inner">
+html += `
+<div class="pw-card ${cardClasses[i]}">
+  <div class="pw-card-stripe"></div>
 
-        <div class="pw-rank-badge ${rankClasses[i]}">${rankNums[i]}</div>
+  <div class="pw-card-inner">
 
-        <div class="pw-name-block">
-          <div class="pw-name">${trophies[i]} ${m.name}</div>
-        </div>
+    <div class="pw-rank-badge ${rankClasses[i]}">
+      ${rankNums[i]}
+    </div>
 
-        <div class="pw-stats">
-          <div class="pw-stat-divider"></div>
-          <div class="pw-stat">
-            <div class="pw-stat-val">${m.imAct}<span style="font-size:30px;opacity:0.5">/${m.imTgt}</span></div>
-            <div class="pw-stat-lbl">Intro</div>
-          </div>
-          <div class="pw-stat-divider"></div>
-          <div class="pw-stat">
-            <div class="pw-stat-val">${m.mtAct}<span style="font-size:30px;opacity:0.5">/${m.mtTgt}</span></div>
-            <div class="pw-stat-lbl">Meetings</div>
-          </div>
-          <div class="pw-stat-divider"></div>
-          <div class="pw-stat-divider"></div>
-          <div class="pw-stat">
-            <div class="pw-stat-val">${m.ccRpt}</div>
-            <div class="pw-stat-lbl">RPT</div>
-          </div>
-        </div>
+    <div class="pw-name-block">
+      <div class="pw-name">
+        ${trophies[i]} ${m.name}
+      </div>
+    </div>
 
-        <div class="pw-pts-block">
-          <div class="pw-pts-val">${m.pts}</div>
+    <div class="pw-stats" 
+         style="
+           width:100%;
+           display:flex;
+           justify-content:center;
+           align-items:center;
+           margin-top:14px;
+         ">
+
+      <div class="pw-stat" 
+           style="
+             width:100%;
+             display:flex;
+             justify-content:center;
+             align-items:center;
+           ">
+
+        <div class="pw-stat-val" 
+             style="
+               width:100%;
+               text-align:center;
+               font-size:38px;
+               font-weight:500;
+               line-height:1.0;
+             ">
+          Total Meetings = ${m.imAct + m.mtAct}
         </div>
 
       </div>
-    </div>`;
+
+    </div>
+
+    <div class="pw-pts-block">
+      <div class="pw-pts-val">
+        ${m.pts}
+      </div>
+    </div>
+
+  </div>
+</div>`;
   });
 
   container.innerHTML = html;
@@ -547,7 +567,6 @@ function renderTeamSummaryCards(buckets, teamOrder){
             <div class="tsp-stat-label">AVG MEETINGS —</div>
             <div class="tsp-stat-nums">
               <span class="tsp-act ${mtBarCls}">${t.avgMtAct}</span>
-              <span class="tsp-tgt">/ ${t.avgMtTgt}</span>
             </div>
           </div>
         </div>
