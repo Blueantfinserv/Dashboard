@@ -539,7 +539,9 @@ function renderTeamSummaryCards(buckets, teamOrder){
 
   const oldPositions=captureCardPositions();
 
-  const stats=computeTeamStats(buckets).sort((a,b)=>b.totalPts-a.totalPts);
+  const stats = computeTeamStats(buckets).sort(
+  (a, b) => (b.totalPts / b.count) - (a.totalPts / a.count)
+);
   const maxPts=stats.length?stats[0].totalPts||1:1;
 
   let html='';
@@ -547,38 +549,56 @@ function renderTeamSummaryCards(buckets, teamOrder){
     const ptsBarPct=Math.min(Math.round((t.totalPts/maxPts)*100),100);
     const mtBarCls=barClsFromPct(t.mtPct);
 
-    html+=`
-    <div class="tsp-card tsp-card-${t.key}" data-team-key="${t.key}">
-      <div class="tsp-card-stripe"></div>
-      <div class="tsp-card-inner">
-        <div class="tsp-card-head">
-          <div class="tsp-rank-badge ${rankBadgeClass(rank)}">${rank+1}</div>
-          <div class="tsp-team-name">${t.label}</div>
-          <div class="tsp-member-count">${t.count} members</div>
-        </div>
-        <div class="tsp-pts-block">
-          <div class="tsp-pts-label">TOTAL POINTS —</div>
-          <div class="tsp-pts-val tsp-pts-${t.key}">${t.totalPts}</div>
-        </div>
-        <div class="tsp-divider"></div>
-        <div class="tsp-stat-row">
-          <div class="tsp-stat-icon">📅</div>
-          <div class="tsp-stat-body">
-            <div class="tsp-stat-label">AVG MEETINGS —</div>
-            <div class="tsp-stat-nums">
-              <span class="tsp-act ${mtBarCls}">${t.avgMtAct}</span>
-            </div>
-          </div>
-        </div>
-        <div class="tsp-stat-row">
-          <div class="tsp-stat-icon">✅</div>
-          <div class="tsp-stat-body">
-            <div class="tsp-stat-label">RPT CLIENTS —</div>
-            <div class="tsp-rpt-val tsp-pts-${t.key}">${t.totalRpt}</div>
-          </div>
+   html+=`
+<div class="tsp-card tsp-card-${t.key}" data-team-key="${t.key}">
+  <div class="tsp-card-stripe"></div>
+
+  <div class="tsp-card-inner">
+
+    <div class="tsp-card-head">
+      <div class="tsp-rank-badge ${rankBadgeClass(rank)}">${rank+1}</div>
+      <div class="tsp-team-name">${t.label}</div>
+      <div class="tsp-member-count">${t.count} members</div>
+    </div>
+
+    <div class="tsp-pts-block">
+      <div class="tsp-pts-label">AVG POINTS —</div>
+
+      <div class="tsp-pts-val tsp-pts-${t.key}">
+        ${(t.totalPts / t.count).toFixed(1)}
+      </div>
+    </div>
+
+    <div class="tsp-divider"></div>
+
+    <div class="tsp-stat-row">
+      <div class="tsp-stat-icon">📅</div>
+
+      <div class="tsp-stat-body">
+        <div class="tsp-stat-label">AVG MEETINGS —</div>
+
+        <div class="tsp-stat-nums">
+          <span class="tsp-act ${mtBarCls}">
+            ${t.avgMtAct}
+          </span>
         </div>
       </div>
-    </div>`;
+    </div>
+
+    <div class="tsp-stat-row">
+      <div class="tsp-stat-icon">✅</div>
+
+      <div class="tsp-stat-body">
+        <div class="tsp-stat-label">RPT CLIENTS —</div>
+
+        <div class="tsp-rpt-val tsp-pts-${t.key}">
+          ${t.totalRpt}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>`;
   });
 
   container.innerHTML=html;
@@ -595,11 +615,18 @@ function render(rows){
   const {buckets,others}=groupByTeam(members);
   const oldPositions=captureRowPositions();
 
-  const teamOrder=TEAMS
-    .map((team,ti)=>({team,ti,totalPts:buckets[ti].reduce((s,m)=>s+(Number(m.pts)||0),0)}))
-    .filter(item=>buckets[item.ti].length)
-    .sort((a,b)=>b.totalPts-a.totalPts);
-
+const teamOrder = TEAMS
+  .map((team, ti) => ({
+    team,
+    ti,
+    totalPts: buckets[ti].reduce((s, m) => s + (Number(m.pts) || 0), 0),
+    avgPts:
+      buckets[ti].length
+        ? buckets[ti].reduce((s, m) => s + (Number(m.pts) || 0), 0) / buckets[ti].length
+        : 0
+  }))
+  .filter(item => buckets[item.ti].length)
+  .sort((a, b) => b.avgPts - a.avgPts);
   let bodyHTML='';
   teamOrder.forEach(({team,ti})=>{
     const group=buckets[ti]; const maxPts=group[0].pts||1;
