@@ -445,7 +445,7 @@ function syncCardHeightsToTableRows(teamOrder){
   const tbody = document.getElementById('tableBody');
   if(!cardsContainer || !tbody) return;
 
-  const BETWEEN_TEAMS_GAP = 40;
+  const BETWEEN_TEAMS_GAP = 12;
   cardsContainer.style.gap = BETWEEN_TEAMS_GAP + 'px';
 
   const teamRowMap = new Map();
