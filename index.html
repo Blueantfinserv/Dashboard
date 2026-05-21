@@ -6,10 +6,6 @@
 <title>Blueant Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
-<style>
-  .filter-strip { display:none; align-items:center; gap:12px; padding:6px 24px 8px; }
-  .filter-strip.visible { display:flex; }
-</style>
 </head>
 <body>
 
@@ -98,13 +94,35 @@
 
 </div>
 
+<!-- ══ BOTTOM SECTION ════════════════════════════════════════ -->
+<div class="bottom-section">
+
+  <!-- Left half: Past Week Top 3 -->
+  <div class="bottom-half">
+    <div class="pw-header">
+      <span class="pw-header-line"></span>
+      <span class="pw-header-label">🏆 PAST WEEK — TOP PERFORMERS</span>
+      <span class="pw-header-line"></span>
+    </div>
+    <div class="pw-cards" id="pwCards">
+      <div class="pw-loading">LOADING PAST WEEK DATA…</div>
+    </div>
+  </div>
+
+  <!-- Right half: reserved -->
+  <div class="bottom-half" id="bottomRight">
+    <!-- Right half available for future content -->
+  </div>
+
+</div>
+
 <script>
 
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZyLPhCRB7pQ5ivX-9FltXfKNhw-CXGqHDAkW3dyzC4EXQ4haFfxEkoD7bniygkugPRA/exec';
 const SHEET_ID = '1XX5Io8gpJPmcALPS217MB1j33FMpGMdoFAg80I-cbmA';
 const GID      = '806469274';
 const CSV_URL  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
-const REFRESH  = 10;
+const REFRESH  = 100000000;
 
 const TEAMS = [
   { key:'harsh',    rowClass:'row-harsh',    members:['Rajat','Atul','Ameet','Rakesh'],          dotColor:'#1d4ed8' },
@@ -304,6 +322,89 @@ function extractData(rows){
   return {members,totalRow};
 }
 
+/* ── Extract past-week data (rows 19-29, 0-indexed = sheet rows 20-30) ── */
+/* Sheet columns (0-indexed): B=1, C=2, D=3, E=4, F=5(name), G=6, H=7, I=8, J=9, K=10, L=11, M=12, N=13, O=14, P=15 */
+function extractPastWeekData(rows){
+  // Past week data starts at row index 19 (sheet row 20) to row index 29 (sheet row 30)
+  // Skip blank rows and the Week Total row (row 31 = index 30)
+  const members = rows.slice(19, 30)
+    .filter(r => r[5] && r[5].trim() !== '' && r[5].trim().toLowerCase() !== 'week total')
+    .map(r => ({
+      name: r[5],
+      yIM:   Number(r[1]) || 0,
+      yClient: Number(r[2]) || 0,
+      tIM:   Number(r[3]) || 0,
+      tClient: Number(r[4]) || 0,
+      lTgt:  Number(r[6]) || 0,  lAct:  Number(r[7]) || 0,
+      imTgt: Number(r[8]) || 0,  imAct: Number(r[9]) || 0,
+      mtTgt: Number(r[10]) || 0, mtAct: Number(r[11]) || 0,
+      ccTgt: Number(r[12]) || 0, ccRpt: Number(r[13]) || 0, ccDoc: Number(r[14]) || 0,
+      pts:   Number(r[15]) || 0
+    }));
+  return members.sort((a, b) => b.pts - a.pts);
+}
+
+/* ── Render Past Week Top 3 cards ── */
+function renderPastWeekCards(rows) {
+  const members = extractPastWeekData(rows);
+  const top3 = members.slice(0, 3);
+  const container = document.getElementById('pwCards');
+  if (!top3.length) {
+    container.innerHTML = '<div class="pw-loading">NO PAST WEEK DATA AVAILABLE</div>';
+    return;
+  }
+
+  const cardClasses = ['pw-card-1', 'pw-card-2', 'pw-card-3'];
+  const rankClasses = ['pw-rank-1', 'pw-rank-2', 'pw-rank-3'];
+  const rankNums    = ['1', '2', '3'];
+  const trophies    = ['🥇', '🥈', '🥉'];
+
+  let html = '';
+  top3.forEach((m, i) => {
+    const mtPct = m.mtTgt ? Math.min(Math.round((m.mtAct / m.mtTgt) * 100), 100) : 0;
+    html += `
+    <div class="pw-card ${cardClasses[i]}">
+      <div class="pw-card-stripe"></div>
+      <div class="pw-card-inner">
+
+        <div class="pw-rank-badge ${rankClasses[i]}">${rankNums[i]}</div>
+
+        <div class="pw-name-block">
+          <div class="pw-name">${trophies[i]} ${m.name}</div>
+          <div class="pw-subtitle">PAST WEEK PERFORMER</div>
+        </div>
+
+        <div class="pw-stats">
+          <div class="pw-stat-divider"></div>
+          <div class="pw-stat">
+            <div class="pw-stat-val">${m.imAct}<span style="font-size:20px;opacity:0.5">/${m.imTgt}</span></div>
+            <div class="pw-stat-lbl">Intro</div>
+          </div>
+          <div class="pw-stat-divider"></div>
+          <div class="pw-stat">
+            <div class="pw-stat-val">${m.mtAct}<span style="font-size:20px;opacity:0.5">/${m.mtTgt}</span></div>
+            <div class="pw-stat-lbl">Meetings</div>
+          </div>
+          <div class="pw-stat-divider"></div>
+          <div class="pw-stat-divider"></div>
+          <div class="pw-stat">
+            <div class="pw-stat-val">${m.ccRpt}</div>
+            <div class="pw-stat-lbl">RPT</div>
+          </div>
+        </div>
+
+        <div class="pw-pts-block">
+          <div class="pw-pts-val">${m.pts}</div>
+          <div class="pw-pts-lbl">POINTS</div>
+        </div>
+
+      </div>
+    </div>`;
+  });
+
+  container.innerHTML = html;
+}
+
 /* ── Group by team ── */
 function groupByTeam(members){
   const lookup=buildTeamLookup();
@@ -338,16 +439,15 @@ function rankBadgeClass(rank){ return rank===0?'tsp-rank-1':rank===1?'tsp-rank-2
 /* ── Bar fill class ── */
 function barClsFromPct(p){ return p>=100?'good':p>=60?'ok':'bad'; }
 
-/* ══ Sync card heights to table row groups (FIXED: uses getBoundingClientRect) ══ */
+/* ══ Sync card heights to table row groups ══ */
 function syncCardHeightsToTableRows(teamOrder){
   const cardsContainer = document.getElementById('tspCards');
   const tbody = document.getElementById('tableBody');
   if(!cardsContainer || !tbody) return;
 
-  const BETWEEN_TEAMS_GAP = 12; // matches border-spacing: 0 6px (6px top + 6px bottom)
+  const BETWEEN_TEAMS_GAP = 40;
   cardsContainer.style.gap = BETWEEN_TEAMS_GAP + 'px';
 
-  // Build map: teamKey → array of <tr> elements
   const teamRowMap = new Map();
   teamOrder.forEach(({team}) => {
     const rows = Array.from(tbody.querySelectorAll(`tr.${team.rowClass}`));
@@ -362,18 +462,14 @@ function syncCardHeightsToTableRows(teamOrder){
 
     const firstRow = rows[0];
     const lastRow  = rows[rows.length - 1];
-
-    // getBoundingClientRect gives reliable pixel positions
     const firstRect = firstRow.getBoundingClientRect();
     const lastRect  = lastRow.getBoundingClientRect();
     const height    = lastRect.bottom - firstRect.top;
 
-    // Temporarily remove height to measure natural content height
     card.style.height = '';
     const naturalH = card.scrollHeight;
     card.style.height = height + 'px';
 
-    // scale: available / natural, clamped 0.55 → 1.0
     const scale = Math.min(1, Math.max(0.55, height / naturalH));
     card.style.setProperty('--scale', scale);
   });
@@ -398,23 +494,16 @@ function renderTeamSummaryCards(buckets, teamOrder){
     <div class="tsp-card tsp-card-${t.key}" data-team-key="${t.key}">
       <div class="tsp-card-stripe"></div>
       <div class="tsp-card-inner">
-
-        <!-- Header: rank + team name + member count -->
         <div class="tsp-card-head">
           <div class="tsp-rank-badge ${rankBadgeClass(rank)}">${rank+1}</div>
           <div class="tsp-team-name">${t.label}</div>
           <div class="tsp-member-count">${t.count} members</div>
         </div>
-
-        <!-- Total Points — horizontal -->
         <div class="tsp-pts-block">
           <div class="tsp-pts-label">TOTAL POINTS —</div>
           <div class="tsp-pts-val tsp-pts-${t.key}">${t.totalPts}</div>
         </div>
-
         <div class="tsp-divider"></div>
-
-        <!-- Avg Meetings — horizontal -->
         <div class="tsp-stat-row">
           <div class="tsp-stat-icon">📅</div>
           <div class="tsp-stat-body">
@@ -426,8 +515,6 @@ function renderTeamSummaryCards(buckets, teamOrder){
             </div>
           </div>
         </div>
-
-        <!-- RPT Clients — horizontal -->
         <div class="tsp-stat-row">
           <div class="tsp-stat-icon">✅</div>
           <div class="tsp-stat-body">
@@ -435,7 +522,6 @@ function renderTeamSummaryCards(buckets, teamOrder){
             <div class="tsp-rpt-val tsp-pts-${t.key}">${t.totalRpt}</div>
           </div>
         </div>
-
       </div>
     </div>`;
   });
@@ -443,7 +529,6 @@ function renderTeamSummaryCards(buckets, teamOrder){
   container.innerHTML=html;
   animateCardMoves(oldPositions);
 
-  // Sync card heights after DOM settles
   requestAnimationFrame(()=>{
     syncCardHeightsToTableRows(teamOrder);
   });
@@ -522,6 +607,9 @@ function render(rows){
   animateRowMoves(oldPositions);
 
   renderTeamSummaryCards(buckets, teamOrder);
+
+  // Render past week cards from same CSV data
+  renderPastWeekCards(rows);
 }
 
 /* ── Load & countdown ── */
