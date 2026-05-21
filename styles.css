@@ -852,3 +852,225 @@ font-family: 'DM Mono', monospace;
   .tsp-card  { flex: 1 1 260px; height: auto !important; }
   .tsp-card-inner { justify-content: flex-start; }
 }
+  .filter-strip { display:none; align-items:center; gap:12px; padding:6px 24px 8px; }
+  .filter-strip.visible { display:flex; }
+
+  /* ══ BOTTOM SECTION ════════════════════════════════════════ */
+  .bottom-section {
+    display: flex;
+    gap: 20px;
+    padding: 10px 24px 24px;
+    background: #d2deeb;
+  }
+
+  .bottom-half {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* ── Past Week Section Header ── */
+  .pw-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding: 0 2px;
+  }
+  .pw-header-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(35,55,90,0.22), transparent);
+  }
+  .pw-header-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 3px;
+    color: #66768a;
+    white-space: nowrap;
+  }
+
+  /* ── Past Week Cards Container ── */
+  .pw-cards {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  /* ── Individual Past Week Card ── */
+  .pw-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(20,38,72,0.13), 0 1px 4px rgba(20,38,72,0.07);
+    transition: box-shadow 0.22s ease, transform 0.22s ease;
+    cursor: default;
+    flex: 1;
+    min-width: 0;
+  }
+  .pw-card:hover {
+    box-shadow: 0 8px 32px rgba(20,38,72,0.18), 0 2px 8px rgba(20,38,72,0.10);
+    transform: translateY(-2px);
+  }
+
+  .pw-card-stripe {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    border-radius: 16px 16px 0 0;
+    z-index: 1;
+  }
+
+  .pw-card-inner {
+    padding: 20px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+  }
+
+  /* Rank badge */
+  .pw-rank-badge {
+    width: 54px; height: 54px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 26px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .pw-rank-1 { background: linear-gradient(135deg,#fff7dc,#f0c060); color:#9a5b00; border:1px solid rgba(200,121,18,0.40); }
+  .pw-rank-2 { background: linear-gradient(135deg,#e0e8f8,#c8d8f4); color:#2563eb; border:1px solid rgba(36,88,211,0.30); }
+  .pw-rank-3 { background: linear-gradient(135deg,#e2ffe8,#c4f4d0); color:#047857; border:1px solid rgba(4,120,87,0.30); }
+
+  /* Name + subtitle */
+  .pw-name-block {
+    min-width: 0;
+    text-align: center;
+  }
+  .pw-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 34px;
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .pw-subtitle {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #66768a;
+  }
+
+  /* Stats block */
+  .pw-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px 8px;
+    width: 100%;
+  }
+  .pw-stat {
+    text-align: center;
+    background: rgba(35,55,90,0.04);
+    border-radius: 8px;
+    padding: 6px 4px;
+  }
+  .pw-stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    line-height: 1;
+  }
+  .pw-stat-lbl {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #8390a5;
+    margin-top: 2px;
+  }
+  .pw-stat-divider { display: none; }
+
+  /* Points badge */
+  .pw-pts-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 10px 18px;
+    border-radius: 12px;
+  }
+  .pw-pts-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    line-height: 1;
+  }
+  .pw-pts-lbl {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 2px;
+    opacity: 0.7;
+  }
+
+  /* Card 1 - Gold */
+  .pw-card-1 {
+    background: linear-gradient(135deg, #fffdf4, #fff8e1);
+    border: 1px solid rgba(200,121,18,0.22);
+  }
+  .pw-card-1 .pw-card-stripe { background: linear-gradient(180deg,#c87912,#f0c060); }
+  .pw-card-1 .pw-name { color: #9a5b00; }
+  .pw-card-1 .pw-pts-block { background: rgba(200,121,18,0.10); border: 1px solid rgba(200,121,18,0.20); }
+  .pw-card-1 .pw-pts-val { color: #9a5b00; }
+  .pw-card-1 .pw-pts-lbl { color: #b87000; }
+  .pw-card-1 .pw-stat-val { color: #9a5b00; }
+
+  /* Card 2 - Silver/Blue */
+  .pw-card-2 {
+    background: linear-gradient(135deg, #f4f8ff, #eef4ff);
+    border: 1px solid rgba(36,88,211,0.18);
+  }
+  .pw-card-2 .pw-card-stripe { background: linear-gradient(180deg,#1d4ed8,#60a5fa); }
+  .pw-card-2 .pw-name { color: #1d4ed8; }
+  .pw-card-2 .pw-pts-block { background: rgba(29,78,216,0.08); border: 1px solid rgba(29,78,216,0.18); }
+  .pw-card-2 .pw-pts-val { color: #1d4ed8; }
+  .pw-card-2 .pw-pts-lbl { color: #2458d3; }
+  .pw-card-2 .pw-stat-val { color: #1d4ed8; }
+
+  /* Card 3 - Green */
+  .pw-card-3 {
+    background: linear-gradient(135deg, #f2fdf7, #ecfdf5);
+    border: 1px solid rgba(4,120,87,0.18);
+  }
+  .pw-card-3 .pw-card-stripe { background: linear-gradient(180deg,#047857,#34d399); }
+  .pw-card-3 .pw-name { color: #047857; }
+  .pw-card-3 .pw-pts-block { background: rgba(4,120,87,0.08); border: 1px solid rgba(4,120,87,0.18); }
+  .pw-card-3 .pw-pts-val { color: #047857; }
+  .pw-card-3 .pw-pts-lbl { color: #047857; }
+  .pw-card-3 .pw-stat-val { color: #047857; }
+
+  /* Loading state for pw cards */
+  .pw-loading {
+    text-align: center;
+    padding: 40px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: #8390a5;
+    letter-spacing: 2px;
+  }
+
+  /* Right half placeholder */
+  .bottom-right-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    border: 2px dashed rgba(35,55,90,0.12);
+    background: rgba(255,255,255,0.3);
+    min-height: 200px;
+    color: #8390a5;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+  }
