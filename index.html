@@ -108,10 +108,18 @@
       <div class="pw-loading">LOADING PAST WEEK DATA…</div>
     </div>
   </div>
-
+<div style="width:1px; background:linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.18) 20%, rgba(0, 0, 0, 0.18) 80%, transparent); margin: 0 20px; flex-shrink:0;"></div>
   <!-- Right half: reserved -->
+<!-- Right half: Top Converters -->
   <div class="bottom-half" id="bottomRight">
-    <!-- Right half available for future content -->
+    <div class="pw-header">
+      <span class="pw-header-line"></span>
+      <span class="pw-header-label">🔥 PAST WEEK — TOP CONVERTERS</span>
+      <span class="pw-header-line"></span>
+    </div>
+    <div class="pw-cards" id="convCards">
+      <div class="pw-loading">LOADING CONVERTER DATA…</div>
+    </div>
   </div>
 
 </div>
@@ -371,7 +379,6 @@ function renderPastWeekCards(rows) {
 
         <div class="pw-name-block">
           <div class="pw-name">${trophies[i]} ${m.name}</div>
-          <div class="pw-subtitle">PAST WEEK PERFORMER</div>
         </div>
 
         <div class="pw-stats">
@@ -395,13 +402,43 @@ function renderPastWeekCards(rows) {
 
         <div class="pw-pts-block">
           <div class="pw-pts-val">${m.pts}</div>
-          <div class="pw-pts-lbl">POINTS</div>
         </div>
 
       </div>
     </div>`;
   });
 
+  container.innerHTML = html;
+}
+function renderTopConvertersCards(rows) {
+  const members = extractPastWeekData(rows)
+    .slice()
+    .sort((a, b) => b.ccRpt - a.ccRpt || b.pts - a.pts);
+  const top3 = members.slice(0, 3);
+  const container = document.getElementById('convCards');
+  if (!top3.length) { container.innerHTML = '<div class="pw-loading">NO DATA</div>'; return; }
+  const cardClasses = ['pw-card-1','pw-card-2','pw-card-3'];
+  const rankClasses = ['pw-rank-1','pw-rank-2','pw-rank-3'];
+  const medals = ['🥇','🥈','🥉'];
+  let html = '';
+  top3.forEach((m, i) => {
+    const convRate = m.mtAct ? Math.round((m.ccRpt / m.mtAct) * 100) : 0;
+    html += `
+<div class="pw-card ${cardClasses[i]}">
+      <div class="pw-card-stripe"></div>
+      <div class="pw-card-inner">
+        <div class="pw-rank-badge ${rankClasses[i]}">${i+1}</div>
+        <div class="pw-name-block">
+          <div class="pw-name">${medals[i]} ${m.name}</div>
+          <div class="pw-subtitle">PAST WEEK CONVERTER</div>
+        </div>
+        <div class="pw-pts-block">
+          <div class="pw-pts-lbl">NEW CLIENT ACQUIRED</div>
+          <div class="pw-pts-val">${m.ccRpt}</div>
+        </div>
+      </div>
+    </div>`;
+  });
   container.innerHTML = html;
 }
 
@@ -609,6 +646,7 @@ function render(rows){
 
   // Render past week cards from same CSV data
   renderPastWeekCards(rows);
+  renderTopConvertersCards(rows);
 }
 
 /* ── Load & countdown ── */
