@@ -6,6 +6,10 @@
 <title>Blueant Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<style>
+  .filter-strip { display:none; align-items:center; gap:12px; padding:6px 24px 8px; }
+  .filter-strip.visible { display:flex; }
+</style>
 </head>
 <body>
 
@@ -30,10 +34,7 @@
       </div>
     </div>
     <div class="topbar-right">
-      <div class="live-badge">
-        <div class="live-dot"></div>
-        LIVE
-      </div>
+      <div class="live-badge"><div class="live-dot"></div>LIVE</div>
       <button class="refresh-btn" onclick="location.reload(true);" title="Force Refresh">
         <span class="refresh-icon">↻</span> REFRESH
       </button>
@@ -46,7 +47,7 @@
       </div>
     </div>
   </div>
-  <div class="filter-strip">
+  <div class="filter-strip" id="filterStrip">
     <span class="filter-label">DATE RANGE</span>
     <div class="filter-divider"></div>
     <div class="custom-panel" id="customPanel">
@@ -85,202 +86,17 @@
     </table>
   </div>
 
-  <!-- Right Panel -->
-  <div class="right-panel">
-
-    <!-- BEST PERFORMER CARD -->
-    <div class="perf-card" id="perfCard">
-      <div class="perf-rank-badge" id="perfRankBadge">1</div>
-      <div class="perf-card-title">BEST PERFORMER-LAST WEEK</div>
-      <div class="perf-avatar-ring">
-        <div class="perf-avatar-inner">
-          <span class="perf-avatar-icon">👤</span>
-        </div>
-        <div class="perf-sparkle s1">✦</div>
-        <div class="perf-sparkle s2">✦</div>
-        <div class="perf-sparkle s3">✦</div>
-        <div class="perf-sparkle s4">✦</div>
-      </div>
-      <div class="perf-ribbon-wrap">
-        <div class="perf-ribbon-left"></div>
-        <div class="perf-ribbon-body">
-          <div class="perf-name loading-shimmer" id="perfName">Loading</div>
-        </div>
-        <div class="perf-ribbon-right"></div>
-      </div>
-      <div class="perf-metrics-row">
-        <div class="perf-metric-item">
-          <div class="perf-metric-icon">👥</div>
-          <div class="perf-metric-label">LEADS</div>
-          <div class="perf-metric-val" id="ps-leads-act">—</div>
-        </div>
-        <div class="perf-metric-item">
-          <div class="perf-metric-icon">🤝</div>
-          <div class="perf-metric-label">INTRO</div>
-          <div class="perf-metric-val" id="ps-intro-act">—</div>
-        </div>
-        <div class="perf-metric-item">
-          <div class="perf-metric-icon">📅</div>
-          <div class="perf-metric-label">MEETINGS</div>
-          <div class="perf-metric-val" id="ps-meet-act">—</div>
-        </div>
-        <div class="perf-metric-item">
-          <div class="perf-metric-icon">✅</div>
-          <div class="perf-metric-label">CONVERTED</div>
-          <div class="perf-metric-val" id="ps-conv-act">—</div>
-        </div>
-        <div class="perf-metric-item">
-          <div class="perf-metric-icon">📄</div>
-          <div class="perf-metric-label">DOCUMENTED</div>
-          <div class="perf-metric-val" id="ps-doc-act">—</div>
-        </div>
-      </div>
-      <div class="perf-points-section">
-        <div class="perf-points-label">POINTS EARNED</div>
-        <div class="perf-laurel-wrap">
-          <div class="perf-laurel left">🏅</div>
-          <div class="perf-pts" id="perfPts">—</div>
-          <div class="perf-laurel right">🏅</div>
-        </div>
-      </div>
-      <div class="perf-team-dot" id="perfTeamDot"></div>
+  <!-- Team Summary Panel -->
+  <div class="team-summary-panel" id="teamSummaryPanel">
+    <div class="tsp-header">
+      <span class="tsp-header-line"></span>
+      <span class="tsp-header-label">⚡ TEAM STANDINGS</span>
+      <span class="tsp-header-line"></span>
     </div>
-    <!-- /perf-card -->
-
-    <!-- BEST TEAM CARD -->
-    <div class="team-card" id="teamCard">
-      <div class="team-card-title">BEST TEAM — LAST WEEK</div>
-      <div class="team-trophy">🏆</div>
-      <div class="perf-ribbon-wrap">
-        <div class="perf-ribbon-left"></div>
-        <div class="perf-ribbon-body team-ribbon-body" id="teamRibbonBody">
-          <div class="perf-name loading-shimmer" id="teamName">Loading</div>
-        </div>
-        <div class="perf-ribbon-right"></div>
-      </div>
-      <div class="team-members-row" id="teamMembersList"></div>
-      <div class="perf-metrics-row">
-        <div class="perf-metric-item">
-          <div class="perf-metric-icon">👥</div>
-          <div class="perf-metric-label">LEADS</div>
-          <div class="perf-metric-val" id="tm-leads">—</div>
-        </div>
-        <div class="perf-metric-item">
-          <div class="perf-metric-icon">🤝</div>
-          <div class="perf-metric-label">INTRO</div>
-          <div class="perf-metric-val" id="tm-intro">—</div>
-        </div>
-        <div class="perf-metric-item">
-          <div class="perf-metric-icon">📅</div>
-          <div class="perf-metric-label">MEETINGS</div>
-          <div class="perf-metric-val" id="tm-meet">—</div>
-        </div>
-        <div class="perf-metric-item">
-          <div class="perf-metric-icon">✅</div>
-          <div class="perf-metric-label">CONVERTED</div>
-          <div class="perf-metric-val" id="tm-conv">—</div>
-        </div>
-        <div class="perf-metric-item">
-          <div class="perf-metric-icon">📄</div>
-          <div class="perf-metric-label">DOCUMENTED</div>
-          <div class="perf-metric-val" id="tm-doc">—</div>
-        </div>
-      </div>
-      <div class="perf-points-section">
-        <div class="perf-points-label">TOTAL POINTS EARNED</div>
-        <div class="perf-laurel-wrap">
-          <div class="perf-laurel left">🏅</div>
-          <div class="perf-pts" id="teamPts">—</div>
-          <div class="perf-laurel right">🏅</div>
-        </div>
-      </div>
-    </div>
-    <!-- /team-card -->
-
-  </div>
-  <!-- /right-panel -->
-
-</div>
-<!-- /board-outer -->
-
-<!-- ══ BOTTOM ANALYTICS SECTION ════════════════════════════ -->
-<div class="analytics-section">
-
-  <!-- LEFT: KPI Cards -->
-  <div class="analytics-left">
-    <div class="analytics-header">
-      <span class="analytics-header-line"></span>
-      <span class="analytics-header-line"></span>
-    </div>
-    <div class="kpi-cards-row">
-
-<!-- TOP INTRO -->
-<div class="kpi-card kpi-intro" id="kpi-intro-card">
-  <div class="kpi-card-top-bar"></div>
-  <div class="kpi-icon-wrap">
-    <span class="kpi-icon">🤝</span>
-  </div>
-  <div class="kpi-text-block">
-    <div class="kpi-label">TOP INTRO</div>
-    <div class="kpi-value-name-row">
-      <div class="kpi-value" id="kpi-intro-val">—</div>
-      <div class="kpi-name" id="kpi-intro-name">—</div>
-    </div>
-  </div>
-  <div class="kpi-team-bar" id="kpi-intro-bar"></div>
-</div>
-
-<!-- TOP MEETINGS -->
-<div class="kpi-card kpi-meet" id="kpi-meet-card">
-  <div class="kpi-card-top-bar"></div>
-  <div class="kpi-icon-wrap">
-    <span class="kpi-icon">📅</span>
-  </div>
-  <div class="kpi-text-block">
-    <div class="kpi-label">TOP MEETINGS</div>
-    <div class="kpi-value-name-row">
-      <div class="kpi-value" id="kpi-meet-val">—</div>
-      <div class="kpi-name" id="kpi-meet-name">—</div>
-    </div>
-  </div>
-  <div class="kpi-team-bar" id="kpi-meet-bar"></div>
-</div>
-
-<!-- TOP CONVERTED -->
-<div class="kpi-card kpi-conv" id="kpi-conv-card">
-  <div class="kpi-card-top-bar"></div>
-  <div class="kpi-icon-wrap">
-    <span class="kpi-icon">✅</span>
-  </div>
-  <div class="kpi-text-block">
-    <div class="kpi-label">TOP CONVERTED</div>
-    <div class="kpi-value-name-row">
-      <div class="kpi-value" id="kpi-conv-val">—</div>
-      <div class="kpi-name" id="kpi-conv-name">—</div>
-    </div>
-  </div>
-  <div class="kpi-team-bar" id="kpi-conv-bar"></div>
-</div>
-  <!-- RIGHT: Future placeholder -->
-  <div class="analytics-right">
-    <div class="analytics-header">
-      <span class="analytics-header-line"></span>
-      <span class="analytics-header-line"></span>
-    </div>
-    <div class="future-analytics-wrap">
-      <div class="future-analytics-inner">
-        <div class="future-analytics-icon">📊</div>
-        <div class="future-analytics-title">Analytics Coming Soon</div>
-        <div class="future-analytics-sub">Charts · Trends · Forecasts</div>
-        <div class="future-analytics-dots">
-          <span></span><span></span><span></span>
-        </div>
-      </div>
-    </div>
+    <div class="tsp-cards" id="tspCards"></div>
   </div>
 
 </div>
-<!-- /analytics-section -->
 
 <script>
 
@@ -288,94 +104,96 @@ const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZyLPhCRB7pQ5i
 const SHEET_ID = '1XX5Io8gpJPmcALPS217MB1j33FMpGMdoFAg80I-cbmA';
 const GID      = '806469274';
 const CSV_URL  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
-const REFRESH  = 10;
-
-const LAST_WEEK_MEMBER_START = 17;
-const LAST_WEEK_MEMBER_END   = 28;
+const REFRESH  = 100000000;
 
 const TEAMS = [
-  { key:'harsh',    rowClass:'row-harsh',    members:['Rajat','Atul','Ameet','Rakesh'],           dotColor:'#1d4ed8' },
-  { key:'alok',     rowClass:'row-alok',     members:['Abhijeet','Amit','Harsh.P','Tejprakash'],  dotColor:'#047857' },
-  { key:'ashutosh', rowClass:'row-ashutosh', members:['Saket','Umakant','Mukul'],                 dotColor:'#7c2d12' }
+  { key:'harsh',    rowClass:'row-harsh',    members:['Rajat','Atul','Ameet','Rakesh'],          dotColor:'#1d4ed8' },
+  { key:'alok',     rowClass:'row-alok',     members:['Abhijeet','Amit','Harsh.P','Tejprakash'], dotColor:'#047857' },
+  { key:'ashutosh', rowClass:'row-ashutosh', members:['Saket','Umakant','Mukul'],                dotColor:'#7c2d12' }
 ];
 
-const TEAM_DISPLAY_NAMES = { harsh:'HARSH', alok:'ALOK', ashutosh:'ASHUTOSH' };
+const TEAM_LABELS = { harsh:'HARSH', alok:'ALOK', ashutosh:'ASHUTOSH' };
 
 let cdVal = REFRESH, cdTimer = null, activeFilter = null, toastTimer = null;
 
 /* ── Utilities ── */
-function todayMidnight() { const d=new Date(); d.setHours(0,0,0,0); return d; }
-function isoDate(d) {
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-}
-function displayDate(iso) {
-  return new Date(iso+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
-}
-function presetRange(preset) {
-  const today = todayMidnight();
-  switch(preset) {
-    case 'today': return { from:isoDate(today), to:isoDate(today) };
-    case 'yesterday': { const y=new Date(today); y.setDate(today.getDate()-1); return {from:isoDate(y),to:isoDate(y)}; }
-    case '7d':  { const f=new Date(today); f.setDate(today.getDate()-6);  return {from:isoDate(f),to:isoDate(today)}; }
-    case '30d': { const f=new Date(today); f.setDate(today.getDate()-29); return {from:isoDate(f),to:isoDate(today)}; }
+function todayMidnight(){ const d=new Date(); d.setHours(0,0,0,0); return d; }
+function isoDate(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function displayDate(iso){ return new Date(iso+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}); }
+function presetRange(preset){
+  const today=todayMidnight();
+  switch(preset){
+    case 'today': return {from:isoDate(today),to:isoDate(today)};
+    case 'yesterday':{ const y=new Date(today); y.setDate(today.getDate()-1); return {from:isoDate(y),to:isoDate(y)}; }
+    case '7d':{ const f=new Date(today); f.setDate(today.getDate()-6); return {from:isoDate(f),to:isoDate(today)}; }
+    case '30d':{ const f=new Date(today); f.setDate(today.getDate()-29); return {from:isoDate(f),to:isoDate(today)}; }
     default: return null;
   }
 }
-function showToast(msg, type='') {
+function showToast(msg,type=''){
   const el=document.getElementById('toast');
   el.textContent=msg; el.className=`toast show ${type}`;
   clearTimeout(toastTimer);
   toastTimer=setTimeout(()=>{el.className='toast';},3500);
 }
-function showLoading(headline,detail,progress=0) {
+function showLoading(headline,detail,progress=0){
   document.getElementById('loadingHeadline').textContent=headline;
   document.getElementById('loadingDetail').textContent=detail;
   document.getElementById('loadingBar').style.width=progress+'%';
   document.getElementById('loadingOverlay').classList.add('active');
 }
-function setLoadingProgress(pct,detail) {
+function setLoadingProgress(pct,detail){
   document.getElementById('loadingBar').style.width=pct+'%';
   document.getElementById('loadingDetail').textContent=detail;
 }
-function hideLoading() {
+function hideLoading(){
   document.getElementById('loadingOverlay').classList.remove('active');
   document.getElementById('loadingBar').style.width='0%';
 }
-function setActiveBtn(range) {
+function setActiveBtn(range){
   document.querySelectorAll('.fbtn').forEach(btn=>btn.classList.toggle('active',btn.dataset.range===range));
   activeFilter=range;
 }
-function showActiveLabel(from,to) {
+
+/* ── Filter strip ── */
+function showActiveLabel(from,to){
   const el=document.getElementById('activeRangeLbl');
+  const strip=document.getElementById('filterStrip');
   el.textContent=from===to?displayDate(from):`${displayDate(from)}  →  ${displayDate(to)}`;
   el.style.display='';
+  strip.classList.add('visible');
 }
-function toggleCustomPanel() {
+function toggleCustomPanel(){
   const panel=document.getElementById('customPanel');
-  if(panel.classList.contains('open')) { closeCustomPanel(); }
-  else {
+  const strip=document.getElementById('filterStrip');
+  if(panel.classList.contains('open')){ closeCustomPanel(); }
+  else{
     const today=isoDate(todayMidnight());
     document.getElementById('fromDate').value=today;
     document.getElementById('toDate').value=today;
-    panel.classList.add('open'); setActiveBtn('custom');
+    panel.classList.add('open');
+    strip.classList.add('visible');
+    setActiveBtn('custom');
   }
 }
-function closeCustomPanel() {
-  document.getElementById('customPanel').classList.remove('open');
-  if(activeFilter==='custom') {
-    document.querySelector('.fbtn[data-range="custom"]').classList.remove('active');
-    activeFilter=null;
-  }
+function closeCustomPanel(){
+  const panel=document.getElementById('customPanel');
+  const strip=document.getElementById('filterStrip');
+  panel.classList.remove('open');
+  if(activeFilter==='custom'){ document.querySelector('.fbtn[data-range="custom"]').classList.remove('active'); activeFilter=null; }
+  const lbl=document.getElementById('activeRangeLbl');
+  if(!lbl||!lbl.textContent.trim()) strip.classList.remove('visible');
 }
-async function writeSheetDates(from,to) {
-  if(!APPS_SCRIPT_URL) { showToast('⚠ Apps Script not configured.','toast-warn'); return false; }
+
+async function writeSheetDates(from,to){
+  if(!APPS_SCRIPT_URL){ showToast('⚠ Apps Script not configured.','toast-warn'); return false; }
   const url=`${APPS_SCRIPT_URL}?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`;
-  try { await fetch(url,{method:'GET',mode:'no-cors'}); } catch(e) {}
+  try{ await fetch(url,{method:'GET',mode:'no-cors'}); }catch(e){}
   return true;
 }
-function sleep(ms) { return new Promise(r=>setTimeout(r,ms)); }
+function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
 
-async function applyPreset(preset) {
+async function applyPreset(preset){
   const range=presetRange(preset); if(!range) return;
   setActiveBtn(preset); closeCustomPanel(); clearInterval(cdTimer);
   showLoading('UPDATING DATE RANGE','Writing to Google Sheets…',10);
@@ -389,11 +207,11 @@ async function applyPreset(preset) {
   showToast(`✓ Range applied: ${range.from===range.to?displayDate(range.from):`${displayDate(range.from)} → ${displayDate(range.to)}`}`,'toast-success');
   startCountdown();
 }
-async function applyCustom() {
+async function applyCustom(){
   const from=document.getElementById('fromDate').value;
   const to=document.getElementById('toDate').value;
-  if(!from||!to){showToast('Please select both From and To dates.','toast-warn');return;}
-  if(from>to){showToast('From date cannot be later than To date.','toast-error');return;}
+  if(!from||!to){ showToast('Please select both From and To dates.','toast-warn'); return; }
+  if(from>to){ showToast('From date cannot be later than To date.','toast-error'); return; }
   closeCustomPanel(); setActiveBtn('custom'); clearInterval(cdTimer);
   showLoading('APPLYING CUSTOM RANGE','Writing dates to Google Sheets…',10);
   await writeSheetDates(from,to);
@@ -408,14 +226,14 @@ async function applyCustom() {
 }
 
 /* ── CSV parser ── */
-function parseCSV(text) {
+function parseCSV(text){
   const rows=[]; const lines=text.trim().split('\n');
-  for(const line of lines) {
+  for(const line of lines){
     const cols=[]; let current='', insideQuotes=false;
-    for(let i=0;i<line.length;i++) {
+    for(let i=0;i<line.length;i++){
       const char=line[i];
       if(char==='"') insideQuotes=!insideQuotes;
-      else if(char===','&&!insideQuotes){cols.push(current.trim());current='';}
+      else if(char===','&&!insideQuotes){ cols.push(current.trim()); current=''; }
       else current+=char;
     }
     cols.push(current.trim()); rows.push(cols);
@@ -424,22 +242,22 @@ function parseCSV(text) {
 }
 
 /* ── Helpers ── */
-function pct(a,t){return t?Math.min((a/t)*100,100):0;}
-function cls(a,t){if(a===0)return'zero';const p=(a/t)*100;return p>=100?'good':p>=60?'ok':'bad';}
+function pct(a,t){ return t?Math.min((a/t)*100,100):0; }
+function cls(a,t){ if(a===0)return'zero'; const p=(a/t)*100; return p>=100?'good':p>=60?'ok':'bad'; }
 function metricHTML(act,tgt){
   const c=cls(act,tgt),p=pct(act,tgt);
   return `<div class="metric"><div class="metric-top"><span class="m-act ${c}">${act}</span><span class="m-tgt">/ ${tgt}</span></div><div class="bar-track"><div class="bar-fill ${c}" style="width:${p}%"></div></div></div>`;
 }
-function rankCircle(i){const c=i===0?'r1':i===1?'r2':i===2?'r3':'rn';return `<div class="rank-circle ${c}">${i+1}</div>`;}
-function ptsClass(p,max){return p>=max*0.75?'pts-top':p>=max*0.4?'pts-mid':'pts-low';}
-function rowKey(prefix,name){return `${prefix}-${String(name).trim().toLowerCase().replace(/[^a-z0-9]+/g,'-')}`;}
+function rankCircle(i){ const c=i===0?'r1':i===1?'r2':i===2?'r3':'rn'; return `<div class="rank-circle ${c}">${i+1}</div>`; }
+function ptsClass(p,max){ return p>=max*0.75?'pts-top':p>=max*0.4?'pts-mid':'pts-low'; }
+function rowKey(prefix,name){ return `${prefix}-${String(name).trim().toLowerCase().replace(/[^a-z0-9]+/g,'-')}`; }
 function buildTeamLookup(){
   const lookup=new Map();
   TEAMS.forEach((team,ti)=>team.members.forEach(name=>lookup.set(name.trim().toLowerCase(),ti)));
   return lookup;
 }
 
-/* ── Animation helpers ── */
+/* ── FLIP helpers: table rows ── */
 function captureRowPositions(){
   const positions=new Map();
   document.querySelectorAll('#tableBody tr[data-row-key]').forEach(row=>positions.set(row.dataset.rowKey,row.getBoundingClientRect().top));
@@ -455,16 +273,20 @@ function animateRowMoves(oldPositions){
   });
 }
 
-/* ── Count-up ── */
-function countUp(el,target){
-  if(!el) return;
-  const start=parseInt(el.textContent)||0;
-  const steps=56,step=16,inc=(target-start)/steps;
-  let current=start,count=0;
-  const timer=setInterval(()=>{
-    count++;current+=inc;el.textContent=Math.round(current);
-    if(count>=steps){clearInterval(timer);el.textContent=target;}
-  },step);
+/* ── FLIP helpers: team cards ── */
+function captureCardPositions(){
+  const positions=new Map();
+  document.querySelectorAll('#tspCards .tsp-card[data-team-key]').forEach(card=>positions.set(card.dataset.teamKey,card.getBoundingClientRect().top));
+  return positions;
+}
+function animateCardMoves(oldPositions){
+  requestAnimationFrame(()=>{
+    document.querySelectorAll('#tspCards .tsp-card[data-team-key]').forEach(card=>{
+      const oldTop=oldPositions.get(card.dataset.teamKey); if(oldTop===undefined) return;
+      const delta=oldTop-card.getBoundingClientRect().top; if(Math.abs(delta)<2) return;
+      card.animate([{transform:`translateY(${delta}px)`},{transform:'translateY(0)'}],{duration:680,easing:'cubic-bezier(0.22,1,0.36,1)'});
+    });
+  });
 }
 
 /* ── Extract current-week data ── */
@@ -482,149 +304,149 @@ function extractData(rows){
   return {members,totalRow};
 }
 
-/* ── Extract last-week top performer ── */
-function extractLastWeekTopPerformer(rows){
-  function parseRow(r){return{name:r[5],lTgt:Number(r[6])||0,lAct:Number(r[7])||0,imTgt:Number(r[8])||0,imAct:Number(r[9])||0,mtTgt:Number(r[10])||0,mtAct:Number(r[11])||0,ccTgt:Number(r[12])||0,ccRpt:Number(r[13])||0,ccDoc:Number(r[14])||0,pts:Number(r[15])||0};}
-  if(rows.length>LAST_WEEK_MEMBER_START){
-    const slice=rows.slice(LAST_WEEK_MEMBER_START,LAST_WEEK_MEMBER_END);
-    let top=null,maxPts=-Infinity;
-    for(const r of slice){if(!r[5]||r[5].trim()==='')continue;const pts=Number(r[15])||0;if(pts>maxPts){maxPts=pts;top=parseRow(r);}}
-    if(top) return top;
-  }
-  if(rows.length>4){
-    const slice=rows.slice(4,15).filter(r=>r[5]&&r[5].trim()!=='');
-    let top=null,maxPts=-Infinity;
-    for(const r of slice){const pts=Number(r[15])||0;if(pts>maxPts){maxPts=pts;top={...parseRow(r),isFallback:true};}}
-    return top;
-  }
-  return null;
-}
-
-/* ── Render performer card ── */
-function renderPerfCard(top){
-  const nameEl=document.getElementById('perfName');
-  const ptsEl=document.getElementById('perfPts');
-  const dotEl=document.getElementById('perfTeamDot');
-
-  function setStat(prefix,act,tgt){
-    const actEl=document.getElementById(`ps-${prefix}-act`);
-    const tgtEl=document.getElementById(`ps-${prefix}-tgt`);
-    const barEl=document.getElementById(`ps-${prefix}-bar`);
-    if(!actEl) return;
-    const pctVal=tgt?Math.min((act/tgt)*100,100):0;
-    const clsName=act===0?'c-bad':pctVal>=100?'c-good':pctVal>=60?'c-ok':'c-bad';
-    actEl.textContent=act; actEl.className=`perf-stat-act ${clsName}`;
-    if(tgtEl) tgtEl.textContent=tgt?`/ ${tgt}`:'';
-    if(barEl){barEl.style.width=pctVal+'%';barEl.className=`perf-stat-bar-fill ${clsName}`;}
-  }
-
-  if(!top){
-    nameEl.textContent='—'; nameEl.classList.remove('loading-shimmer');
-    ptsEl.textContent='—'; dotEl.classList.remove('visible');
-    ['leads','intro','meet','conv'].forEach(k=>{
-      const a=document.getElementById(`ps-${k}-act`);
-      const t=document.getElementById(`ps-${k}-tgt`);
-      const b=document.getElementById(`ps-${k}-bar`);
-      if(a)a.textContent='—'; if(t)t.textContent=''; if(b)b.style.width='0%';
-    });
-    const docA=document.getElementById('ps-doc-act'); const docT=document.getElementById('ps-doc-tgt');
-    if(docA)docA.textContent='—'; if(docT)docT.textContent='';
-    return;
-  }
-
-  nameEl.classList.add('loading-shimmer');
-  setTimeout(()=>{
-    nameEl.textContent=top.name; nameEl.classList.remove('loading-shimmer');
-    const lookup=buildTeamLookup();
-    const ti=lookup.get(top.name.trim().toLowerCase());
-    if(ti!==undefined){dotEl.style.background=TEAMS[ti].dotColor;dotEl.classList.add('visible');}
-    else dotEl.classList.remove('visible');
-  },320);
-
-  countUp(ptsEl,top.pts);
-
-  setTimeout(()=>{
-    setStat('leads',top.lAct,top.lTgt);
-    setStat('intro',top.imAct,top.imTgt);
-    setStat('meet',top.mtAct,top.mtTgt);
-    setStat('conv',top.ccRpt,top.ccTgt);
-    const docActEl=document.getElementById('ps-doc-act');
-    const docTgtEl=document.getElementById('ps-doc-tgt');
-    if(docActEl){docActEl.textContent=top.ccDoc;docActEl.className='perf-stat-act';}
-    if(docTgtEl)docTgtEl.textContent=top.ccTgt?`tgt ${top.ccTgt}`:'';
-  },200);
-}
-
-/* ── Extract last-week team stats ── */
-function extractLastWeekTeamStats(rows){
-  const slice=rows.length>LAST_WEEK_MEMBER_START?rows.slice(LAST_WEEK_MEMBER_START,LAST_WEEK_MEMBER_END):rows.slice(4,15);
-  const lookup=buildTeamLookup();
-  const teamStats=TEAMS.map(team=>({key:team.key,name:TEAM_DISPLAY_NAMES[team.key]||team.key.toUpperCase(),members:team.members,pts:0,lAct:0,imAct:0,mtAct:0,ccRpt:0,ccDoc:0}));
-  for(const r of slice){
-    if(!r[5]||r[5].trim()==='') continue;
-    const ti=lookup.get(r[5].trim().toLowerCase()); if(ti===undefined) continue;
-    const t=teamStats[ti];
-    t.pts+=Number(r[15])||0; t.lAct+=Number(r[7])||0; t.imAct+=Number(r[9])||0;
-    t.mtAct+=Number(r[11])||0; t.ccRpt+=Number(r[13])||0; t.ccDoc+=Number(r[14])||0;
-  }
-  return teamStats.reduce((best,t)=>t.pts>best.pts?t:best,teamStats[0]);
-}
-
-/* ── Render team card ── */
-function renderTeamCard(rows){
-  const card=document.getElementById('teamCard');
-  const nameEl=document.getElementById('teamName');
-  const ptsEl=document.getElementById('teamPts');
-  const membersEl=document.getElementById('teamMembersList');
-  if(!card) return;
-  const top=extractLastWeekTeamStats(rows);
-  if(!top) return;
-  card.className=`team-card team-${top.key}`;
-  nameEl.classList.add('loading-shimmer');
-  setTimeout(()=>{nameEl.textContent=top.name;nameEl.classList.remove('loading-shimmer');},320);
-  countUp(ptsEl,top.pts);
-  membersEl.innerHTML=top.members.map(m=>`<div class="team-member-pill">${m}</div>`).join('');
-  setTimeout(()=>{
-    document.getElementById('tm-leads').textContent=top.lAct;
-    document.getElementById('tm-intro').textContent=top.imAct;
-    document.getElementById('tm-meet').textContent=top.mtAct;
-    document.getElementById('tm-conv').textContent=top.ccRpt;
-    document.getElementById('tm-doc').textContent=top.ccDoc;
-  },200);
-}
-
-/* ── Render KPI cards ── */
-function renderKpiCards(members){
-  if(!members||!members.length) return;
-  const lookup=buildTeamLookup();
-  function getTeamColor(name){
-    const ti=lookup.get(name.trim().toLowerCase());
-    return ti!==undefined?TEAMS[ti].dotColor:'#8390a5';
-  }
-  const topIntro=members.reduce((a,b)=>b.imAct>a.imAct?b:a,members[0]);
-  const topMeet=members.reduce((a,b)=>b.mtAct>a.mtAct?b:a,members[0]);
-  const topConv=members.reduce((a,b)=>b.ccRpt>a.ccRpt?b:a,members[0]);
-
-  function setCard(valId,nameId,barId,value,name){
-    countUp(document.getElementById(valId),value);
-    const nameEl=document.getElementById(nameId); if(nameEl) nameEl.textContent=name;
-    const barEl=document.getElementById(barId);
-    if(barEl){barEl.style.background=getTeamColor(name);barEl.classList.add('visible');}
-  }
-  setCard('kpi-intro-val','kpi-intro-name','kpi-intro-bar',topIntro.imAct,topIntro.name);
-  setCard('kpi-meet-val','kpi-meet-name','kpi-meet-bar',topMeet.mtAct,topMeet.name);
-  setCard('kpi-conv-val','kpi-conv-name','kpi-conv-bar',topConv.ccRpt,topConv.name);
-}
-
 /* ── Group by team ── */
 function groupByTeam(members){
   const lookup=buildTeamLookup();
   const buckets=TEAMS.map(()=>[]);
   const others=[];
-  members.forEach(m=>{const ti=lookup.get(m.name.trim().toLowerCase());ti!==undefined?buckets[ti].push(m):others.push(m);});
+  members.forEach(m=>{ const ti=lookup.get(m.name.trim().toLowerCase()); ti!==undefined?buckets[ti].push(m):others.push(m); });
   buckets.forEach(b=>b.sort((a,b_)=>b_.pts-a.pts));
   others.sort((a,b_)=>b_.pts-a.pts);
   return {buckets,others};
+}
+
+/* ── Compute team stats ── */
+function computeTeamStats(buckets){
+  return TEAMS.map((team,ti)=>{
+    const members=buckets[ti];
+    if(!members.length) return null;
+    const totalPts  = members.reduce((s,m)=>s+m.pts,0);
+    const totalMtAct= members.reduce((s,m)=>s+m.mtAct,0);
+    const totalMtTgt= members.reduce((s,m)=>s+m.mtTgt,0);
+    const totalRpt  = members.reduce((s,m)=>s+m.ccRpt,0);
+    const count     = members.length;
+    const avgMtAct  = Math.round((totalMtAct/count)*10)/10;
+    const avgMtTgt  = Math.round((totalMtTgt/count)*10)/10;
+    const mtPct     = totalMtTgt ? Math.min(Math.round((totalMtAct/totalMtTgt)*100),100) : 0;
+    return { key:team.key, label:TEAM_LABELS[team.key], totalPts, avgMtAct, avgMtTgt, mtPct, totalRpt, count };
+  }).filter(Boolean);
+}
+
+/* ── Rank badge class ── */
+function rankBadgeClass(rank){ return rank===0?'tsp-rank-1':rank===1?'tsp-rank-2':'tsp-rank-3'; }
+
+/* ── Bar fill class ── */
+function barClsFromPct(p){ return p>=100?'good':p>=60?'ok':'bad'; }
+
+/* ══ Sync card heights to table row groups (FIXED: uses getBoundingClientRect) ══ */
+function syncCardHeightsToTableRows(teamOrder){
+  const cardsContainer = document.getElementById('tspCards');
+  const tbody = document.getElementById('tableBody');
+  if(!cardsContainer || !tbody) return;
+
+  const BETWEEN_TEAMS_GAP = 40; // matches border-spacing: 0 6px (6px top + 6px bottom)
+  cardsContainer.style.gap = BETWEEN_TEAMS_GAP + 'px';
+
+  // Build map: teamKey → array of <tr> elements
+  const teamRowMap = new Map();
+  teamOrder.forEach(({team}) => {
+    const rows = Array.from(tbody.querySelectorAll(`tr.${team.rowClass}`));
+    if(rows.length) teamRowMap.set(team.key, rows);
+  });
+
+  const cards = document.querySelectorAll('#tspCards .tsp-card[data-team-key]');
+  cards.forEach(card => {
+    const teamKey = card.dataset.teamKey;
+    const rows = teamRowMap.get(teamKey);
+    if(!rows || !rows.length) return;
+
+    const firstRow = rows[0];
+    const lastRow  = rows[rows.length - 1];
+
+    // getBoundingClientRect gives reliable pixel positions
+    const firstRect = firstRow.getBoundingClientRect();
+    const lastRect  = lastRow.getBoundingClientRect();
+    const height    = lastRect.bottom - firstRect.top;
+
+    // Temporarily remove height to measure natural content height
+    card.style.height = '';
+    const naturalH = card.scrollHeight;
+    card.style.height = height + 'px';
+
+    // scale: available / natural, clamped 0.55 → 1.0
+    const scale = Math.min(1, Math.max(0.55, height / naturalH));
+    card.style.setProperty('--scale', scale);
+  });
+}
+
+/* ── Render team summary cards ── */
+function renderTeamSummaryCards(buckets, teamOrder){
+  const container=document.getElementById('tspCards');
+  if(!container) return;
+
+  const oldPositions=captureCardPositions();
+
+  const stats=computeTeamStats(buckets).sort((a,b)=>b.totalPts-a.totalPts);
+  const maxPts=stats.length?stats[0].totalPts||1:1;
+
+  let html='';
+  stats.forEach((t,rank)=>{
+    const ptsBarPct=Math.min(Math.round((t.totalPts/maxPts)*100),100);
+    const mtBarCls=barClsFromPct(t.mtPct);
+
+    html+=`
+    <div class="tsp-card tsp-card-${t.key}" data-team-key="${t.key}">
+      <div class="tsp-card-stripe"></div>
+      <div class="tsp-card-inner">
+
+        <!-- Header: rank + team name + member count -->
+        <div class="tsp-card-head">
+          <div class="tsp-rank-badge ${rankBadgeClass(rank)}">${rank+1}</div>
+          <div class="tsp-team-name">${t.label}</div>
+          <div class="tsp-member-count">${t.count} members</div>
+        </div>
+
+        <!-- Total Points — horizontal -->
+        <div class="tsp-pts-block">
+          <div class="tsp-pts-label">TOTAL POINTS —</div>
+          <div class="tsp-pts-val tsp-pts-${t.key}">${t.totalPts}</div>
+        </div>
+
+        <div class="tsp-divider"></div>
+
+        <!-- Avg Meetings — horizontal -->
+        <div class="tsp-stat-row">
+          <div class="tsp-stat-icon">📅</div>
+          <div class="tsp-stat-body">
+            <div class="tsp-stat-label">AVG MEETINGS —</div>
+            <div class="tsp-stat-nums">
+              <span class="tsp-act ${mtBarCls}">${t.avgMtAct}</span>
+              <span class="tsp-tgt">/ ${t.avgMtTgt}</span>
+              <span class="tsp-pct-pill tsp-pct-${t.key}">${t.mtPct}%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RPT Clients — horizontal -->
+        <div class="tsp-stat-row">
+          <div class="tsp-stat-icon">✅</div>
+          <div class="tsp-stat-body">
+            <div class="tsp-stat-label">RPT CLIENTS —</div>
+            <div class="tsp-rpt-val tsp-pts-${t.key}">${t.totalRpt}</div>
+          </div>
+        </div>
+
+      </div>
+    </div>`;
+  });
+
+  container.innerHTML=html;
+  animateCardMoves(oldPositions);
+
+  // Sync card heights after DOM settles
+  requestAnimationFrame(()=>{
+    syncCardHeightsToTableRows(teamOrder);
+  });
 }
 
 /* ── Render table ── */
@@ -639,12 +461,11 @@ function render(rows){
     .sort((a,b)=>b.totalPts-a.totalPts);
 
   let bodyHTML='';
-
   teamOrder.forEach(({team,ti})=>{
     const group=buckets[ti]; const maxPts=group[0].pts||1;
     group.forEach((m,i)=>{
       bodyHTML+=`
-        <tr class="${team.rowClass}" data-row-key="${rowKey(team.key,m.name)}">
+        <tr class="${team.rowClass}" data-row-key="${rowKey(team.key,m.name)}" data-team-key="${team.key}">
           <td class="center">${rankCircle(i)}</td>
           <td><div class="member-name">${m.name}</div></td>
           <td class="center big">${m.yIM}</td>
@@ -700,10 +521,7 @@ function render(rows){
   document.getElementById('tableBody').innerHTML=bodyHTML;
   animateRowMoves(oldPositions);
 
-  const top=extractLastWeekTopPerformer(rows);
-  renderPerfCard(top);
-  renderTeamCard(rows);
-  renderKpiCards(members);
+  renderTeamSummaryCards(buckets, teamOrder);
 }
 
 /* ── Load & countdown ── */
@@ -726,7 +544,7 @@ function startCountdown(){
   document.getElementById('cdNum').textContent=cdVal;
   cdTimer=setInterval(()=>{
     cdVal--; document.getElementById('cdNum').textContent=cdVal;
-    if(cdVal<=0){clearInterval(cdTimer);load();}
+    if(cdVal<=0){ clearInterval(cdTimer); load(); }
   },1000);
 }
 
