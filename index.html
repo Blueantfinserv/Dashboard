@@ -108,9 +108,10 @@
       <div class="pw-loading">LOADING PAST WEEK DATA…</div>
     </div>
   </div>
-<div style="width:1px; background:linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.18) 20%, rgba(0, 0, 0, 0.18) 80%, transparent); margin: 0 20px; flex-shrink:0;"></div>
-  <!-- Right half: reserved -->
-<!-- Right half: Top Converters -->
+
+  <div style="width:1px; background:linear-gradient(180deg, transparent, rgba(0,0,0,0.18) 20%, rgba(0,0,0,0.18) 80%, transparent); margin: 0 20px; flex-shrink:0;"></div>
+
+  <!-- Right half: Top Converters -->
   <div class="bottom-half" id="bottomRight">
     <div class="pw-header">
       <span class="pw-header-line"></span>
@@ -315,40 +316,94 @@ function animateCardMoves(oldPositions){
   });
 }
 
-/* ── Extract current-week data ── */
+/* ══════════════════════════════════════════════════
+   FIXED: Dynamic Week Total detection for current week
+   No longer relies on hardcoded row index (rows[15])
+   Searches for "week total" label in column F (index 5)
+   starting from row 4 (index 4) onward.
+══════════════════════════════════════════════════ */
 function extractData(rows){
-  const members=rows.slice(4,15).filter(r=>r[5]&&r[5].trim()!=='').map(r=>({
-    yIM:Number(r[1])||0, yClient:Number(r[2])||0, tIM:Number(r[3])||0, tClient:Number(r[4])||0,
-    name:r[5],
-    lTgt:Number(r[6])||0,  lAct:Number(r[7])||0,
-    imTgt:Number(r[8])||0, imAct:Number(r[9])||0,
-    mtTgt:Number(r[10])||0,mtAct:Number(r[11])||0,
-    ccTgt:Number(r[12])||0,ccRpt:Number(r[13])||0,ccDoc:Number(r[14])||0,
-    pts:Number(r[15])||0
-  }));
-  const totalRow=rows[15];
-  return {members,totalRow};
-}
+  // Dynamically find "Week Total" row — search from row index 4 onward
+  let totalRowIndex = -1;
+  for(let i = 4; i < rows.length; i++){
+    const cellVal = rows[i][5];
+    if(cellVal && cellVal.trim().toLowerCase() === 'week total'){
+      totalRowIndex = i;
+      break;
+    }
+  }
 
-/* ── Extract past-week data (rows 19-29, 0-indexed = sheet rows 20-30) ── */
-/* Sheet columns (0-indexed): B=1, C=2, D=3, E=4, F=5(name), G=6, H=7, I=8, J=9, K=10, L=11, M=12, N=13, O=14, P=15 */
-function extractPastWeekData(rows){
-  // Past week data starts at row index 19 (sheet row 20) to row index 29 (sheet row 30)
-  // Skip blank rows and the Week Total row (row 31 = index 30)
-  const members = rows.slice(19, 30)
+  // Members: everything from row 4 up to (but not including) the total row
+  // Falls back to row 15 if no total row found, for safety
+  const endIndex = totalRowIndex > 4 ? totalRowIndex : 15;
+
+  const members = rows.slice(4, endIndex)
     .filter(r => r[5] && r[5].trim() !== '' && r[5].trim().toLowerCase() !== 'week total')
     .map(r => ({
-      name: r[5],
-      yIM:   Number(r[1]) || 0,
-      yClient: Number(r[2]) || 0,
-      tIM:   Number(r[3]) || 0,
-      tClient: Number(r[4]) || 0,
-      lTgt:  Number(r[6]) || 0,  lAct:  Number(r[7]) || 0,
-      imTgt: Number(r[8]) || 0,  imAct: Number(r[9]) || 0,
-      mtTgt: Number(r[10]) || 0, mtAct: Number(r[11]) || 0,
-      ccTgt: Number(r[12]) || 0, ccRpt: Number(r[13]) || 0, ccDoc: Number(r[14]) || 0,
-      pts:   Number(r[15]) || 0
+      yIM:    Number(r[1])  || 0,
+      yClient:Number(r[2])  || 0,
+      tIM:    Number(r[3])  || 0,
+      tClient:Number(r[4])  || 0,
+      name:   r[5],
+      lTgt:   Number(r[6])  || 0,
+      lAct:   Number(r[7])  || 0,
+      imTgt:  Number(r[8])  || 0,
+      imAct:  Number(r[9])  || 0,
+      mtTgt:  Number(r[10]) || 0,
+      mtAct:  Number(r[11]) || 0,
+      ccTgt:  Number(r[12]) || 0,
+      ccRpt:  Number(r[13]) || 0,
+      ccDoc:  Number(r[14]) || 0,
+      pts:    Number(r[15]) || 0
     }));
+
+  // Total row is found dynamically — never hardcoded
+  const totalRow = totalRowIndex > -1 ? rows[totalRowIndex] : null;
+
+  return { members, totalRow };
+}
+
+/* ══════════════════════════════════════════════════
+   FIXED: Dynamic Week Total detection for past week
+   Searches for "week total" starting from row 19 onward
+   so deleting SM rows won't break the past week total.
+══════════════════════════════════════════════════ */
+function extractPastWeekData(rows){
+  // Past week section starts at row index 19
+  // Dynamically find "Week Total" from row 19 onward
+  let totalRowIndex = -1;
+  for(let i = 19; i < rows.length; i++){
+    const cellVal = rows[i][5];
+    if(cellVal && cellVal.trim().toLowerCase() === 'week total'){
+      totalRowIndex = i;
+      break;
+    }
+  }
+
+  // Members: everything from row 19 up to (but not including) the total row
+  // Falls back to row 30 if no total row found, for safety
+  const endIndex = totalRowIndex > 19 ? totalRowIndex : 30;
+
+  const members = rows.slice(19, endIndex)
+    .filter(r => r[5] && r[5].trim() !== '' && r[5].trim().toLowerCase() !== 'week total')
+    .map(r => ({
+      name:    r[5],
+      yIM:     Number(r[1])  || 0,
+      yClient: Number(r[2])  || 0,
+      tIM:     Number(r[3])  || 0,
+      tClient: Number(r[4])  || 0,
+      lTgt:    Number(r[6])  || 0,
+      lAct:    Number(r[7])  || 0,
+      imTgt:   Number(r[8])  || 0,
+      imAct:   Number(r[9])  || 0,
+      mtTgt:   Number(r[10]) || 0,
+      mtAct:   Number(r[11]) || 0,
+      ccTgt:   Number(r[12]) || 0,
+      ccRpt:   Number(r[13]) || 0,
+      ccDoc:   Number(r[14]) || 0,
+      pts:     Number(r[15]) || 0
+    }));
+
   return members.sort((a, b) => b.pts - a.pts);
 }
 
@@ -369,67 +424,35 @@ function renderPastWeekCards(rows) {
 
   let html = '';
   top3.forEach((m, i) => {
-    const mtPct = m.mtTgt ? Math.min(Math.round((m.mtAct / m.mtTgt) * 100), 100) : 0;
-html += `
+    html += `
 <div class="pw-card ${cardClasses[i]}">
   <div class="pw-card-stripe"></div>
-
   <div class="pw-card-inner">
-
-    <div class="pw-rank-badge ${rankClasses[i]}">
-      ${rankNums[i]}
-    </div>
-
+    <div class="pw-rank-badge ${rankClasses[i]}">${rankNums[i]}</div>
     <div class="pw-name-block">
-      <div class="pw-name">
-        ${trophies[i]} ${m.name}
-      </div>
+      <div class="pw-name">${trophies[i]} ${m.name}</div>
     </div>
-
-    <div class="pw-stats" 
-         style="
-           width:100%;
-           display:flex;
-           justify-content:center;
-           align-items:center;
-           margin-top:14px;
-         ">
-
-      <div class="pw-stat" 
-           style="
-             width:100%;
-             display:flex;
-             justify-content:center;
-             align-items:center;
-           ">
-
-        <div class="pw-stat-val" 
-             style="
-               width:100%;
-               text-align:center;
-               font-size:38px;
-               font-weight:500;
-               line-height:1.0;
-             ">
+    <div class="pw-stats"
+         style="width:100%;display:flex;justify-content:center;align-items:center;margin-top:14px;">
+      <div class="pw-stat"
+           style="width:100%;display:flex;justify-content:center;align-items:center;">
+        <div class="pw-stat-val"
+             style="width:100%;text-align:center;font-size:38px;font-weight:500;line-height:1.0;">
           Total Meetings = ${m.imAct + m.mtAct}
         </div>
-
       </div>
-
     </div>
-
     <div class="pw-pts-block">
-      <div class="pw-pts-val">
-        ${m.pts}
-      </div>
+      <div class="pw-pts-val">${m.pts}</div>
     </div>
-
   </div>
 </div>`;
   });
 
   container.innerHTML = html;
 }
+
+/* ── Render Top Converters cards ── */
 function renderTopConvertersCards(rows) {
   const members = extractPastWeekData(rows)
     .slice()
@@ -437,28 +460,30 @@ function renderTopConvertersCards(rows) {
   const top3 = members.slice(0, 3);
   const container = document.getElementById('convCards');
   if (!top3.length) { container.innerHTML = '<div class="pw-loading">NO DATA</div>'; return; }
+
   const cardClasses = ['pw-card-1','pw-card-2','pw-card-3'];
   const rankClasses = ['pw-rank-1','pw-rank-2','pw-rank-3'];
   const medals = ['🥇','🥈','🥉'];
+
   let html = '';
   top3.forEach((m, i) => {
-    const convRate = m.mtAct ? Math.round((m.ccRpt / m.mtAct) * 100) : 0;
     html += `
 <div class="pw-card ${cardClasses[i]}">
-      <div class="pw-card-stripe"></div>
-      <div class="pw-card-inner">
-        <div class="pw-rank-badge ${rankClasses[i]}">${i+1}</div>
-        <div class="pw-name-block">
-          <div class="pw-name">${medals[i]} ${m.name}</div>
-          <div class="pw-subtitle">PAST WEEK CONVERTER</div>
-        </div>
-        <div class="pw-pts-block">
-          <div class="pw-pts-lbl">NEW CLIENT ACQUIRED</div>
-          <div class="pw-pts-val">${m.ccRpt}</div>
-        </div>
-      </div>
-    </div>`;
+  <div class="pw-card-stripe"></div>
+  <div class="pw-card-inner">
+    <div class="pw-rank-badge ${rankClasses[i]}">${i+1}</div>
+    <div class="pw-name-block">
+      <div class="pw-name">${medals[i]} ${m.name}</div>
+      <div class="pw-subtitle">PAST WEEK CONVERTER</div>
+    </div>
+    <div class="pw-pts-block">
+      <div class="pw-pts-lbl">NEW CLIENT ACQUIRED</div>
+      <div class="pw-pts-val">${m.ccRpt}</div>
+    </div>
+  </div>
+</div>`;
   });
+
   container.innerHTML = html;
 }
 
@@ -540,8 +565,8 @@ function renderTeamSummaryCards(buckets, teamOrder){
   const oldPositions=captureCardPositions();
 
   const stats = computeTeamStats(buckets).sort(
-  (a, b) => (b.totalPts / b.count) - (a.totalPts / a.count)
-);
+    (a, b) => (b.totalPts / b.count) - (a.totalPts / a.count)
+  );
   const maxPts=stats.length?stats[0].totalPts||1:1;
 
   let html='';
@@ -549,54 +574,36 @@ function renderTeamSummaryCards(buckets, teamOrder){
     const ptsBarPct=Math.min(Math.round((t.totalPts/maxPts)*100),100);
     const mtBarCls=barClsFromPct(t.mtPct);
 
-   html+=`
+    html+=`
 <div class="tsp-card tsp-card-${t.key}" data-team-key="${t.key}">
   <div class="tsp-card-stripe"></div>
-
   <div class="tsp-card-inner">
-
     <div class="tsp-card-head">
       <div class="tsp-rank-badge ${rankBadgeClass(rank)}">${rank+1}</div>
       <div class="tsp-team-name">${t.label}</div>
       <div class="tsp-member-count">${t.count} members</div>
     </div>
-
     <div class="tsp-pts-block">
       <div class="tsp-pts-label">AVG POINTS —</div>
-
-      <div class="tsp-pts-val tsp-pts-${t.key}">
-        ${(t.totalPts / t.count).toFixed(1)}
-      </div>
+      <div class="tsp-pts-val tsp-pts-${t.key}">${(t.totalPts / t.count).toFixed(1)}</div>
     </div>
-
     <div class="tsp-divider"></div>
-
     <div class="tsp-stat-row">
       <div class="tsp-stat-icon">📅</div>
-
       <div class="tsp-stat-body">
         <div class="tsp-stat-label">AVG MEETINGS —</div>
-
         <div class="tsp-stat-nums">
-          <span class="tsp-act ${mtBarCls}">
-            ${t.avgMtAct}
-          </span>
+          <span class="tsp-act ${mtBarCls}">${t.avgMtAct}</span>
         </div>
       </div>
     </div>
-
     <div class="tsp-stat-row">
       <div class="tsp-stat-icon">✅</div>
-
       <div class="tsp-stat-body">
         <div class="tsp-stat-label">RPT CLIENTS —</div>
-
-        <div class="tsp-rpt-val tsp-pts-${t.key}">
-          ${t.totalRpt}
-        </div>
+        <div class="tsp-rpt-val tsp-pts-${t.key}">${t.totalRpt}</div>
       </div>
     </div>
-
   </div>
 </div>`;
   });
@@ -615,18 +622,19 @@ function render(rows){
   const {buckets,others}=groupByTeam(members);
   const oldPositions=captureRowPositions();
 
-const teamOrder = TEAMS
-  .map((team, ti) => ({
-    team,
-    ti,
-    totalPts: buckets[ti].reduce((s, m) => s + (Number(m.pts) || 0), 0),
-    avgPts:
-      buckets[ti].length
-        ? buckets[ti].reduce((s, m) => s + (Number(m.pts) || 0), 0) / buckets[ti].length
-        : 0
-  }))
-  .filter(item => buckets[item.ti].length)
-  .sort((a, b) => b.avgPts - a.avgPts);
+  const teamOrder = TEAMS
+    .map((team, ti) => ({
+      team,
+      ti,
+      totalPts: buckets[ti].reduce((s, m) => s + (Number(m.pts) || 0), 0),
+      avgPts:
+        buckets[ti].length
+          ? buckets[ti].reduce((s, m) => s + (Number(m.pts) || 0), 0) / buckets[ti].length
+          : 0
+    }))
+    .filter(item => buckets[item.ti].length)
+    .sort((a, b) => b.avgPts - a.avgPts);
+
   let bodyHTML='';
   teamOrder.forEach(({team,ti})=>{
     const group=buckets[ti]; const maxPts=group[0].pts||1;
@@ -689,8 +697,6 @@ const teamOrder = TEAMS
   animateRowMoves(oldPositions);
 
   renderTeamSummaryCards(buckets, teamOrder);
-
-  // Render past week cards from same CSV data
   renderPastWeekCards(rows);
   renderTopConvertersCards(rows);
 }
