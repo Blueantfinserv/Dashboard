@@ -371,7 +371,7 @@ table {
   border-collapse: separate;
   border-spacing: 0 6px;
   min-width: 1600px;
-  height: 1500px;
+  height: 2300px;
 }
 
 thead th {
@@ -451,7 +451,7 @@ tbody td:last-child {
 .rn { background: #f6f8fb; color:#64748b; border:1px solid var(--border); }
 
 /* ── Member name ── */
-.member-name { font-size: 60px; font-weight: bolder; color: #182235; }
+.member-name { font-size: 70px; font-weight: bolder; color: #182235; }
 tbody tr.row-harsh    .member-name { color: #1d4ed8; }
 tbody tr.row-alok     .member-name { color: #047857; }
 tbody tr.row-ashutosh .member-name { color: #7c2d12; }
@@ -546,7 +546,7 @@ tbody tr.row-ashutosh .pts-badge { border-color:rgba(154,52,18,0.34);  }
 
 /* ── Utilities ── */
 .center { text-align: center; }
-.big    { font-size: 60px; font-weight: 700; white-space: nowrap; }
+.big    { font-size: 70px; font-weight: 700; white-space: nowrap; }
 
 /* ══ TEAM SUMMARY PANEL ══════════════════════════════════════ */
 .team-summary-panel {
