@@ -67,13 +67,28 @@
         <tr>
           <th style="width:90px;">Rank</th>
           <th style="width:260px;">Name</th>
-          <th class="center">Yest. I&amp;M</th>
-          <th class="center">Yest. Cl.</th>
-          <th class="center">Today I&amp;M</th>
-          <th class="center">Today Cl.</th>
-          <th style="min-width:190px;">Leads</th>
-          <th style="min-width:190px;">Intro</th>
-          <th style="min-width:190px;">Meetings</th>
+          <th class="center" style="width:60px;">Yest. I&amp;M</th>
+          <th class="center" style="width:60px;">Yest. Cl.</th>
+          <th class="center" style="width:60px;">Today I&amp;M</th>
+          <th class="center" style="width:60px;">Today Cl.</th>
+          <th style="min-width:190px;">
+            <div class="metric-head">
+              <div>Leads</div>
+              <div class="metric-subheads">Ach. | Tgt. | Pen %</div>
+            </div>
+          </th>
+          <th style="min-width:190px;">
+            <div class="metric-head">
+              <div>Intro</div>
+              <div class="metric-subheads">Ach. | Tgt. | Pen %</div>
+            </div>
+          </th>
+          <th style="min-width:190px;">
+            <div class="metric-head">
+              <div>Meetings</div>
+              <div class="metric-subheads">Ach. | Tgt. | Pen %</div>
+            </div>
+          </th>
           <th class="center">Tgt-Rpt / Doc</th>
           <th class="center">Points</th>
         </tr>
@@ -131,7 +146,7 @@ const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZyLPhCRB7pQ5i
 const SHEET_ID = '1XX5Io8gpJPmcALPS217MB1j33FMpGMdoFAg80I-cbmA';
 const GID      = '806469274';
 const CSV_URL  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
-const REFRESH  = 10;
+const REFRESH  = 100000;
 
 const TEAMS = [
   { key:'harsh',    rowClass:'row-harsh',    members:['Rajat','Atul','Ameet','Rakesh','Garv'],          dotColor:'#1d4ed8' },
@@ -272,15 +287,24 @@ function parseCSV(text){
 function pct(a,t){ return t?Math.min((a/t)*100,100):0; }
 function cls(a,t){ if(a===0)return'zero'; const p=(a/t)*100; return p>=100?'good':p>=60?'ok':'bad'; }
 function metricHTML(act,tgt){
-  const c=cls(act,tgt),p=pct(act,tgt);
-  return `<div class="metric"><div class="metric-top"><span class="m-act ${c}">${act}</span><span class="m-tgt">/ ${tgt}</span></div><div class="bar-track"><div class="bar-fill ${c}" style="width:${p}%"></div></div></div>`;
+  const c=cls(act,tgt), p=pct(act,tgt);
+  const pendingPct = tgt ? Math.max(100 - Math.round((act / tgt) * 100), 0) : 0;
+  return `<div class="metric">
+    <div class="metric-grid metric-values">
+      <span class="metric-v ${c}">${act}</span>
+      <span class="metric-v tgt">${tgt}</span>
+      <span class="metric-v pend">${pendingPct}%</span>
+    </div>
+  </div>`;
 }
 function rankCircle(i){ const c=i===0?'r1':i===1?'r2':i===2?'r3':'rn'; return `<div class="rank-circle ${c}">${i+1}</div>`; }
 function ptsClass(p,max){ return p>=max*0.75?'pts-top':p>=max*0.4?'pts-mid':'pts-low'; }
 function rowKey(prefix,name){ return `${prefix}-${String(name).trim().toLowerCase().replace(/[^a-z0-9]+/g,'-')}`; }
 function buildTeamLookup(){
   const lookup=new Map();
-  TEAMS.forEach((team,ti)=>team.members.forEach(name=>lookup.set(name.trim().toLowerCase(),ti)));
+  TEAMS.forEach((team,ti)=>team.members.forEach(name=>{
+    if(name && name.trim()) lookup.set(name.trim().toLowerCase(),ti);
+  }));
   return lookup;
 }
 
@@ -316,12 +340,6 @@ function animateCardMoves(oldPositions){
   });
 }
 
-/* ══════════════════════════════════════════════════
-   FIXED: Dynamic Week Total detection for current week
-   No longer relies on hardcoded row index (rows[15])
-   Searches for "week total" label in column F (index 5)
-   starting from row 4 (index 4) onward.
-══════════════════════════════════════════════════ */
 function extractData(rows){
   // Dynamically find "Week Total" row — search from row index 4 onward
   let totalRowIndex = -1;
@@ -508,8 +526,8 @@ function computeTeamStats(buckets){
     const totalMtTgt= members.reduce((s,m)=>s+m.mtTgt,0);
     const totalRpt  = members.reduce((s,m)=>s+m.ccRpt,0);
     const count     = members.length;
-    const avgMtAct  = Math.round((totalMtAct/count)*10)/10;
-    const avgMtTgt  = Math.round((totalMtTgt/count)*10)/10;
+    const avgMtAct  = members.length ? Math.round((totalMtAct/members.length)*10)/10 : 0;
+    const avgMtTgt  = members.length ? Math.round((totalMtTgt/members.length)*10)/10 : 0;
     const mtPct     = totalMtTgt ? Math.min(Math.round((totalMtAct/totalMtTgt)*100),100) : 0;
     return { key:team.key, label:TEAM_LABELS[team.key], totalPts, avgMtAct, avgMtTgt, mtPct, totalRpt, count };
   }).filter(Boolean);
@@ -584,23 +602,21 @@ function renderTeamSummaryCards(buckets, teamOrder){
       <div class="tsp-member-count">${t.count} members</div>
     </div>
     <div class="tsp-pts-block">
-      <div class="tsp-pts-label">AVG POINTS —</div>
+      <div class="tsp-pts-label">AVG POINTS</div>
       <div class="tsp-pts-val tsp-pts-${t.key}">${(t.totalPts / t.count).toFixed(1)}</div>
     </div>
     <div class="tsp-divider"></div>
     <div class="tsp-stat-row">
-      <div class="tsp-stat-icon">📅</div>
       <div class="tsp-stat-body">
-        <div class="tsp-stat-label">AVG MEETINGS —</div>
+        <div class="tsp-stat-label">AVG MEETINGS</div>
         <div class="tsp-stat-nums">
           <span class="tsp-act ${mtBarCls}">${t.avgMtAct}</span>
         </div>
       </div>
     </div>
     <div class="tsp-stat-row">
-      <div class="tsp-stat-icon">✅</div>
-      <div class="tsp-stat-body">
-        <div class="tsp-stat-label">RPT CLIENTS —</div>
+           <div class="tsp-stat-body">
+        <div class="tsp-stat-label">RPT CLIENTS</div>
         <div class="tsp-rpt-val tsp-pts-${t.key}">${t.totalRpt}</div>
       </div>
     </div>
@@ -654,6 +670,7 @@ function render(rows){
           <td class="center"><div class="pts-badge ${ptsClass(m.pts,maxPts)}">${m.pts}</div></td>
         </tr>`;
     });
+
   });
 
   if(others.length){
