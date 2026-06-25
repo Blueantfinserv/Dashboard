@@ -372,6 +372,7 @@ table {
   border-spacing: 0 6px;
   min-width: 1600px;
   height: auto;
+  max-height: 2200px;
   table-layout: fixed;
 }
 
@@ -537,10 +538,10 @@ tbody tr.row-ashutosh .big { color: #7c2d12; }
   background: rgba(35,55,90,0.38);
 }
 .metric-grid.metric-values::before {
-  left: calc(33.333% - 6px);
+  left: calc(33.333% + 10px);
 }
 .metric-grid.metric-values::after {
-  left: calc(66.666% - 6px);
+  left: calc(66.666% - 40px);
 }
 .metric-values {
   margin-bottom: 2px;
@@ -564,11 +565,14 @@ tbody tr.row-ashutosh .big { color: #7c2d12; }
 }
 .metric-v.tgt { color: #718096; }
 .metric-v.pend { color: #c87912; }
+.metric-v.achieved {
+  transform: translateX(6px);
+}
 .metric-v.tgt {
-  transform: translateX(-15px);
+  transform: translateX(-10px);
 }
 .metric-v.pend {
-  transform: translateX(-22px);
+  transform: translateX(-16px);
 }
 .good { color: var(--green); }
 .ok   { color: var(--amber); }
