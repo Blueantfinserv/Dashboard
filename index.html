@@ -65,12 +65,12 @@
     <table>
       <thead>
         <tr>
-          <th style="width:90px;">Rank</th>
-          <th style="width:260px;">Name</th>
-          <th class="center" style="width:60px;">Yest. I&amp;M</th>
-          <th class="center" style="width:60px;">Yest. Cl.</th>
-          <th class="center" style="width:60px;">Today I&amp;M</th>
-          <th class="center" style="width:60px;">Today Cl.</th>
+          <th style="width:150px;">Rank</th>
+          <th style="width:320px;">Name</th>
+          <th class="center" style="width:350px;">Yest. I&amp;M</th>
+          <th class="center" style="width:300px;">Yest. Cl.</th>
+          <th class="center" style="width:300px;">Today I&amp;M</th>
+          <th class="center" style="width:300px;">Today Cl.</th>
           <th style="min-width:190px;">
             <div class="metric-head">
               <div>Leads</div>
@@ -291,9 +291,9 @@ function metricHTML(act,tgt){
   const pendingPct = tgt ? Math.max(100 - Math.round((act / tgt) * 100), 0) : 0;
   return `<div class="metric">
     <div class="metric-grid metric-values">
-      <span class="metric-v ${c}">${act}</span>
-      <span class="metric-v tgt">${tgt}</span>
-      <span class="metric-v pend">${pendingPct}%</span>
+      <span class="metric-v achieved ${c}">${act}</span>
+      <span class="metric-v target tgt">${tgt}</span>
+      <span class="metric-v pending pend">${pendingPct}%</span>
     </div>
   </div>`;
 }
