@@ -565,13 +565,13 @@ tbody tr.row-ashutosh .big { color: #7c2d12; }
 .metric-v.tgt { color: #718096; }
 .metric-v.pend { color: #c87912; }
 .metric-v.achieved {
-  transform: translateX(6px);
+  transform: translateX(30px);
 }
 .metric-v.tgt {
   transform: translateX(-10px);
 }
 .metric-v.pend {
-  transform: translateX(-16px);
+  transform: translateX(-60px);
 }
 .good { color: var(--green); }
 .ok   { color: var(--amber); }
