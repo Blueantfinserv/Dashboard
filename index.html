@@ -74,7 +74,7 @@
           <th style="min-width:190px;">
             <div class="metric-head">
               <div>Leads</div>
-              <div class="metric-subheads">Ach. | Tgt. | Pen %</div>
+              <div class="metric-subheads">Ach. | Tgt.</div>
             </div>
           </th>
           <th style="min-width:190px;">
@@ -89,7 +89,13 @@
               <div class="metric-subheads">Ach. | Tgt. | Pen %</div>
             </div>
           </th>
-          <th class="center">Tgt-Rpt / Doc</th>
+          <th style="min-width:190px;">
+            <div class="metric-head">
+              <div>Tgt-Rpt</div>
+              <div class="metric-subheads">Ach. | Tgt. | Pen %</div>
+            </div>
+          </th>
+          <th class="center">Doc</th>
           <th class="center">Points</th>
         </tr>
       </thead>
@@ -294,6 +300,15 @@ function metricHTML(act,tgt){
       <span class="metric-v achieved ${c}">${act}</span>
       <span class="metric-v target tgt">${tgt}</span>
       <span class="metric-v pending pend">${pendingPct}%</span>
+    </div>
+  </div>`;
+}
+function metricHTMLNoPending(act,tgt){
+  const c=cls(act,tgt);
+  return `<div class="metric">
+    <div class="metric-grid metric-values metric-values-2">
+      <span class="metric-v achieved ${c}">${act}</span>
+      <span class="metric-v target tgt">${tgt}</span>
     </div>
   </div>`;
 }
@@ -663,10 +678,11 @@ function render(rows){
           <td class="center big">${m.yClient}</td>
           <td class="center big">${m.tIM}</td>
           <td class="center big">${m.tClient}</td>
-          <td>${metricHTML(m.lAct,m.lTgt)}</td>
+          <td>${metricHTMLNoPending(m.lAct,m.lTgt)}</td>
           <td>${metricHTML(m.imAct,m.imTgt)}</td>
           <td>${metricHTML(m.mtAct,m.mtTgt)}</td>
-          <td class="center big">${m.ccTgt} - ${m.ccRpt} / ${m.ccDoc}</td>
+          <td>${metricHTML(m.ccRpt,m.ccTgt)}</td>
+          <td class="center big">${m.ccDoc}</td>
           <td class="center"><div class="pts-badge ${ptsClass(m.pts,maxPts)}">${m.pts}</div></td>
         </tr>`;
     });
@@ -684,10 +700,11 @@ function render(rows){
           <td class="center big">${m.yClient}</td>
           <td class="center big">${m.tIM}</td>
           <td class="center big">${m.tClient}</td>
-          <td>${metricHTML(m.lAct,m.lTgt)}</td>
+          <td>${metricHTMLNoPending(m.lAct,m.lTgt)}</td>
           <td>${metricHTML(m.imAct,m.imTgt)}</td>
           <td>${metricHTML(m.mtAct,m.mtTgt)}</td>
-          <td class="center big">${m.ccTgt} - ${m.ccRpt} / ${m.ccDoc}</td>
+          <td>${metricHTML(m.ccRpt,m.ccTgt)}</td>
+          <td class="center big">${m.ccDoc}</td>
           <td class="center"><div class="pts-badge ${ptsClass(m.pts,maxPts)}">${m.pts}</div></td>
         </tr>`;
     });
@@ -702,10 +719,11 @@ function render(rows){
         <td class="center big">${totalRow[2]}</td>
         <td class="center big">${totalRow[3]}</td>
         <td class="center big">${totalRow[4]}</td>
-        <td>${metricHTML(Number(totalRow[7]),Number(totalRow[6]))}</td>
+        <td>${metricHTMLNoPending(Number(totalRow[7]),Number(totalRow[6]))}</td>
         <td>${metricHTML(Number(totalRow[9]),Number(totalRow[8]))}</td>
         <td>${metricHTML(Number(totalRow[11]),Number(totalRow[10]))}</td>
-        <td class="center big">${totalRow[12]} - ${totalRow[13]} / ${totalRow[14]}</td>
+        <td>${metricHTML(Number(totalRow[13]),Number(totalRow[12]))}</td>
+        <td class="center big">${totalRow[14]}</td>
         <td class="center big" style="color:var(--gold);">${totalRow[15]}</td>
       </tr>`;
   }
