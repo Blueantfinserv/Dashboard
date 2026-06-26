@@ -95,7 +95,7 @@
               <div class="metric-subheads">Ach. | Tgt. | Pen %</div>
             </div>
           </th>
-          <th class="center">Doc</th>
+          <th class="center" style="width:300px;">Doc</th>
           <th class="center">Points</th>
         </tr>
       </thead>
@@ -152,7 +152,7 @@ const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZyLPhCRB7pQ5i
 const SHEET_ID = '1XX5Io8gpJPmcALPS217MB1j33FMpGMdoFAg80I-cbmA';
 const GID      = '806469274';
 const CSV_URL  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
-const REFRESH  = 10;
+const REFRESH  = 1000;
 
 const TEAMS = [
   { key:'harsh',    rowClass:'row-harsh',    members:['Rajat','Atul','Ameet','Rakesh','Garv'],          dotColor:'#1d4ed8' },
@@ -365,9 +365,6 @@ function extractData(rows){
       break;
     }
   }
-
-  // Members: everything from row 4 up to (but not including) the total row
-  // Falls back to row 15 if no total row found, for safety
   const endIndex = totalRowIndex > 4 ? totalRowIndex : 15;
 
   const members = rows.slice(4, endIndex)
@@ -396,11 +393,6 @@ function extractData(rows){
   return { members, totalRow };
 }
 
-/* ══════════════════════════════════════════════════
-   FIXED: Dynamic Week Total detection for past week
-   Searches for "week total" starting from row 19 onward
-   so deleting SM rows won't break the past week total.
-══════════════════════════════════════════════════ */
 function extractPastWeekData(rows){
   // Past week section starts at row index 19
   // Dynamically find "Week Total" from row 19 onward
@@ -413,8 +405,6 @@ function extractPastWeekData(rows){
     }
   }
 
-  // Members: everything from row 19 up to (but not including) the total row
-  // Falls back to row 30 if no total row found, for safety
   const endIndex = totalRowIndex > 19 ? totalRowIndex : 30;
 
   const members = rows.slice(19, endIndex)
