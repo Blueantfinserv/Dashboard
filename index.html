@@ -642,6 +642,7 @@ function render(rows){
   const {members,totalRow}=extractData(rows);
   const {buckets,others}=groupByTeam(members);
   const oldPositions=captureRowPositions();
+  const tableColumnCount = 12;
 
   const teamOrder = TEAMS
     .map((team, ti) => ({
@@ -676,6 +677,13 @@ function render(rows){
           <td class="center"><div class="pts-badge ${ptsClass(m.pts,maxPts)}">${m.pts}</div></td>
         </tr>`;
     });
+    const vacantCount = Math.max(0, 5 - group.length);
+    for(let v=0; v<vacantCount; v++){
+      bodyHTML+=`
+        <tr class="vacant-row ${team.rowClass}" data-row-key="${rowKey(team.key,`vacant-${v}`)}" data-team-key="${team.key}">
+          <td class="vacant-cell" colspan="${tableColumnCount}">-----VACANT-----</td>
+        </tr>`;
+    }
 
   });
 
