@@ -645,6 +645,30 @@ tbody tr.row-harsh    .pts-badge { border-color:rgba(37,99,235,0.34);  }
 tbody tr.row-alok     .pts-badge { border-color:rgba(5,150,105,0.34);  }
 tbody tr.row-ashutosh .pts-badge { border-color:rgba(154,52,18,0.34);  }
 
+/* ── Vacant rows ── */
+.vacant-row td {
+  background: #ef1111 !important;
+  color: #ffffff !important;
+  border-top: 1px solid #c70d0d !important;
+  border-bottom: 1px solid #c70d0d !important;
+  text-align: center !important;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 72px;
+  letter-spacing: 10px;
+  font-weight: 700;
+  padding: 10px 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  position: relative;
+}
+.vacant-row td::before {
+  content: none;
+}
+.vacant-row td:first-child,
+.vacant-row td:last-child {
+  border-radius: 0 !important;
+}
+
 /* ── Total row ── */
 .total-row td {
   background: linear-gradient(90deg,#fff7ed,#eef2ff 34%,#ecfdf5 68%,#ffedd5) !important;
