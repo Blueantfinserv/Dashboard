@@ -30,6 +30,7 @@
       </div>
     </div>
     <div class="topbar-right">
+      <div class="report-range-badge" id="reportRangeBadge">REPORT RANGE</div>
       <div class="live-badge"><div class="live-dot"></div>LIVE</div>
       <button class="refresh-btn" onclick="location.reload(true);" title="Force Refresh">
         <span class="refresh-icon">↻</span> REFRESH
@@ -163,6 +164,7 @@ const TEAMS = [
 const TEAM_LABELS = { harsh:'HARSH', alok:'ALOK', ashutosh:'ASHUTOSH' };
 
 let cdVal = REFRESH, cdTimer = null, activeFilter = null, toastTimer = null;
+let currentReportRange = null;
 
 /* ── Utilities ── */
 function todayMidnight(){ const d=new Date(); d.setHours(0,0,0,0); return d; }
@@ -203,6 +205,68 @@ function setActiveBtn(range){
   activeFilter=range;
 }
 
+function saveReportRange(from,to){
+  currentReportRange = { from, to };
+  try{
+    localStorage.setItem('dashboardReportRange', JSON.stringify(currentReportRange));
+  }catch(e){}
+  updateReportRangeBadge();
+}
+
+function loadSavedReportRange(){
+  try{
+    const raw = localStorage.getItem('dashboardReportRange');
+    if(!raw) return null;
+    const parsed = JSON.parse(raw);
+    if(parsed && parsed.from && parsed.to) return parsed;
+  }catch(e){}
+  return null;
+}
+
+function parseSheetDate(value){
+  if(!value) return null;
+  const text = String(value).trim();
+  if(!text) return null;
+  const d = new Date(text);
+  if(!Number.isNaN(d.getTime())) return isoDate(d);
+  const m = text.match(/^(\d{1,2})[-\/](\w{3})[-\/](\d{4})$/i);
+  if(m){
+    const day = m[1].padStart(2,'0');
+    const monthMap = { jan:'01', feb:'02', mar:'03', apr:'04', may:'05', jun:'06', jul:'07', aug:'08', sep:'09', oct:'10', nov:'11', dec:'12' };
+    const month = monthMap[m[2].toLowerCase()];
+    if(month) return `${m[3]}-${month}-${day}`;
+  }
+  return null;
+}
+
+function extractReportRangeFromSheet(rows){
+  for(let i=0; i<Math.min(rows.length, 4); i++){
+    const from = parseSheetDate(rows[i]?.[19]);
+    const to = parseSheetDate(rows[i]?.[20]);
+    if(from && to) return { from, to };
+  }
+  return null;
+}
+
+function weekdayLabel(isoDateStr){
+  if(!isoDateStr) return '';
+  const d = new Date(isoDateStr + 'T00:00:00');
+  return d.toLocaleDateString('en-US', { weekday: 'long' });
+}
+
+function updateReportRangeBadge(){
+  const el = document.getElementById('reportRangeBadge');
+  if(!el) return;
+  const range = currentReportRange || loadSavedReportRange();
+  if(!range || !range.from || !range.to){
+    el.textContent = 'REPORT RANGE';
+    return;
+  }
+  const fromDay = weekdayLabel(range.from);
+  const toDay = weekdayLabel(range.to);
+  el.textContent = `${fromDay} to ${toDay}`;
+}
+
 /* ── Filter strip ── */
 function showActiveLabel(from,to){
   const el=document.getElementById('activeRangeLbl');
@@ -216,9 +280,10 @@ function toggleCustomPanel(){
   const strip=document.getElementById('filterStrip');
   if(panel.classList.contains('open')){ closeCustomPanel(); }
   else{
-    const today=isoDate(todayMidnight());
-    document.getElementById('fromDate').value=today;
-    document.getElementById('toDate').value=today;
+    const saved = currentReportRange || loadSavedReportRange();
+    const fallback = isoDate(todayMidnight());
+    document.getElementById('fromDate').value = saved?.from || fallback;
+    document.getElementById('toDate').value = saved?.to || fallback;
     panel.classList.add('open');
     strip.classList.add('visible');
     setActiveBtn('custom');
@@ -252,6 +317,7 @@ async function applyPreset(preset){
   await load(false);
   setLoadingProgress(100,'Done!'); await sleep(300);
   hideLoading(); showActiveLabel(range.from,range.to);
+  saveReportRange(range.from, range.to);
   showToast(`✓ Range applied: ${range.from===range.to?displayDate(range.from):`${displayDate(range.from)} → ${displayDate(range.to)}`}`,'toast-success');
   startCountdown();
 }
@@ -269,6 +335,7 @@ async function applyCustom(){
   await load(false);
   setLoadingProgress(100,'Done!'); await sleep(300);
   hideLoading(); showActiveLabel(from,to);
+  saveReportRange(from, to);
   showToast(`✓ Custom range: ${displayDate(from)} → ${displayDate(to)}`,'toast-success');
   startCountdown();
 }
@@ -740,6 +807,11 @@ async function load(restartCountdown=true){
     const res=await fetch(CSV_URL+'&t='+Date.now());
     const text=await res.text();
     const rows=parseCSV(text);
+    const sheetRange = extractReportRangeFromSheet(rows);
+    if(sheetRange){
+      saveReportRange(sheetRange.from, sheetRange.to);
+    }
+    updateReportRangeBadge();
     render(rows);
     document.getElementById('lastUpdated').textContent='Last updated '+new Date().toLocaleTimeString();
     if(restartCountdown) startCountdown();
@@ -759,6 +831,8 @@ function startCountdown(){
 }
 
 load();
+currentReportRange = loadSavedReportRange();
+updateReportRangeBadge();
 </script>
 </body>
 </html>
