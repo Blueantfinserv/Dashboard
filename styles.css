@@ -79,6 +79,24 @@ body {
   gap: 26px;
 }
 
+.report-range-badge {
+  align-items: center;
+  justify-content: center;
+  min-width: 400px;
+  padding: 10px 40px;
+  border-radius: 30px;
+  background: linear-gradient(180deg, #fff7ed, #ffe4bf);
+  border: 1px solid rgb(0 0 0);
+  color: #c81212;
+  font-family: 'DM Mono', monospace;
+  font-size: 70px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  box-shadow: 0 8px 18px rgba(200, 121, 18, 0.10);
+  display: flex;
+}
+
 .live-badge {
   display: flex;
   align-items: center;
