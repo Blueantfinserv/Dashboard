@@ -665,7 +665,7 @@ tbody tr.row-ashutosh .pts-badge { border-color:rgba(154,52,18,0.34);  }
 
 /* ── Vacant rows ── */
 .vacant-row td {
-  background: #ef1111 !important;
+  background: #fc4e42 !important;
   color: #ffffff !important;
   border-top: 1px solid #c70d0d !important;
   border-bottom: 1px solid #c70d0d !important;
