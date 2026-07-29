@@ -12,7 +12,7 @@
 <div class="loading-overlay" id="loadingOverlay">
   <div class="loading-ring"></div>
   <div class="loading-headline" id="loadingHeadline">UPDATING DATE RANGE</div>
-  <div class="loading-detail"   id="loadingDetail">Syncing with Google Sheets…</div>
+  <div class="loading-detail"   id="loadingDetail">Syncing with Google Sheetsâ€¦</div>
   <div class="loading-progress-track">
     <div class="loading-progress-bar" id="loadingBar"></div>
   </div>
@@ -33,14 +33,14 @@
       <div class="report-range-badge" id="reportRangeBadge">REPORT RANGE</div>
       <div class="live-badge"><div class="live-dot"></div>LIVE</div>
       <button class="refresh-btn" onclick="location.reload(true);" title="Force Refresh">
-        <span class="refresh-icon">↻</span> REFRESH
+        <span class="refresh-icon">â†»</span> REFRESH
       </button>
       <div class="filter-group">
         <button class="fbtn" data-range="custom" onclick="toggleCustomPanel()">Custom Range &#9662;</button>
       </div>
       <div>
         <div class="update-time" id="lastUpdated">Connecting...</div>
-        <div class="countdown-line">↻ Next update in <span id="cdNum">10</span>s</div>
+        <div class="countdown-line">â†» Next update in <span id="cdNum">10</span>s</div>
       </div>
     </div>
   </div>
@@ -58,7 +58,7 @@
   </div>
 </div>
 
-<!-- ══ BOARD ════════════════════════════════════════════════ -->
+<!-- â•â• BOARD â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <div class="board-outer">
 
   <!-- Main Table -->
@@ -74,29 +74,24 @@
           <th class="center" style="width:300px;">Today Cl.</th>
           <th style="min-width:190px;">
             <div class="metric-head">
-              <div>Leads</div>
-              <div class="metric-subheads">Ach. | Tgt.</div>
+              <div>Intro + Meeting</div>
+              <div class="metric-subheads">
+                <span>Ach.</span>
+                <span>Tgt.</span>
+                <span>Pen %</span>
+              </div>
             </div>
           </th>
           <th style="min-width:190px;">
             <div class="metric-head">
-              <div>Intro</div>
-              <div class="metric-subheads">Ach. | Tgt. | Pen %</div>
+              <div>Client Created</div>
+              <div class="metric-subheads">
+                <span>Ach.</span>
+                <span>Tgt.</span>
+                <span>Pen %</span>
+              </div>
             </div>
           </th>
-          <th style="min-width:190px;">
-            <div class="metric-head">
-              <div>Meetings</div>
-              <div class="metric-subheads">Ach. | Tgt. | Pen %</div>
-            </div>
-          </th>
-          <th style="min-width:190px;">
-            <div class="metric-head">
-              <div>Tgt-Rpt</div>
-              <div class="metric-subheads">Ach. | Tgt. | Pen %</div>
-            </div>
-          </th>
-          <th class="center" style="width:300px;">Doc</th>
           <th class="center">Points</th>
         </tr>
       </thead>
@@ -108,7 +103,7 @@
   <div class="team-summary-panel" id="teamSummaryPanel">
     <div class="tsp-header">
       <span class="tsp-header-line"></span>
-      <span class="tsp-header-label">⚡ TEAM STANDINGS</span>
+      <span class="tsp-header-label">&#x26A1; TEAM STANDINGS</span>
       <span class="tsp-header-line"></span>
     </div>
     <div class="tsp-cards" id="tspCards"></div>
@@ -116,18 +111,18 @@
 
 </div>
 
-<!-- ══ BOTTOM SECTION ════════════════════════════════════════ -->
+
 <div class="bottom-section">
 
   <!-- Left half: Past Week Top 3 -->
   <div class="bottom-half">
     <div class="pw-header">
       <span class="pw-header-line"></span>
-      <span class="pw-header-label">🏆 PAST WEEK — TOP PERFORMERS</span>
+      <span class="pw-header-label">PAST WEEK TOP PERFORMERS</span>
       <span class="pw-header-line"></span>
     </div>
     <div class="pw-cards" id="pwCards">
-      <div class="pw-loading">LOADING PAST WEEK DATA…</div>
+      <div class="pw-loading">LOADING PAST WEEK DATA</div>
     </div>
   </div>
 
@@ -137,11 +132,11 @@
   <div class="bottom-half" id="bottomRight">
     <div class="pw-header">
       <span class="pw-header-line"></span>
-      <span class="pw-header-label">🔥 PAST WEEK — TOP CONVERTERS</span>
+      <span class="pw-header-label">PAST WEEK TOP CONVERTERS</span>
       <span class="pw-header-line"></span>
     </div>
     <div class="pw-cards" id="convCards">
-      <div class="pw-loading">LOADING CONVERTER DATA…</div>
+      <div class="pw-loading">LOADING CONVERTER DATA</div>
     </div>
   </div>
 
@@ -149,9 +144,9 @@
 
 <script>
 
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZyLPhCRB7pQ5ivX-9FltXfKNhw-CXGqHDAkW3dyzC4EXQ4haFfxEkoD7bniygkugPRA/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3TC3EzB6FLo7Hy5R5Qn92QT0KSltCo9tKfGGi5hEd0Hs1di0v9Lf-rcuYDmZP8UISbA/exec';
 const SHEET_ID = '1XX5Io8gpJPmcALPS217MB1j33FMpGMdoFAg80I-cbmA';
-const GID      = '806469274';
+const GID      = '69761529';
 const CSV_URL  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
 const REFRESH  = 10;
 
@@ -166,7 +161,7 @@ const TEAM_LABELS = { harsh:'HARSH', alok:'ALOK', ashutosh:'ASHUTOSH' };
 let cdVal = REFRESH, cdTimer = null, activeFilter = null, toastTimer = null;
 let currentReportRange = null;
 
-/* ── Utilities ── */
+/* â”€â”€ Utilities â”€â”€ */
 function todayMidnight(){ const d=new Date(); d.setHours(0,0,0,0); return d; }
 function isoDate(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
 function displayDate(iso){ return new Date(iso+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}); }
@@ -267,11 +262,11 @@ function updateReportRangeBadge(){
   el.textContent = `${fromDay} to ${toDay}`;
 }
 
-/* ── Filter strip ── */
+/* â”€â”€ Filter strip â”€â”€ */
 function showActiveLabel(from,to){
   const el=document.getElementById('activeRangeLbl');
   const strip=document.getElementById('filterStrip');
-  el.textContent=from===to?displayDate(from):`${displayDate(from)}  →  ${displayDate(to)}`;
+  el.textContent=from===to?displayDate(from):`${displayDate(from)}  â†’  ${displayDate(to)}`;
   el.style.display='';
   strip.classList.add('visible');
 }
@@ -299,7 +294,7 @@ function closeCustomPanel(){
 }
 
 async function writeSheetDates(from,to){
-  if(!APPS_SCRIPT_URL){ showToast('⚠ Apps Script not configured.','toast-warn'); return false; }
+  if(!APPS_SCRIPT_URL){ showToast('âš  Apps Script not configured.','toast-warn'); return false; }
   const url=`${APPS_SCRIPT_URL}?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`;
   try{ await fetch(url,{method:'GET',mode:'no-cors'}); }catch(e){}
   return true;
@@ -309,16 +304,16 @@ function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
 async function applyPreset(preset){
   const range=presetRange(preset); if(!range) return;
   setActiveBtn(preset); closeCustomPanel(); clearInterval(cdTimer);
-  showLoading('UPDATING DATE RANGE','Writing to Google Sheets…',10);
+  showLoading('UPDATING DATE RANGE','Writing to Google Sheetsâ€¦',10);
   await writeSheetDates(range.from,range.to);
-  setLoadingProgress(35,'Waiting for formulas to recalculate…'); await sleep(1500);
-  setLoadingProgress(65,'Recalculating…'); await sleep(1500);
-  setLoadingProgress(85,'Fetching updated data…');
+  setLoadingProgress(35,'Waiting for formulas to recalculateâ€¦'); await sleep(1500);
+  setLoadingProgress(65,'Recalculatingâ€¦'); await sleep(1500);
+  setLoadingProgress(85,'Fetching updated dataâ€¦');
   await load(false);
   setLoadingProgress(100,'Done!'); await sleep(300);
   hideLoading(); showActiveLabel(range.from,range.to);
   saveReportRange(range.from, range.to);
-  showToast(`✓ Range applied: ${range.from===range.to?displayDate(range.from):`${displayDate(range.from)} → ${displayDate(range.to)}`}`,'toast-success');
+  showToast(`âœ“ Range applied: ${range.from===range.to?displayDate(range.from):`${displayDate(range.from)} â†’ ${displayDate(range.to)}`}`,'toast-success');
   startCountdown();
 }
 async function applyCustom(){
@@ -327,20 +322,20 @@ async function applyCustom(){
   if(!from||!to){ showToast('Please select both From and To dates.','toast-warn'); return; }
   if(from>to){ showToast('From date cannot be later than To date.','toast-error'); return; }
   closeCustomPanel(); setActiveBtn('custom'); clearInterval(cdTimer);
-  showLoading('APPLYING CUSTOM RANGE','Writing dates to Google Sheets…',10);
+  showLoading('APPLYING CUSTOM RANGE','Writing dates to Google Sheetsâ€¦',10);
   await writeSheetDates(from,to);
-  setLoadingProgress(35,'Waiting for formulas to recalculate…'); await sleep(1500);
-  setLoadingProgress(65,'Recalculating…'); await sleep(1500);
-  setLoadingProgress(85,'Fetching updated data…');
+  setLoadingProgress(35,'Waiting for formulas to recalculateâ€¦'); await sleep(1500);
+  setLoadingProgress(65,'Recalculatingâ€¦'); await sleep(1500);
+  setLoadingProgress(85,'Fetching updated dataâ€¦');
   await load(false);
   setLoadingProgress(100,'Done!'); await sleep(300);
   hideLoading(); showActiveLabel(from,to);
   saveReportRange(from, to);
-  showToast(`✓ Custom range: ${displayDate(from)} → ${displayDate(to)}`,'toast-success');
+  showToast(`âœ“ Custom range: ${displayDate(from)} â†’ ${displayDate(to)}`,'toast-success');
   startCountdown();
 }
 
-/* ── CSV parser ── */
+/* â”€â”€ CSV parser â”€â”€ */
 function parseCSV(text){
   const rows=[]; const lines=text.trim().split('\n');
   for(const line of lines){
@@ -356,7 +351,7 @@ function parseCSV(text){
   return rows;
 }
 
-/* ── Helpers ── */
+/* â”€â”€ Helpers â”€â”€ */
 function pct(a,t){ return t?Math.min((a/t)*100,100):0; }
 function cls(a,t){ if(a===0)return'zero'; const p=(a/t)*100; return p>=100?'good':p>=60?'ok':'bad'; }
 function metricHTML(act,tgt){
@@ -367,15 +362,6 @@ function metricHTML(act,tgt){
       <span class="metric-v achieved ${c}">${act}</span>
       <span class="metric-v target tgt">${tgt}</span>
       <span class="metric-v pending pend">${pendingPct}%</span>
-    </div>
-  </div>`;
-}
-function metricHTMLNoPending(act,tgt){
-  const c=cls(act,tgt);
-  return `<div class="metric">
-    <div class="metric-grid metric-values metric-values-2">
-      <span class="metric-v achieved ${c}">${act}</span>
-      <span class="metric-v target tgt">${tgt}</span>
     </div>
   </div>`;
 }
@@ -390,7 +376,7 @@ function buildTeamLookup(){
   return lookup;
 }
 
-/* ── FLIP helpers: table rows ── */
+/* â”€â”€ FLIP helpers: table rows â”€â”€ */
 function captureRowPositions(){
   const positions=new Map();
   document.querySelectorAll('#tableBody tr[data-row-key]').forEach(row=>positions.set(row.dataset.rowKey,row.getBoundingClientRect().top));
@@ -406,7 +392,7 @@ function animateRowMoves(oldPositions){
   });
 }
 
-/* ── FLIP helpers: team cards ── */
+/* â”€â”€ FLIP helpers: team cards â”€â”€ */
 function captureCardPositions(){
   const positions=new Map();
   document.querySelectorAll('#tspCards .tsp-card[data-team-key]').forEach(card=>positions.set(card.dataset.teamKey,card.getBoundingClientRect().top));
@@ -423,7 +409,7 @@ function animateCardMoves(oldPositions){
 }
 
 function extractData(rows){
-  // Dynamically find "Week Total" row — search from row index 4 onward
+  // Dynamically find "Week Total" row â€” search from row index 4 onward
   let totalRowIndex = -1;
   for(let i = 4; i < rows.length; i++){
     const cellVal = rows[i][5];
@@ -442,29 +428,25 @@ function extractData(rows){
       tIM:    Number(r[3])  || 0,
       tClient:Number(r[4])  || 0,
       name:   r[5],
-      lTgt:   Number(r[6])  || 0,
-      lAct:   Number(r[7])  || 0,
-      imTgt:  Number(r[8])  || 0,
-      imAct:  Number(r[9])  || 0,
-      mtTgt:  Number(r[10]) || 0,
-      mtAct:  Number(r[11]) || 0,
-      ccTgt:  Number(r[12]) || 0,
-      ccRpt:  Number(r[13]) || 0,
-      ccDoc:  Number(r[14]) || 0,
-      pts:    Number(r[15]) || 0
+      imTgt:  Number(r[6])  || 0,
+      imAct:  Number(r[7])  || 0,
+      ccTgt:  Number(r[8])  || 0,
+      ccRpt:  Number(r[9])  || 0,
+      pts:    Number(r[10]) || 0
     }));
 
-  // Total row is found dynamically — never hardcoded
+  // Total row is found dynamically â€” never hardcoded
   const totalRow = totalRowIndex > -1 ? rows[totalRowIndex] : null;
 
   return { members, totalRow };
 }
 
 function extractPastWeekData(rows){
-  // Past week section starts at row index 19
-  // Dynamically find "Week Total" from row 19 onward
+  // Past week section starts at row index 25
+  // Dynamically find "Week Total" from row 25 onward
+  const pastWeekStartIndex = 25;
   let totalRowIndex = -1;
-  for(let i = 19; i < rows.length; i++){
+  for(let i = pastWeekStartIndex; i < rows.length; i++){
     const cellVal = rows[i][5];
     if(cellVal && cellVal.trim().toLowerCase() === 'week total'){
       totalRowIndex = i;
@@ -472,9 +454,9 @@ function extractPastWeekData(rows){
     }
   }
 
-  const endIndex = totalRowIndex > 19 ? totalRowIndex : 30;
+  const endIndex = totalRowIndex > pastWeekStartIndex ? totalRowIndex : rows.length;
 
-  const members = rows.slice(19, endIndex)
+  const members = rows.slice(pastWeekStartIndex, endIndex)
     .filter(r => r[5] && r[5].trim() !== '' && r[5].trim().toLowerCase() !== 'week total')
     .map(r => ({
       name:    r[5],
@@ -482,22 +464,17 @@ function extractPastWeekData(rows){
       yClient: Number(r[2])  || 0,
       tIM:     Number(r[3])  || 0,
       tClient: Number(r[4])  || 0,
-      lTgt:    Number(r[6])  || 0,
-      lAct:    Number(r[7])  || 0,
-      imTgt:   Number(r[8])  || 0,
-      imAct:   Number(r[9])  || 0,
-      mtTgt:   Number(r[10]) || 0,
-      mtAct:   Number(r[11]) || 0,
-      ccTgt:   Number(r[12]) || 0,
-      ccRpt:   Number(r[13]) || 0,
-      ccDoc:   Number(r[14]) || 0,
-      pts:     Number(r[15]) || 0
+      imTgt:   Number(r[6])  || 0,
+      imAct:   Number(r[7])  || 0,
+      ccTgt:   Number(r[8])  || 0,
+      ccRpt:   Number(r[9])  || 0,
+      pts:     Number(r[10]) || 0
     }));
 
   return members.sort((a, b) => b.pts - a.pts);
 }
 
-/* ── Render Past Week Top 3 cards ── */
+/* â”€â”€ Render Past Week Top 3 cards â”€â”€ */
 function renderPastWeekCards(rows) {
   const members = extractPastWeekData(rows);
   const top3 = members.slice(0, 3);
@@ -510,7 +487,7 @@ function renderPastWeekCards(rows) {
   const cardClasses = ['pw-card-1', 'pw-card-2', 'pw-card-3'];
   const rankClasses = ['pw-rank-1', 'pw-rank-2', 'pw-rank-3'];
   const rankNums    = ['1', '2', '3'];
-  const trophies    = ['🥇', '🥈', '🥉'];
+  const trophies    = ['&#x1F947;', '&#x1F948;', '&#x1F949;'];
 
   let html = '';
   top3.forEach((m, i) => {
@@ -528,7 +505,7 @@ function renderPastWeekCards(rows) {
            style="width:100%;display:flex;justify-content:center;align-items:center;">
         <div class="pw-stat-val"
              style="width:100%;text-align:center;font-size:38px;font-weight:500;line-height:1.0;">
-          Total Meetings = ${m.imAct + m.mtAct}
+          Total Intro + Meetings = ${m.imAct}
         </div>
       </div>
     </div>
@@ -542,7 +519,7 @@ function renderPastWeekCards(rows) {
   container.innerHTML = html;
 }
 
-/* ── Render Top Converters cards ── */
+/* â”€â”€ Render Top Converters cards â”€â”€ */
 function renderTopConvertersCards(rows) {
   const members = extractPastWeekData(rows)
     .slice()
@@ -553,7 +530,7 @@ function renderTopConvertersCards(rows) {
 
   const cardClasses = ['pw-card-1','pw-card-2','pw-card-3'];
   const rankClasses = ['pw-rank-1','pw-rank-2','pw-rank-3'];
-  const medals = ['🥇','🥈','🥉'];
+  const medals = ['&#x1F947;','&#x1F948;','&#x1F949;'];
 
   let html = '';
   top3.forEach((m, i) => {
@@ -577,7 +554,7 @@ function renderTopConvertersCards(rows) {
   container.innerHTML = html;
 }
 
-/* ── Group by team ── */
+/* â”€â”€ Group by team â”€â”€ */
 function groupByTeam(members){
   const lookup=buildTeamLookup();
   const buckets=TEAMS.map(()=>[]);
@@ -588,30 +565,30 @@ function groupByTeam(members){
   return {buckets,others};
 }
 
-/* ── Compute team stats ── */
+/* â”€â”€ Compute team stats â”€â”€ */
 function computeTeamStats(buckets){
   return TEAMS.map((team,ti)=>{
     const members=buckets[ti];
     if(!members.length) return null;
     const totalPts  = members.reduce((s,m)=>s+m.pts,0);
-    const totalMtAct= members.reduce((s,m)=>s+m.mtAct,0);
-    const totalMtTgt= members.reduce((s,m)=>s+m.mtTgt,0);
+    const totalImAct= members.reduce((s,m)=>s+m.imAct,0);
+    const totalImTgt= members.reduce((s,m)=>s+m.imTgt,0);
     const totalRpt  = members.reduce((s,m)=>s+m.ccRpt,0);
     const count     = members.length;
-    const avgMtAct  = members.length ? Math.round((totalMtAct/members.length)*10)/10 : 0;
-    const avgMtTgt  = members.length ? Math.round((totalMtTgt/members.length)*10)/10 : 0;
-    const mtPct     = totalMtTgt ? Math.min(Math.round((totalMtAct/totalMtTgt)*100),100) : 0;
-    return { key:team.key, label:TEAM_LABELS[team.key], totalPts, avgMtAct, avgMtTgt, mtPct, totalRpt, count };
+    const avgImAct  = members.length ? Math.round((totalImAct/members.length)*10)/10 : 0;
+    const avgImTgt  = members.length ? Math.round((totalImTgt/members.length)*10)/10 : 0;
+    const imPct     = totalImTgt ? Math.min(Math.round((totalImAct/totalImTgt)*100),100) : 0;
+    return { key:team.key, label:TEAM_LABELS[team.key], totalPts, avgImAct, avgImTgt, imPct, totalRpt, count };
   }).filter(Boolean);
 }
 
-/* ── Rank badge class ── */
+/* â”€â”€ Rank badge class â”€â”€ */
 function rankBadgeClass(rank){ return rank===0?'tsp-rank-1':rank===1?'tsp-rank-2':'tsp-rank-3'; }
 
-/* ── Bar fill class ── */
+/* â”€â”€ Bar fill class â”€â”€ */
 function barClsFromPct(p){ return p>=100?'good':p>=60?'ok':'bad'; }
 
-/* ══ Sync card heights to table row groups ══ */
+/* â•â• Sync card heights to table row groups â•â• */
 function syncCardHeightsToTableRows(teamOrder){
   const cardsContainer = document.getElementById('tspCards');
   const tbody = document.getElementById('tableBody');
@@ -647,7 +624,7 @@ function syncCardHeightsToTableRows(teamOrder){
   });
 }
 
-/* ── Render team summary cards ── */
+/* â”€â”€ Render team summary cards â”€â”€ */
 function renderTeamSummaryCards(buckets, teamOrder){
   const container=document.getElementById('tspCards');
   if(!container) return;
@@ -662,7 +639,7 @@ function renderTeamSummaryCards(buckets, teamOrder){
   let html='';
   stats.forEach((t,rank)=>{
     const ptsBarPct=Math.min(Math.round((t.totalPts/maxPts)*100),100);
-    const mtBarCls=barClsFromPct(t.mtPct);
+    const imBarCls=barClsFromPct(t.imPct);
 
     html+=`
 <div class="tsp-card tsp-card-${t.key}" data-team-key="${t.key}">
@@ -680,15 +657,15 @@ function renderTeamSummaryCards(buckets, teamOrder){
     <div class="tsp-divider"></div>
     <div class="tsp-stat-row">
       <div class="tsp-stat-body">
-        <div class="tsp-stat-label">AVG MEETINGS</div>
+        <div class="tsp-stat-label">AVG INTRO + MEETINGS</div>
         <div class="tsp-stat-nums">
-          <span class="tsp-act ${mtBarCls}">${t.avgMtAct}</span>
+          <span class="tsp-act ${imBarCls}">${t.avgImAct}</span>
         </div>
       </div>
     </div>
     <div class="tsp-stat-row">
            <div class="tsp-stat-body">
-        <div class="tsp-stat-label">RPT CLIENTS</div>
+        <div class="tsp-stat-label">CLIENTS CREATED</div>
         <div class="tsp-rpt-val tsp-pts-${t.key}">${t.totalRpt}</div>
       </div>
     </div>
@@ -704,12 +681,12 @@ function renderTeamSummaryCards(buckets, teamOrder){
   });
 }
 
-/* ── Render table ── */
+/* â”€â”€ Render table â”€â”€ */
 function render(rows){
   const {members,totalRow}=extractData(rows);
   const {buckets,others}=groupByTeam(members);
   const oldPositions=captureRowPositions();
-  const tableColumnCount = 12;
+  const tableColumnCount = 9;
 
   const teamOrder = TEAMS
     .map((team, ti) => ({
@@ -736,11 +713,8 @@ function render(rows){
           <td class="center big">${m.yClient}</td>
           <td class="center big">${m.tIM}</td>
           <td class="center big">${m.tClient}</td>
-          <td>${metricHTMLNoPending(m.lAct,m.lTgt)}</td>
           <td>${metricHTML(m.imAct,m.imTgt)}</td>
-          <td>${metricHTML(m.mtAct,m.mtTgt)}</td>
           <td>${metricHTML(m.ccRpt,m.ccTgt)}</td>
-          <td class="center big">${m.ccDoc}</td>
           <td class="center"><div class="pts-badge ${ptsClass(m.pts,maxPts)}">${m.pts}</div></td>
         </tr>`;
     });
@@ -765,11 +739,8 @@ function render(rows){
           <td class="center big">${m.yClient}</td>
           <td class="center big">${m.tIM}</td>
           <td class="center big">${m.tClient}</td>
-          <td>${metricHTMLNoPending(m.lAct,m.lTgt)}</td>
           <td>${metricHTML(m.imAct,m.imTgt)}</td>
-          <td>${metricHTML(m.mtAct,m.mtTgt)}</td>
           <td>${metricHTML(m.ccRpt,m.ccTgt)}</td>
-          <td class="center big">${m.ccDoc}</td>
           <td class="center"><div class="pts-badge ${ptsClass(m.pts,maxPts)}">${m.pts}</div></td>
         </tr>`;
     });
@@ -784,12 +755,9 @@ function render(rows){
         <td class="center big">${totalRow[2]}</td>
         <td class="center big">${totalRow[3]}</td>
         <td class="center big">${totalRow[4]}</td>
-        <td>${metricHTMLNoPending(Number(totalRow[7]),Number(totalRow[6]))}</td>
+        <td>${metricHTML(Number(totalRow[7]),Number(totalRow[6]))}</td>
         <td>${metricHTML(Number(totalRow[9]),Number(totalRow[8]))}</td>
-        <td>${metricHTML(Number(totalRow[11]),Number(totalRow[10]))}</td>
-        <td>${metricHTML(Number(totalRow[13]),Number(totalRow[12]))}</td>
-        <td class="center big">${totalRow[14]}</td>
-        <td class="center big" style="color:var(--gold);">${totalRow[15]}</td>
+        <td class="center big" style="color:var(--gold);">${totalRow[10]}</td>
       </tr>`;
   }
 
@@ -801,7 +769,7 @@ function render(rows){
   renderTopConvertersCards(rows);
 }
 
-/* ── Load & countdown ── */
+/* â”€â”€ Load & countdown â”€â”€ */
 async function load(restartCountdown=true){
   try{
     const res=await fetch(CSV_URL+'&t='+Date.now());
