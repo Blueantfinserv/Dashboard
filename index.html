@@ -235,12 +235,9 @@ function parseSheetDate(value){
 }
 
 function extractReportRangeFromSheet(rows){
-  for(let i=0; i<Math.min(rows.length, 4); i++){
-    const from = parseSheetDate(rows[i]?.[19]);
-    const to = parseSheetDate(rows[i]?.[20]);
-    if(from && to) return { from, to };
-  }
-  return null;
+  const from = parseSheetDate(rows[0]?.[14]);
+  const to = parseSheetDate(rows[0]?.[15]);
+  return from && to ? { from, to } : null;
 }
 
 function weekdayLabel(isoDateStr){
