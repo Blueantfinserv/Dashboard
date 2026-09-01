@@ -1,1282 +1,829 @@
-*, *::before, *::after {
-  margin: 0; padding: 0; box-sizing: border-box;
-}
-
-:root {
-  --bg:      #d5dfec;
-  --surface: #ffffff;
-  --card:    #ffffff;
-  --border:  rgba(35, 55, 90, 0.11);
-  --text:    #111827;
-  --text-dim:   #52627a;
-  --text-faint: #8390a5;
-  --gold:  #c87912;
-  --green: #078f71;
-  --amber: #b76b00;
-  --red:   #c72f52;
-  --blue:  #2458d3;
-  --team-harsh:     #1d4ed8;
-  --team-alok:      #047857;
-  --team-sachin:     #7c2d12;
-  --shadow-soft: 0 14px 32px rgba(31, 45, 71, 0.12);
-  --shadow-row:  0 16px 34px rgba(31, 45, 71, 0.18);
-}
-
-body {
-  background: #dbe5ef;
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  min-height: 100vh;
-  overflow-x: auto;
-}
-
-/* ══ TOPBAR ══════════════════════════════════════════════════ */
-.topbar {
-  display: flex;
-  flex-direction: column;
-  background: #eef4fb;
-  border-bottom: 1px solid rgba(35,55,90,0.12);
-  box-shadow: 0 14px 34px rgba(20, 38, 62, 0.10);
-}
-
-.topbar-main {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 18px 32px;
-}
-
-.topbar-left {
-  display: flex;
-  align-items: center;
-  gap: 42px;
-}
-
-.logo {
-  height: 72px;
-  width: auto;
-  object-fit: contain;
-  display: block;
-}
-
-.topbar-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 44px;
-  letter-spacing: 2px;
-  color: #17324f;
-  text-shadow: 0 8px 20px rgba(20, 38, 62, 0.10);
-}
-
-.topbar-sub {
-  color: #52627a;
-  font-size: 24px;
-  letter-spacing: 3px;
-}
-
-.topbar-right {
-  display: flex;
-  align-items: center;
-  gap: 26px;
-}
-
-.report-range-badge {
-  align-items: center;
-  justify-content: center;
-  min-width: 400px;
-  padding: 10px 40px;
-  border-radius: 30px;
-  background: linear-gradient(180deg, #fff7ed, #ffe4bf);
-  border: 1px solid rgb(0 0 0);
-  color: #c81212;
-  font-family: 'DM Mono', monospace;
-  font-size: 70px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  white-space: nowrap;
-  box-shadow: 0 8px 18px rgba(200, 121, 18, 0.10);
-  display: flex;
-}
-
-.live-badge {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: linear-gradient(180deg, #ecfdf5, #dff8ec);
-  border: 1px solid rgba(7,143,113,0.24);
-  padding: 8px 16px;
-  border-radius: 30px;
-  color: var(--green);
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  box-shadow: 0 8px 18px rgba(7,143,113,0.10);
-}
-
-.live-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--green);
-  animation: pulse 1.4s infinite;
-}
-
-@keyframes pulse {
-  0%,100% { opacity:1; transform:scale(1); }
-  50%      { opacity:0.3; transform:scale(0.6); }
-}
-
-.refresh-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: linear-gradient(180deg, #eef4ff, #e5edff);
-  border: 1px solid rgba(36,88,211,0.22);
-  padding: 8px 16px;
-  border-radius: 30px;
-  color: var(--blue);
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 18px rgba(36,88,211,0.09);
-}
-.refresh-btn:hover {
-  background: linear-gradient(180deg, #e8f0ff, #dce8ff);
-  border-color: rgba(36,88,211,0.36);
-  box-shadow: 0 12px 24px rgba(36,88,211,0.14);
-}
-.refresh-icon { display: inline-block; }
-.refresh-btn:active .refresh-icon { animation: spin 0.6s ease; }
-@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-
-.update-time   { color: #52627a; font-size: 20px; text-align: right; }
-.countdown-line { color: #c87912; margin-top: 4px; font-size: 18px; font-family: 'DM Mono', monospace; }
-
-/* ══ FILTER STRIP ════════════════════════════════════════════ */
-.filter-strip {
-  display: none;
-  align-items: center;
-  gap: 16px;
-  padding: 11px 32px 13px;
-  border-top: 1px solid rgba(35,55,90,0.10);
-  background: #e3edf7;
-  flex-wrap: wrap;
-}
-.filter-strip.visible { display: flex; }
-
-.filter-label {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 17px;
-  letter-spacing: 3px;
-  color: #66768a;
-  flex-shrink: 0;
-}
-
-.filter-divider {
-  width: 1px; height: 28px;
-  background: rgba(35,55,90,0.14);
-  flex-shrink: 0;
-}
-
-.filter-group {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  flex-wrap: wrap;
-}
-
-.fbtn {
-  background: #ffffff;
-  border: 1px solid rgba(36,88,211,0.17);
-  color: var(--blue);
-  padding: 8px 16px;
-  border-radius: 24px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 0.4px;
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
-  outline: none;
-  white-space: nowrap;
-  box-shadow: 0 6px 16px rgba(31,45,71,0.06);
-}
-.fbtn:hover {
-  background: #f2f6ff;
-  border-color: rgba(36,88,211,0.30);
-  color: #163ea3;
-  box-shadow: 0 10px 22px rgba(36,88,211,0.10);
-}
-.fbtn.active {
-  background: linear-gradient(180deg, #fff6e7, #ffedd3);
-  border-color: rgba(200,121,18,0.34);
-  color: var(--gold);
-  box-shadow: 0 10px 22px rgba(200,121,18,0.13);
-}
-.fbtn.active:hover {
-  background: linear-gradient(180deg, #fff2dc, #ffe5bd);
-}
-
-.custom-panel {
-  display: none;
-  align-items: center;
-  gap: 10px;
-  padding: 7px 16px;
-  background: rgba(255,255,255,0.88);
-  border: 1px solid rgba(35,55,90,0.10);
-  border-radius: 12px;
-  flex-wrap: wrap;
-  box-shadow: var(--shadow-soft);
-}
-.custom-panel.open { display: flex; }
-
-.date-input {
-  background: #ffffff;
-  border: 1px solid rgba(35,55,90,0.18);
-  color: var(--text);
-  padding: 5px 11px;
-  border-radius: 7px;
-  font-size: 14px;
-  font-family: 'DM Mono', monospace;
-  cursor: pointer;
-  outline: none;
-  color-scheme: light;
-  transition: border-color 0.2s;
-}
-.date-input:focus {
-  border-color: rgba(36,88,211,0.42);
-  box-shadow: 0 0 0 3px rgba(36,88,211,0.10);
-}
-
-.range-arrow { color: var(--blue); font-size: 14px; }
-
-.apply-btn {
-  background: linear-gradient(135deg, #1d4ed8, #0f766e);
-  color: #ffffff;
-  border: none;
-  padding: 6px 18px;
-  border-radius: 7px;
-  font-weight: 700;
-  font-size: 14px;
-  cursor: pointer;
-  letter-spacing: 0.4px;
-  transition: opacity 0.2s, transform 0.1s;
-}
-.apply-btn:hover  { opacity: 0.88; }
-.apply-btn:active { transform: scale(0.97); }
-
-.close-panel-btn {
-  background: #fff5f7;
-  border: 1px solid rgba(199,47,82,0.28);
-  color: var(--red);
-  width: 26px; height: 26px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 15px;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.2s;
-}
-.close-panel-btn:hover { border-color: var(--red); color: var(--red); }
-
-.active-range-lbl {
-  display: none;
-  margin-left: auto;
-  font-family: 'DM Mono', monospace;
-  font-size: 13px;
-  color: var(--gold);
-  background: #fff7e8;
-  border: 1px solid rgba(200,121,18,0.20);
-  border-radius: 20px;
-  padding: 4px 14px;
-  letter-spacing: 1px;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-/* ══ LOADING OVERLAY ═════════════════════════════════════════ */
-.loading-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(244,247,251,0.86);
-  backdrop-filter: blur(6px);
-  z-index: 9999;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 22px;
-}
-.loading-overlay.active { display: flex; }
-
-.loading-ring {
-  width: 72px; height: 72px;
-  border: 3px solid rgba(36,88,211,0.12);
-  border-top-color: var(--blue);
-  border-radius: 50%;
-  animation: ringpin 0.75s linear infinite;
-}
-@keyframes ringpin { to { transform: rotate(360deg); } }
-
-.loading-headline {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 28px;
-  letter-spacing: 5px;
-  color: var(--blue);
-}
-.loading-detail {
-  font-size: 14px;
-  color: var(--text-dim);
-  letter-spacing: 1px;
-  font-family: 'DM Mono', monospace;
-}
-
-.loading-progress-track {
-  width: 260px; height: 3px;
-  background: rgba(35,55,90,0.10);
-  border-radius: 3px;
-  overflow: hidden;
-}
-.loading-progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, var(--blue), var(--team-sachin));
-  border-radius: 3px;
-  width: 0%;
-  transition: width 0.4s ease;
-}
-
-/* ══ TOAST ═══════════════════════════════════════════════════ */
-.toast {
-  position: fixed;
-  bottom: 36px; right: 36px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 14px 22px;
-  font-size: 15px;
-  color: var(--text-dim);
-  box-shadow: var(--shadow-soft);
-  z-index: 10000;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  pointer-events: none;
-  max-width: 380px;
-  font-family: 'DM Mono', monospace;
-}
-.toast.show          { opacity: 1; transform: translateY(0); }
-.toast.toast-warn    { border-color: rgba(255,176,32,0.35); color: var(--amber); }
-.toast.toast-success { border-color: rgba(25,226,140,0.35); color: var(--green); }
-.toast.toast-error   { border-color: rgba(255,77,95,0.35);  color: var(--red);   }
-
-/* ══ BOARD ═══════════════════════════════════════════════════ */
-.board-outer {
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
-  padding: 10px 24px 10px;
-  background: #d2deeb;
-}
-
-.board-section {
-  flex: 7;
-  min-width: 0;
-  overflow-x: auto;
-}
-
-/* ══ TABLE ═══════════════════════════════════════════════════ */
-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 6px;
-  min-width: 2350px;
-  height: 2300px;
-  table-layout: fixed;
-}
-
-thead th {
-  text-align: left;
-  padding: 5px 10px;
-  color: #17324f;
-  font-size: 40px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.72);
-}
-thead th:nth-child(3n)     { color: #047857; }
-thead th:nth-child(3n + 1) { color: #7c2d12; }
-thead th:nth-child(3n + 2) { color: #1d4ed8; }
-thead th:nth-child(7),
-thead th:nth-child(8),
-thead th:nth-child(9) {
-  text-align: center;
-}
-thead th:nth-child(10),
-thead th:nth-child(11) {
-  text-align: center;
-}
-
-tbody tr {
-  background: var(--card);
-  box-shadow: var(--shadow-row);
-  outline: 1px solid rgba(35,55,90,0.05);
-  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
-  will-change: transform;
-}
-tbody tr:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 20px 38px rgba(31, 45, 71, 0.18);
-  filter: saturate(1.03);
-}
-
-tbody tr.row-harsh {
-  background:
-    linear-gradient(90deg, rgba(29,78,216,0.36), rgba(59,130,246,0.24) 28%, rgba(255,255,255,0.87) 50%, rgba(191,219,254,0.36) 75%, rgba(29,78,216,0.22) 100%),
-    #ffffff;
-}
-tbody tr.row-alok {
-  background:
-    linear-gradient(90deg, rgba(4,120,87,0.34), rgba(15,118,110,0.25) 28%, rgba(255,255,255,0.87) 50%, rgba(153,246,228,0.32) 75%, rgba(4,120,87,0.22) 100%),
-    #ffffff;
-}
-tbody tr.row-sachin {
-  background:
-    linear-gradient(90deg, rgba(124,45,18,0.34), rgba(154,52,18,0.24) 28%, rgba(255,255,255,0.87) 50%, rgba(254,215,170,0.36) 75%, rgba(124,45,18,0.22) 100%),
-    #ffffff;
-}
-
-tbody tr.row-harsh    td:first-child { box-shadow: inset 6px 0 0 var(--team-harsh),    inset 12px 0 0 rgba(59,130,246,0.32); }
-tbody tr.row-alok     td:first-child { box-shadow: inset 6px 0 0 var(--team-alok),     inset 12px 0 0 rgba(15,118,110,0.30); }
-tbody tr.row-sachin td:first-child { box-shadow: inset 6px 0 0 var(--team-sachin), inset 12px 0 0 rgba(154,52,18,0.30);  }
-
-tbody td {
-  padding: 8px 8px;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  background: transparent;
-}
-
-/* ── Metric columns (INTRO, MEETINGS, TGT-RPT) ── */
-/* Each metric column gets generous width + breathing room padding */
-tbody td:nth-child(3),
-tbody td:nth-child(4),
-tbody td:nth-child(5),
-tbody td:nth-child(6) {
-  padding-left: 16px;      /* ← increased from 2px */
-  padding-right: 16px;     /* ← increased from 2px */
-  width: 280px;            /* ← increased from 50px */
-}
-
-tbody td:nth-child(7),
-tbody td:nth-child(8),
-tbody td:nth-child(9) {
-  text-align: center;
-}
-tbody td:nth-child(10),
-tbody td:nth-child(11) {
-  text-align: center;
-}
-thead th:nth-child(11),
-tbody td:nth-child(11) {
-  padding-left: 90px;
-}
-tbody td:nth-child(11) .pts-badge {
-  margin-left: 24px;
-}
-thead th:nth-child(12),
-tbody td:nth-child(12) {
-  padding-left: 150px;
-}
-thead th:nth-child(10),
-tbody td:nth-child(10) {
-  padding-left: 80px;
-}
-thead th:nth-child(9),
-tbody td:nth-child(9) {
-  padding-left: 80px;
-}
-tbody td:first-child {
-  border-left: 1px solid var(--border);
-  border-radius: 12px 0 0 12px;
-}
-tbody td:last-child {
-  border-right: 1px solid var(--border);
-  border-radius: 0 12px 12px 0;
-}
-
-/* ── Rank circles ── */
-.rank-circle {
-  width: 80px; height: 80px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'DM Mono', monospace;
-  font-weight: 700; font-size: 50px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.75), 0 8px 18px rgba(31,45,71,0.08);
-}
-.r1 { background: linear-gradient(180deg,#fff7dc,#ffe8ad); color:#9a5b00;       border:1px solid rgba(200,121,18,0.42); }
-.r2 { background: linear-gradient(180deg,#e0f2fe,#dbeafe); color:var(--blue);   border:1px solid rgba(36,88,211,0.34); }
-.r3 { background: linear-gradient(180deg,#dcfce7,#ccfbf1); color:var(--green);  border:1px solid rgba(7,143,113,0.34); }
-.rn { background: #f6f8fb; color:#64748b; border:1px solid var(--border); }
-
-/* ── Member name ── */
-.member-name { font-size: 70px; font-weight: bolder; color: #182235; }
-tbody tr.row-harsh    .member-name { color: #1d4ed8; }
-tbody tr.row-alok     .member-name { color: #047857; }
-tbody tr.row-sachin .member-name { color: #7c2d12; }
-tbody tr.row-harsh    .big { color: #1e3a8a; }
-tbody tr.row-alok     .big { color: #065f46; }
-tbody tr.row-sachin .big { color: #7c2d12; }
-
-/* ── Metric cells ── */
-.metric {
-  width: 100%;
-  min-width: 0;
-  max-width: none;
-  margin: 0 auto;
-  padding-left: 0;
-  padding-right: 0;
-}
-.metric-head {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  width: 100%;
-}
-.metric-subheads {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-items: center;
-  justify-items: center;
-  column-gap: 12px;
-  width: 100%;
-  font-family: 'DM Mono', monospace;
-  font-size: 30px;
-  letter-spacing: 0.8px;
-  color: #7b8799;
-  white-space: nowrap;
-}
-.metric-subheads span {
-  width: 100%;
-  text-align: center;
-}
-.metric-subheads span:nth-child(1) {
-  transform: translateX(10px);
-}
-.metric-subheads span:nth-child(2) {
-  transform: translateX(-10px);
-}
-.metric-subheads span:nth-child(3) {
-  transform: translateX(-20px);
-}
-.metric-caption {
-  font-family: 'DM Mono', monospace;
-  font-size: 20px;
-  color: #7b8799;
-  text-transform: none;
-}
-.metric-subheads-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.metric-subheads-2 span:nth-child(1),
-.metric-subheads-2 span:nth-child(2) { transform: none; }
-.metric-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-items: center;
-  justify-items: center;
-  column-gap: 12px;        /* ← increased from 4px for breathing room */
-  row-gap: 4px;
-  margin-top: 4px;
-  transform: translateX(0);
-  width: 100%;
-}
-.metric-grid.metric-values {
-  position: relative;
-}
-.metric-grid.metric-values-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-.metric-grid.metric-values::before,
-.metric-grid.metric-values::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  width: 1px;
-  height: 34px;
-  transform: translateY(-50%);
-  background: rgba(35,55,90,0.38);
-}
-.metric-grid.metric-values::before {
-  left: calc(33.333% + 0px);
-}
-.metric-grid.metric-values::after {
-  left: calc(66.666% - 20px);
-}
-.metric-grid.metric-values-2::after {
-  display: none;
-}
-.metric-grid.metric-values-2::before {
-  left: calc(50% - 1px);
-}
-.metric-values {
-  margin-bottom: 2px;
-}
-.metric-k {
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  color: #718096;
-  white-space: nowrap;
-  text-align: center;
-}
-.metric-v {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 70px;
-  line-height: 1;
-  white-space: nowrap;
-  text-align: center;
-  width: 100%;
-}
-.metric-v.tgt { color: #718096; }
-.metric-v.pend { color: #c87912; }
-.metric-v.achieved {
-  transform: translateX(10px);
-}
-.metric-grid.metric-values-2 .metric-v.achieved {
-  transform: translateX(30px);
-}
-.metric-v.tgt {
-  transform: translateX(-10px);
-}
-.metric-grid.metric-values-2 .metric-v.tgt {
-  transform: translateX(-50px);
-}
-.metric-v.pend {
-  transform: translateX(-20px);
-}
-.good { color: var(--green); }
-.ok   { color: var(--amber); }
-.bad  { color: var(--red);   }
-.zero { color: var(--red);   }
-
-/* ── Points badges ── */
-.pts-badge {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 70px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-family: 'DM Mono', monospace;
-  font-size: 22px;
-  white-space: nowrap;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.72), 0 9px 18px rgba(31,45,71,0.08);
-}
-.pts-top { background:linear-gradient(180deg,#fff7dc,#ffe7a3); border:1px solid rgba(200,121,18,0.32); color:#9a5b00; font-size:70px; font-weight:bold; }
-.pts-mid { background:linear-gradient(180deg,#eef4ff,#dbe8ff); border:1px solid rgba(36,88,211,0.24);  color:var(--blue); font-size:70px; font-weight:bold; }
-.pts-low { background:linear-gradient(180deg,#fff1f3,#ffe2e8); border:1px solid rgba(199,47,82,0.22);  color:var(--red);  font-size:70px; font-weight:bold; }
-
-tbody tr.row-harsh    .pts-top { background:linear-gradient(135deg,#dbeafe,#bae6fd); color:#1d4ed8; border-color:rgba(37,99,235,0.34); }
-tbody tr.row-alok     .pts-top { background:linear-gradient(135deg,#d1fae5,#ccfbf1); color:#047857; border-color:rgba(5,150,105,0.34);  }
-tbody tr.row-sachin .pts-top { background:linear-gradient(135deg,#ffedd5,#fed7aa); color:#7c2d12; border-color:rgba(154,52,18,0.34);  }
-tbody tr.row-harsh    .pts-mid { background:linear-gradient(135deg,#eff6ff,#cffafe); color:#2563eb; }
-tbody tr.row-alok     .pts-mid { background:linear-gradient(135deg,#ecfdf5,#ccfbf1); color:#047857; }
-tbody tr.row-sachin .pts-mid { background:linear-gradient(135deg,#fff7ed,#ffedd5); color:#9a3412; }
-tbody tr.row-harsh    .pts-low { background:linear-gradient(135deg,#fff1f2,#dbeafe); color:#be123c; }
-tbody tr.row-alok     .pts-low { background:linear-gradient(135deg,#fff7ed,#ccfbf1); color:#b45309; }
-tbody tr.row-sachin .pts-low { background:linear-gradient(135deg,#fef2f2,#ffedd5); color:#b91c1c; }
-
-tbody tr.row-harsh    .pts-badge { border-color:rgba(37,99,235,0.34);  }
-tbody tr.row-alok     .pts-badge { border-color:rgba(5,150,105,0.34);  }
-tbody tr.row-sachin .pts-badge { border-color:rgba(154,52,18,0.34);  }
-
-/* ── Vacant rows ── */
-.vacant-row td {
-  background: #ef1111 !important;
-  color: #ffffff !important;
-  border-top: 1px solid #c70d0d !important;
-  border-bottom: 1px solid #c70d0d !important;
-  text-align: center !important;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 72px;
-  letter-spacing: 10px;
-  font-weight: 700;
-  padding: 10px 0 !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  position: relative;
-}
-.vacant-row td::before {
-  content: none;
-}
-.vacant-row td:first-child,
-.vacant-row td:last-child {
-  border-radius: 0 !important;
-}
-
-/* ── Total row ── */
-.total-row td {
-  background: linear-gradient(90deg,#fff7ed,#eef2ff 34%,#ecfdf5 68%,#ffedd5) !important;
-  border-top-color: rgba(200,121,18,0.22);
-  border-bottom-color: rgba(200,121,18,0.22);
-  padding: 8px 16px;
-}
-.total-label {
-  font-family: 'Bebas Neue', sans-serif;
-  color: var(--gold);
-  font-size: 65px;
-  letter-spacing: 5px;
-  padding: 18px 16px;
-}
-
-/* ── Utilities ── */
-.center { text-align: center; }
-.big    { font-size: 70px; font-weight: 700; white-space: nowrap; }
-
-/* ══ TEAM SUMMARY PANEL ══════════════════════════════════════ */
-.team-summary-panel {
-  flex: 0 0 640px;
-  width: 640px;
-  display: flex;
-  flex-direction: column;
-  align-self: flex-start;
-  margin-top: 25px;
-}
-
-/* ── Panel header ── */
-.tsp-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 30px;
-  padding: 0 2px;
-}
-.tsp-header-line {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(35,55,90,0.22), transparent);
-}
-.tsp-header-label {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 55px;
-  letter-spacing: 3px;
-  color: #66768a;
-  white-space: nowrap;
-}
-
-/* ── Cards container ── */
-.tsp-cards {
-  display: flex;
-  flex-direction: column;
-}
-
-/* ══ INDIVIDUAL TEAM CARD ══════════════════════════════════ */
-.tsp-card {
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 24px rgba(20,38,72,0.13), 0 1px 4px rgba(20,38,72,0.07);
-  transition: box-shadow 0.22s ease, transform 0.22s ease;
-  will-change: transform;
-  cursor: default;
-}
-.tsp-card:hover {
-  box-shadow: 0 8px 32px rgba(20,38,72,0.18), 0 2px 8px rgba(20,38,72,0.10);
-  transform: translateY(-1px);
-}
-
-/* ── Dynamic scaling ── */
-.tsp-card { --scale: 1; }
-
-.tsp-card-inner {
-  padding: calc(16px * var(--scale)) calc(20px * var(--scale));
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  gap: calc(12px * var(--scale));
-}
-
-/* ── Card head ── */
-.tsp-card-head {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: calc(5px * var(--scale));
-  margin-bottom: calc(6px * var(--scale));
-  padding-bottom: calc(10px * var(--scale));
-  border-bottom: 1px solid rgba(35,55,90,0.10);
-  width: 100%;
-  text-align: center;
-}
-.tsp-rank-badge {
-  width: calc(90px * var(--scale));
-  height: calc(90px * var(--scale));
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'DM Mono', monospace;
-  font-size: calc(60px * var(--scale));
-  font-weight: 700;
-  flex-shrink: 0;
-}
-.tsp-team-name {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: calc(60px * var(--scale));
-  letter-spacing: 2px;
-  line-height: 1;
-}
-.tsp-member-count {
-  font-family: 'DM Mono', monospace;
-  font-size: calc(30px * var(--scale));
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #363d48;
-  white-space: nowrap;
-  background: rgba(35, 55, 90, 0.06);
-  padding: calc(3px * var(--scale)) calc(8px * var(--scale));
-  border-radius: 20px;
-}
-
-/* ── Points block ── */
-.tsp-pts-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: calc(5px * var(--scale));
-  padding: calc(10px * var(--scale)) calc(12px * var(--scale));
-  border-radius: 10px;
-  margin: 0 auto;
-  background: rgba(35,55,90,0.04);
-  width: 100%;
-}
-.tsp-pts-label {
-  font-family: 'DM Mono', monospace;
-  font-size: calc(30px * var(--scale));
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  color: #011d4a;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.tsp-pts-val {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: calc(60px * var(--scale));
-  line-height: 1;
-  letter-spacing: 1px;
-}
-.tsp-pts-bar-track { display: none; }
-
-/* ── Divider ── */
-.tsp-divider { display: none; }
-
-/* ── Stat rows ── */
-.tsp-stat-row {
-  display: flex;
-  align-items: center;
-  gap: calc(8px * var(--scale));
-  padding: calc(7px * var(--scale)) calc(12px * var(--scale));
-  border-radius: 8px;
-  margin-bottom: calc(4px * var(--scale));
-  background: rgba(35,55,90,0.03);
-  border: 1px solid rgba(35,55,90,0.06);
-  width: 100%;
-}
-.tsp-stat-row:last-child { margin-bottom: 0; }
-
-.tsp-stat-icon {
-  font-size: calc(16px * var(--scale));
-  line-height: 1;
-  flex-shrink: 0;
-}
-
-/* ── Stat body ── */
-.tsp-stat-body {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: calc(2px * var(--scale));
-  text-align: center;
-}
-.tsp-stat-label {
-  font-family: 'DM Mono', monospace;
-  font-size: calc(30px * var(--scale));
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #053179;
-  white-space: nowrap;
-  flex-shrink: 0;
-  margin-bottom: 0;
-}
-.tsp-stat-nums {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  flex-wrap: nowrap;
-  margin-bottom: 0;
-  width: 100%;
-}
-.tsp-act {
-  font-family: 'DM Mono', monospace;
-  font-size: calc(60px * var(--scale));
-  font-weight: 700;
-  line-height: 1;
-}
-.tsp-tgt {
-  font-family: 'DM Mono', monospace;
-  font-size: calc(14px * var(--scale));
-  color: #8390a5;
-  line-height: 1;
-}
-.tsp-rpt-val {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: calc(60px * var(--scale));
-  line-height: 1;
-  letter-spacing: 1px;
-}
-.tsp-mini-bar-track { display: none; }
-
-/* ── Left accent stripe ── */
-.tsp-card-stripe {
-  position: absolute;
-  top: 0; left: 0; bottom: 0;
-  width: 5px;
-  border-radius: 16px 0 0 16px;
-  z-index: 1;
-}
-
-/* ── Per-team card styles ── */
-.tsp-card-harsh {
-  background: #f4f8ff;
-  border: 1px solid rgba(29,78,216,0.18);
-}
-.tsp-card-harsh .tsp-card-stripe {
-  background: linear-gradient(180deg, #1d4ed8, #60a5fa);
-}
-.tsp-card-harsh .tsp-pts-block {
-  background: rgba(29,78,216,0.07);
-}
-.tsp-card-harsh .tsp-stat-row {
-  background: rgba(29,78,216,0.04);
-  border-color: rgba(29,78,216,0.08);
-}
-
-.tsp-card-alok {
-  background: #f2fdf7;
-  border: 1px solid rgba(4,120,87,0.18);
-}
-.tsp-card-alok .tsp-card-stripe {
-  background: linear-gradient(180deg, #047857, #34d399);
-}
-.tsp-card-alok .tsp-pts-block {
-  background: rgba(4,120,87,0.07);
-}
-.tsp-card-alok .tsp-stat-row {
-  background: rgba(4,120,87,0.04);
-  border-color: rgba(4,120,87,0.08);
-}
-
-.tsp-card-sachin {
-  background: #fff8f4;
-  border: 1px solid rgba(124,45,18,0.18);
-}
-.tsp-card-sachin .tsp-card-stripe {
-  background: linear-gradient(180deg, #7c2d12, #fb923c);
-}
-.tsp-card-sachin .tsp-pts-block {
-  background: rgba(124,45,18,0.07);
-}
-.tsp-card-sachin .tsp-stat-row {
-  background: rgba(124,45,18,0.04);
-  border-color: rgba(124,45,18,0.08);
-}
-
-/* ── Rank badge colours ── */
-.tsp-rank-1 { background: linear-gradient(135deg,#fff7dc,#f0c060); color:#9a5b00; border:1px solid rgba(200,121,18,0.40); }
-.tsp-rank-2 { background: linear-gradient(135deg,#e0e8f8,#c8d8f4); color:#2563eb; border:1px solid rgba(36,88,211,0.30); }
-.tsp-rank-3 { background: linear-gradient(135deg,#e2ffe8,#c4f4d0); color:#047857; border:1px solid rgba(4,120,87,0.30); }
-
-/* ── Team name colours ── */
-.tsp-card-harsh    .tsp-team-name { color: #1d4ed8; }
-.tsp-card-alok     .tsp-team-name { color: #047857; }
-.tsp-card-sachin .tsp-team-name { color: #7c2d12; }
-
-/* ── Points gradient text ── */
-.tsp-pts-harsh    { color: #1d4ed8; }
-.tsp-pts-alok     { color: #047857; }
-.tsp-pts-sachin { color: #7c2d12; }
-
-/* ── Points bar fill ── */
-.tsp-pts-bar-fill { height: 100%; border-radius: 20px; transition: width 0.7s cubic-bezier(0.22,1,0.36,1); }
-.tsp-fill-harsh    { background: linear-gradient(90deg,#60a5fa,#1d4ed8); }
-.tsp-fill-alok     { background: linear-gradient(90deg,#34d399,#047857); }
-.tsp-fill-sachin { background: linear-gradient(90deg,#fb923c,#7c2d12); }
-
-/* ── Percent pill ── */
-.tsp-pct-pill {
-  font-family: 'DM Mono', monospace;
-  font-size: calc(15px * var(--scale));
-  font-weight: 700;
-  padding: calc(2px * var(--scale)) calc(7px * var(--scale));
-  border-radius: 20px;
-  line-height: 1.6;
-  white-space: nowrap;
-}
-.tsp-pct-harsh    { background:rgba(29,78,216,0.12); color:#1d4ed8; }
-.tsp-pct-alok     { background:rgba(4,120,87,0.12);  color:#047857; }
-.tsp-pct-sachin { background:rgba(124,45,18,0.12); color:#7c2d12; }
-
-.tsp-mini-bar-fill { height: 100%; border-radius: 20px; transition: width 0.7s cubic-bezier(0.22,1,0.36,1); }
-
-/* ══ RESPONSIVE ════════════════════════════════════════════ */
-@media (max-width: 1400px) {
-  .team-summary-panel { flex: 0 0 460px; width: 460px; }
-}
-@media (max-width: 1200px) {
-  .board-outer { flex-direction: column; }
-  .team-summary-panel {
-    flex: none; width: 100%;
-    flex-direction: row;
-    position: static;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Blueant Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-ring"></div>
+  <div class="loading-headline" id="loadingHeadline">UPDATING DATE RANGE</div>
+  <div class="loading-detail"   id="loadingDetail">Syncing with Google Sheetsâ€¦</div>
+  <div class="loading-progress-track">
+    <div class="loading-progress-bar" id="loadingBar"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="topbar">
+  <div class="topbar-main">
+    <div class="topbar-left">
+      <img src="blueAnt.png" class="logo" alt="BlueAnt"/>
+      <div>
+        <div class="topbar-title">DASHBOARD</div>
+        <div class="topbar-sub">MUTUAL FUND TEAM</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="report-range-badge" id="reportRangeBadge">REPORT RANGE</div>
+      <div class="live-badge"><div class="live-dot"></div>LIVE</div>
+      <button class="refresh-btn" onclick="location.reload(true);" title="Force Refresh">
+        <span class="refresh-icon">â†»</span> REFRESH
+      </button>
+      <div class="filter-group">
+        <button class="fbtn" data-range="custom" onclick="toggleCustomPanel()">Custom Range &#9662;</button>
+      </div>
+      <div>
+        <div class="update-time" id="lastUpdated">Connecting...</div>
+        <div class="countdown-line">â†» Next update in <span id="cdNum">10</span>s</div>
+      </div>
+    </div>
+  </div>
+  <div class="filter-strip" id="filterStrip">
+    <span class="filter-label">DATE RANGE</span>
+    <div class="filter-divider"></div>
+    <div class="custom-panel" id="customPanel">
+      <input type="date" class="date-input" id="fromDate" />
+      <span class="range-arrow">&#8594;</span>
+      <input type="date" class="date-input" id="toDate" />
+      <button class="apply-btn" onclick="applyCustom()">Apply</button>
+      <button class="close-panel-btn" onclick="closeCustomPanel()">&#10005;</button>
+    </div>
+    <div class="active-range-lbl" id="activeRangeLbl"></div>
+  </div>
+</div>
+
+<!-- â•â• BOARD â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<div class="board-outer">
+
+  <!-- Main Table -->
+  <div class="board-section">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:150px;">Rank</th>
+          <th style="width:320px;">Name</th>
+          <th class="center" style="width:350px;">Yest. I&amp;M</th>
+          <th class="center" style="width:300px;">Yest. Cl.</th>
+          <th class="center" style="width:300px;">Today I&amp;M</th>
+          <th class="center" style="width:300px;">Today Cl.</th>
+          <th style="min-width:240px;">
+            <div class="metric-head">
+              <div>Discovery Meeting</div>
+              <div class="metric-caption">Max 30 Points</div>
+              <div class="metric-subheads metric-subheads-2">
+                <span># Meetings</span>
+                <span>Points</span>
+              </div>
+            </div>
+          </th>
+          <th style="min-width:240px;">
+            <div class="metric-head">
+              <div>Qualifying Meeting</div>
+              <div class="metric-caption">Expected 15 Meetings</div>
+              <div class="metric-subheads metric-subheads-2">
+                <span># Meetings</span>
+                <span>Points</span>
+              </div>
+            </div>
+          </th>
+          <th style="min-width:190px;">
+            <div class="metric-head">
+              <div>Client Created</div>
+              <div class="metric-subheads metric-subheads-2">
+                <span>Tgt.</span>
+                <span>Achievement</span>
+              </div>
+            </div>
+          </th>
+          <th class="center">Points</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+
+  <!-- Team Summary Panel -->
+  <div class="team-summary-panel" id="teamSummaryPanel">
+    <div class="tsp-header">
+      <span class="tsp-header-line"></span>
+      <span class="tsp-header-label">&#x26A1; TEAM STANDINGS</span>
+      <span class="tsp-header-line"></span>
+    </div>
+    <div class="tsp-cards" id="tspCards"></div>
+  </div>
+
+</div>
+
+
+<div class="bottom-section">
+
+  <!-- Left half: Past Week Top 3 -->
+  <div class="bottom-half">
+    <div class="pw-header">
+      <span class="pw-header-line"></span>
+      <span class="pw-header-label">PAST WEEK TOP PERFORMERS</span>
+      <span class="pw-header-line"></span>
+    </div>
+    <div class="pw-cards" id="pwCards">
+      <div class="pw-loading">LOADING PAST WEEK DATA</div>
+    </div>
+  </div>
+
+  <div style="width:1px; background:linear-gradient(180deg, transparent, rgba(0,0,0,0.18) 20%, rgba(0,0,0,0.18) 80%, transparent); margin: 0 20px; flex-shrink:0;"></div>
+
+  <!-- Right half: Top Converters -->
+  <div class="bottom-half" id="bottomRight">
+    <div class="pw-header">
+      <span class="pw-header-line"></span>
+      <span class="pw-header-label">PAST WEEK TOP CONVERTERS</span>
+      <span class="pw-header-line"></span>
+    </div>
+    <div class="pw-cards" id="convCards">
+      <div class="pw-loading">LOADING CONVERTER DATA</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3TC3EzB6FLo7Hy5R5Qn92QT0KSltCo9tKfGGi5hEd0Hs1di0v9Lf-rcuYDmZP8UISbA/exec';
+const SHEET_ID = '1XX5Io8gpJPmcALPS217MB1j33FMpGMdoFAg80I-cbmA';
+const GID      = '1611922272';
+const CSV_URL  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
+const REFRESH  = 10;
+
+const TEAMS = [
+  { key:'sachin', rowClass:'row-sachin', members:['Abhijeet','Sunny','Abhay'], dotColor:'#7c2d12' },
+  { key:'alok',   rowClass:'row-alok',   members:['Rakesh','Rajat','Atul','Garv','Tushar','Abhishek'], dotColor:'#047857' },
+  { key:'harsh',  rowClass:'row-harsh',  members:['Umakant','Harsh.P','Amit','Satyam.R','Umesh'], dotColor:'#1d4ed8' }
+];
+
+const TEAM_LABELS = { sachin:'SACHIN SIR', alok:'ALOK', harsh:'HARSH' };
+
+let cdVal = REFRESH, cdTimer = null, activeFilter = null, toastTimer = null;
+let currentReportRange = null;
+
+/* â”€â”€ Utilities â”€â”€ */
+function todayMidnight(){ const d=new Date(); d.setHours(0,0,0,0); return d; }
+function isoDate(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function displayDate(iso){ return new Date(iso+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}); }
+function presetRange(preset){
+  const today=todayMidnight();
+  switch(preset){
+    case 'today': return {from:isoDate(today),to:isoDate(today)};
+    case 'yesterday':{ const y=new Date(today); y.setDate(today.getDate()-1); return {from:isoDate(y),to:isoDate(y)}; }
+    case '7d':{ const f=new Date(today); f.setDate(today.getDate()-6); return {from:isoDate(f),to:isoDate(today)}; }
+    case '30d':{ const f=new Date(today); f.setDate(today.getDate()-29); return {from:isoDate(f),to:isoDate(today)}; }
+    default: return null;
   }
-  .tsp-cards { flex-direction: row; flex-wrap: wrap; }
-  .tsp-card  { flex: 1 1 260px; height: auto !important; }
-  .tsp-card-inner { justify-content: flex-start; }
+}
+function showToast(msg,type=''){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.className=`toast show ${type}`;
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>{el.className='toast';},3500);
+}
+function showLoading(headline,detail,progress=0){
+  document.getElementById('loadingHeadline').textContent=headline;
+  document.getElementById('loadingDetail').textContent=detail;
+  document.getElementById('loadingBar').style.width=progress+'%';
+  document.getElementById('loadingOverlay').classList.add('active');
+}
+function setLoadingProgress(pct,detail){
+  document.getElementById('loadingBar').style.width=pct+'%';
+  document.getElementById('loadingDetail').textContent=detail;
+}
+function hideLoading(){
+  document.getElementById('loadingOverlay').classList.remove('active');
+  document.getElementById('loadingBar').style.width='0%';
+}
+function setActiveBtn(range){
+  document.querySelectorAll('.fbtn').forEach(btn=>btn.classList.toggle('active',btn.dataset.range===range));
+  activeFilter=range;
 }
 
-.filter-strip { display:none; align-items:center; gap:12px; padding:6px 24px 8px; }
-.filter-strip.visible { display:flex; }
-
-/* ══ BOTTOM SECTION ════════════════════════════════════════ */
-.bottom-section {
-  display: flex;
-  gap: 0;
-  padding: 10px 24px 24px;
-  background: #d2deeb;
+function saveReportRange(from,to){
+  currentReportRange = { from, to };
+  try{
+    localStorage.setItem('dashboardReportRange', JSON.stringify(currentReportRange));
+  }catch(e){}
+  updateReportRangeBadge();
 }
 
-.bottom-half {
-  flex: 1;
-  min-width: 0;
+function loadSavedReportRange(){
+  try{
+    const raw = localStorage.getItem('dashboardReportRange');
+    if(!raw) return null;
+    const parsed = JSON.parse(raw);
+    if(parsed && parsed.from && parsed.to) return parsed;
+  }catch(e){}
+  return null;
 }
 
-/* ── Past Week Section Header ── */
-.pw-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 16px;
-  padding: 0 2px;
-}
-.pw-header-line {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(35,55,90,0.22), transparent);
-}
-.pw-header-label {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 45px;
-  letter-spacing: 3px;
-  color: #66768a;
-  white-space: nowrap;
+function parseSheetDate(value){
+  if(!value) return null;
+  const text = String(value).trim();
+  if(!text) return null;
+  const d = new Date(text);
+  if(!Number.isNaN(d.getTime())) return isoDate(d);
+  const m = text.match(/^(\d{1,2})[-\/](\w{3})[-\/](\d{4})$/i);
+  if(m){
+    const day = m[1].padStart(2,'0');
+    const monthMap = { jan:'01', feb:'02', mar:'03', apr:'04', may:'05', jun:'06', jul:'07', aug:'08', sep:'09', oct:'10', nov:'11', dec:'12' };
+    const month = monthMap[m[2].toLowerCase()];
+    if(month) return `${m[3]}-${month}-${day}`;
+  }
+  return null;
 }
 
-/* ── Past Week Cards Container ── */
-.pw-cards {
-  display: flex;
-  flex-direction: row;
-  gap: 12px;
+function extractReportRangeFromSheet(rows){
+  const from = parseSheetDate(rows[0]?.[16]);
+  const to = parseSheetDate(rows[0]?.[17]);
+  return from && to ? { from, to } : null;
 }
 
-/* ── Individual Past Week Card ── */
-.pw-card {
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 24px rgba(20,38,72,0.13), 0 1px 4px rgba(20,38,72,0.07);
-  transition: box-shadow 0.22s ease, transform 0.22s ease;
-  cursor: default;
-  flex: 1;
-  min-width: 0;
-}
-.pw-card:hover {
-  box-shadow: 0 8px 32px rgba(20,38,72,0.18), 0 2px 8px rgba(20,38,72,0.10);
-  transform: translateY(-2px);
+function weekdayLabel(isoDateStr){
+  if(!isoDateStr) return '';
+  const d = new Date(isoDateStr + 'T00:00:00');
+  return d.toLocaleDateString('en-US', { weekday: 'long' });
 }
 
-.pw-card-stripe {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 5px;
-  border-radius: 16px 16px 0 0;
-  z-index: 1;
+function updateReportRangeBadge(){
+  const el = document.getElementById('reportRangeBadge');
+  if(!el) return;
+  const range = currentReportRange || loadSavedReportRange();
+  if(!range || !range.from || !range.to){
+    el.textContent = 'REPORT RANGE';
+    return;
+  }
+  const fromDay = weekdayLabel(range.from);
+  const toDay = weekdayLabel(range.to);
+  el.textContent = `${fromDay} to ${toDay}`;
 }
 
-.pw-card-inner {
-  padding: 20px 16px 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  text-align: center;
+/* â”€â”€ Filter strip â”€â”€ */
+function showActiveLabel(from,to){
+  const el=document.getElementById('activeRangeLbl');
+  const strip=document.getElementById('filterStrip');
+  el.textContent=from===to?displayDate(from):`${displayDate(from)}  â†’  ${displayDate(to)}`;
+  el.style.display='';
+  strip.classList.add('visible');
+}
+function toggleCustomPanel(){
+  const panel=document.getElementById('customPanel');
+  const strip=document.getElementById('filterStrip');
+  if(panel.classList.contains('open')){ closeCustomPanel(); }
+  else{
+    const saved = currentReportRange || loadSavedReportRange();
+    const fallback = isoDate(todayMidnight());
+    document.getElementById('fromDate').value = saved?.from || fallback;
+    document.getElementById('toDate').value = saved?.to || fallback;
+    panel.classList.add('open');
+    strip.classList.add('visible');
+    setActiveBtn('custom');
+  }
+}
+function closeCustomPanel(){
+  const panel=document.getElementById('customPanel');
+  const strip=document.getElementById('filterStrip');
+  panel.classList.remove('open');
+  if(activeFilter==='custom'){ document.querySelector('.fbtn[data-range="custom"]').classList.remove('active'); activeFilter=null; }
+  const lbl=document.getElementById('activeRangeLbl');
+  if(!lbl||!lbl.textContent.trim()) strip.classList.remove('visible');
 }
 
-/* Rank badge */
-.pw-rank-badge {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'DM Mono', monospace;
-  font-size: 40px;
-  font-weight: 700;
-  flex-shrink: 0;
+async function writeSheetDates(from,to){
+  if(!APPS_SCRIPT_URL){ showToast('âš  Apps Script not configured.','toast-warn'); return false; }
+  const url=`${APPS_SCRIPT_URL}?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&gid=${encodeURIComponent(GID)}`;
+  try{ await fetch(url,{method:'GET',mode:'no-cors'}); }catch(e){}
+  return true;
 }
-.pw-rank-1 { background: linear-gradient(135deg,#fff7dc,#f0c060); color:#9a5b00; border:1px solid rgba(200,121,18,0.40); }
-.pw-rank-2 { background: linear-gradient(135deg,#e0e8f8,#c8d8f4); color:#2563eb; border:1px solid rgba(36,88,211,0.30); }
-.pw-rank-3 { background: linear-gradient(135deg,#e2ffe8,#c4f4d0); color:#047857; border:1px solid rgba(4,120,87,0.30); }
+function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
 
-/* Name + subtitle */
-.pw-name-block {
-  min-width: 0;
-  text-align: center;
+async function applyPreset(preset){
+  const range=presetRange(preset); if(!range) return;
+  setActiveBtn(preset); closeCustomPanel(); clearInterval(cdTimer);
+  showLoading('UPDATING DATE RANGE','Writing to Google Sheetsâ€¦',10);
+  await writeSheetDates(range.from,range.to);
+  setLoadingProgress(35,'Waiting for formulas to recalculateâ€¦'); await sleep(1500);
+  setLoadingProgress(65,'Recalculatingâ€¦'); await sleep(1500);
+  setLoadingProgress(85,'Fetching updated dataâ€¦');
+  await load(false);
+  setLoadingProgress(100,'Done!'); await sleep(300);
+  hideLoading(); showActiveLabel(range.from,range.to);
+  saveReportRange(range.from, range.to);
+  showToast(`âœ“ Range applied: ${range.from===range.to?displayDate(range.from):`${displayDate(range.from)} â†’ ${displayDate(range.to)}`}`,'toast-success');
+  startCountdown();
 }
-.pw-name {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 50px;
-  letter-spacing: 2px;
-  line-height: 1;
-  margin-bottom: 4px;
-}
-.pw-subtitle {
-  font-family: 'DM Mono', monospace;
-  font-size: 16px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: #66768a;
-}
-
-/* Stats block */
-.pw-stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 6px 8px;
-  width: 100%;
-}
-.pw-stat {
-  text-align: center;
-  background: rgba(35,55,90,0.04);
-  border-radius: 8px;
-  padding: 6px 4px;
-}
-.pw-stat-val {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 40px;
-  line-height: 1;
-}
-.pw-stat-lbl {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #8390a5;
-  margin-top: 2px;
-}
-.pw-stat-divider { display: none; }
-
-/* Points badge */
-.pw-pts-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-shrink: 0;
-  padding: 10px 18px;
-  border-radius: 12px;
-}
-.pw-pts-val {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 60px;
-  line-height: 1;
-}
-.pw-pts-lbl {
-  font-family: 'DM Mono', monospace;
-  font-size: 25px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-top: 10px;
-  opacity: 0.7;
-  font-weight: 700;
-  margin-bottom: 10px;
+async function applyCustom(){
+  const from=document.getElementById('fromDate').value;
+  const to=document.getElementById('toDate').value;
+  if(!from||!to){ showToast('Please select both From and To dates.','toast-warn'); return; }
+  if(from>to){ showToast('From date cannot be later than To date.','toast-error'); return; }
+  closeCustomPanel(); setActiveBtn('custom'); clearInterval(cdTimer);
+  showLoading('APPLYING CUSTOM RANGE','Writing dates to Google Sheetsâ€¦',10);
+  await writeSheetDates(from,to);
+  setLoadingProgress(35,'Waiting for formulas to recalculateâ€¦'); await sleep(1500);
+  setLoadingProgress(65,'Recalculatingâ€¦'); await sleep(1500);
+  setLoadingProgress(85,'Fetching updated dataâ€¦');
+  await load(false);
+  setLoadingProgress(100,'Done!'); await sleep(300);
+  hideLoading(); showActiveLabel(from,to);
+  saveReportRange(from, to);
+  showToast(`âœ“ Custom range: ${displayDate(from)} â†’ ${displayDate(to)}`,'toast-success');
+  startCountdown();
 }
 
-/* Card 1 - Gold */
-.pw-card-1 {
-  background: linear-gradient(135deg, #fffdf4, #fff8e1);
-  border: 1px solid rgba(200,121,18,0.22);
-}
-.pw-card-1 .pw-card-stripe { background: linear-gradient(180deg,#c87912,#f0c060); }
-.pw-card-1 .pw-name { color: #9a5b00; }
-.pw-card-1 .pw-pts-block { background: rgba(200,121,18,0.10); border: 1px solid rgba(200,121,18,0.20); }
-.pw-card-1 .pw-pts-val { color: #9a5b00; }
-.pw-card-1 .pw-pts-lbl { color: #b87000; }
-.pw-card-1 .pw-stat-val { color: #9a5b00; }
-
-/* Card 2 - Silver/Blue */
-.pw-card-2 {
-  background: linear-gradient(135deg, #f4f8ff, #eef4ff);
-  border: 1px solid rgba(36,88,211,0.18);
-}
-.pw-card-2 .pw-card-stripe { background: linear-gradient(180deg,#1d4ed8,#60a5fa); }
-.pw-card-2 .pw-name { color: #1d4ed8; }
-.pw-card-2 .pw-pts-block { background: rgba(29,78,216,0.08); border: 1px solid rgba(29,78,216,0.18); }
-.pw-card-2 .pw-pts-val { color: #1d4ed8; }
-.pw-card-2 .pw-pts-lbl { color: #2458d3; }
-.pw-card-2 .pw-stat-val { color: #1d4ed8; }
-
-/* Card 3 - Green */
-.pw-card-3 {
-  background: linear-gradient(135deg, #f2fdf7, #ecfdf5);
-  border: 1px solid rgba(4,120,87,0.18);
-}
-.pw-card-3 .pw-card-stripe { background: linear-gradient(180deg,#047857,#34d399); }
-.pw-card-3 .pw-name { color: #047857; }
-.pw-card-3 .pw-pts-block { background: rgba(4,120,87,0.08); border: 1px solid rgba(4,120,87,0.18); }
-.pw-card-3 .pw-pts-val { color: #047857; }
-.pw-card-3 .pw-pts-lbl { color: #047857; }
-.pw-card-3 .pw-stat-val { color: #047857; }
-
-/* Loading state for pw cards */
-.pw-loading {
-  text-align: center;
-  padding: 40px;
-  font-family: 'DM Mono', monospace;
-  font-size: 13px;
-  color: #8390a5;
-  letter-spacing: 2px;
+/* â”€â”€ CSV parser â”€â”€ */
+function parseCSV(text){
+  const rows=[]; const lines=text.trim().split('\n');
+  for(const line of lines){
+    const cols=[]; let current='', insideQuotes=false;
+    for(let i=0;i<line.length;i++){
+      const char=line[i];
+      if(char==='"') insideQuotes=!insideQuotes;
+      else if(char===','&&!insideQuotes){ cols.push(current.trim()); current=''; }
+      else current+=char;
+    }
+    cols.push(current.trim()); rows.push(cols);
+  }
+  return rows;
 }
 
-/* Right half placeholder */
-.bottom-right-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 16px;
-  border: 2px dashed rgba(35,55,90,0.12);
-  background: rgba(255,255,255,0.3);
-  min-height: 200px;
-  color: #8390a5;
-  font-family: 'DM Mono', monospace;
-  font-size: 13px;
-  letter-spacing: 2px;
+/* â”€â”€ Helpers â”€â”€ */
+function pct(a,t){ return t?Math.min((a/t)*100,100):0; }
+function cls(a,t){ if(a===0)return'zero'; const p=(a/t)*100; return p>=100?'good':p>=60?'ok':'bad'; }
+function metricHTML(act,tgt){
+  const c=cls(act,tgt), p=pct(act,tgt);
+  const pendingPct = tgt ? Math.max(100 - Math.round((act / tgt) * 100), 0) : 0;
+  return `<div class="metric">
+    <div class="metric-grid metric-values">
+      <span class="metric-v achieved ${c}">${act}</span>
+      <span class="metric-v target tgt">${tgt}</span>
+      <span class="metric-v pending pend">${pendingPct}%</span>
+    </div>
+  </div>`;
 }
+function pairMetricHTML(first,second){
+  return `<div class="metric"><div class="metric-grid metric-values metric-values-2">
+    <span class="metric-v achieved">${first}</span>
+    <span class="metric-v target tgt">${second}</span>
+  </div></div>`;
+}
+function rankCircle(i){ const c=i===0?'r1':i===1?'r2':i===2?'r3':'rn'; return `<div class="rank-circle ${c}">${i+1}</div>`; }
+function ptsClass(p,max){ return p>=max*0.75?'pts-top':p>=max*0.4?'pts-mid':'pts-low'; }
+function rowKey(prefix,name){ return `${prefix}-${String(name).trim().toLowerCase().replace(/[^a-z0-9]+/g,'-')}`; }
+function buildTeamLookup(){
+  const lookup=new Map();
+  TEAMS.forEach((team,ti)=>team.members.forEach(name=>{
+    if(name && name.trim()) lookup.set(name.trim().toLowerCase(),ti);
+  }));
+  return lookup;
+}
+
+/* â”€â”€ FLIP helpers: table rows â”€â”€ */
+function captureRowPositions(){
+  const positions=new Map();
+  document.querySelectorAll('#tableBody tr[data-row-key]').forEach(row=>positions.set(row.dataset.rowKey,row.getBoundingClientRect().top));
+  return positions;
+}
+function animateRowMoves(oldPositions){
+  requestAnimationFrame(()=>{
+    document.querySelectorAll('#tableBody tr[data-row-key]').forEach(row=>{
+      const oldTop=oldPositions.get(row.dataset.rowKey); if(oldTop===undefined) return;
+      const delta=oldTop-row.getBoundingClientRect().top; if(Math.abs(delta)<2) return;
+      row.animate([{transform:`translateY(${delta}px)`},{transform:'translateY(0)'}],{duration:620,easing:'cubic-bezier(0.22,1,0.36,1)'});
+    });
+  });
+}
+
+/* â”€â”€ FLIP helpers: team cards â”€â”€ */
+function captureCardPositions(){
+  const positions=new Map();
+  document.querySelectorAll('#tspCards .tsp-card[data-team-key]').forEach(card=>positions.set(card.dataset.teamKey,card.getBoundingClientRect().top));
+  return positions;
+}
+function animateCardMoves(oldPositions){
+  requestAnimationFrame(()=>{
+    document.querySelectorAll('#tspCards .tsp-card[data-team-key]').forEach(card=>{
+      const oldTop=oldPositions.get(card.dataset.teamKey); if(oldTop===undefined) return;
+      const delta=oldTop-card.getBoundingClientRect().top; if(Math.abs(delta)<2) return;
+      card.animate([{transform:`translateY(${delta}px)`},{transform:'translateY(0)'}],{duration:680,easing:'cubic-bezier(0.22,1,0.36,1)'});
+    });
+  });
+}
+
+function extractData(rows){
+  // Dynamically find "Week Total" row â€” search from row index 4 onward
+  let totalRowIndex = -1;
+  for(let i = 4; i < rows.length; i++){
+    const cellVal = rows[i][5];
+    if(cellVal && cellVal.trim().toLowerCase() === 'week total'){
+      totalRowIndex = i;
+      break;
+    }
+  }
+  const endIndex = totalRowIndex > 4 ? totalRowIndex : 15;
+
+  const members = rows.slice(4, endIndex)
+    .filter(r => r[5] && r[5].trim() !== '' && r[5].trim().toLowerCase() !== 'week total')
+    .map(r => ({
+      yIM:    Number(r[1])  || 0,
+      yClient:Number(r[2])  || 0,
+      tIM:    Number(r[3])  || 0,
+      tClient:Number(r[4])  || 0,
+      name:   r[5],
+      discoveryMeetings: Number(r[6]) || 0,
+      discoveryPoints: Number(r[7]) || 0,
+      qualifyingMeetings: Number(r[8]) || 0,
+      qualifyingPoints: Number(r[9]) || 0,
+      ccTgt: Number(r[10]) || 0,
+      ccRpt: Number(r[11]) || 0,
+      pts: Number(r[12]) || 0,
+      imAct: (Number(r[6]) || 0) + (Number(r[8]) || 0),
+      imTgt: 15
+    }));
+
+  // Total row is found dynamically â€” never hardcoded
+  const totalRow = totalRowIndex > -1 ? rows[totalRowIndex] : null;
+
+  return { members, totalRow };
+}
+
+function extractPastWeekData(rows){
+  // Past week section starts at row index 25
+  // Dynamically find "Week Total" from row 25 onward
+  const pastWeekStartIndex = 25;
+  let totalRowIndex = -1;
+  for(let i = pastWeekStartIndex; i < rows.length; i++){
+    const cellVal = rows[i][5];
+    if(cellVal && cellVal.trim().toLowerCase() === 'week total'){
+      totalRowIndex = i;
+      break;
+    }
+  }
+
+  const endIndex = totalRowIndex > pastWeekStartIndex ? totalRowIndex : rows.length;
+
+  const members = rows.slice(pastWeekStartIndex, endIndex)
+    .filter(r => r[5] && r[5].trim() !== '' && r[5].trim().toLowerCase() !== 'week total')
+    .map(r => ({
+      name:    r[5],
+      yIM:     Number(r[1])  || 0,
+      yClient: Number(r[2])  || 0,
+      tIM:     Number(r[3])  || 0,
+      tClient: Number(r[4])  || 0,
+      discoveryMeetings: Number(r[6]) || 0,
+      discoveryPoints: Number(r[7]) || 0,
+      qualifyingMeetings: Number(r[8]) || 0,
+      qualifyingPoints: Number(r[9]) || 0,
+      imAct: (Number(r[6]) || 0) + (Number(r[8]) || 0),
+      imTgt: 15,
+      ccTgt: Number(r[10]) || 0,
+      ccRpt: Number(r[11]) || 0,
+      pts: Number(r[12]) || 0
+    }));
+
+  return members.sort((a, b) => b.pts - a.pts);
+}
+
+/* â”€â”€ Render Past Week Top 3 cards â”€â”€ */
+function renderPastWeekCards(rows) {
+  const members = extractPastWeekData(rows);
+  const top3 = members.slice(0, 3);
+  const container = document.getElementById('pwCards');
+  if (!top3.length) {
+    container.innerHTML = '<div class="pw-loading">NO PAST WEEK DATA AVAILABLE</div>';
+    return;
+  }
+
+  const cardClasses = ['pw-card-1', 'pw-card-2', 'pw-card-3'];
+  const rankClasses = ['pw-rank-1', 'pw-rank-2', 'pw-rank-3'];
+  const rankNums    = ['1', '2', '3'];
+  const trophies    = ['&#x1F947;', '&#x1F948;', '&#x1F949;'];
+
+  let html = '';
+  top3.forEach((m, i) => {
+    html += `
+<div class="pw-card ${cardClasses[i]}">
+  <div class="pw-card-stripe"></div>
+  <div class="pw-card-inner">
+    <div class="pw-rank-badge ${rankClasses[i]}">${rankNums[i]}</div>
+    <div class="pw-name-block">
+      <div class="pw-name">${trophies[i]} ${m.name}</div>
+    </div>
+    <div class="pw-stats"
+         style="width:100%;display:flex;justify-content:center;align-items:center;margin-top:14px;">
+      <div class="pw-stat"
+           style="width:100%;display:flex;justify-content:center;align-items:center;">
+        <div class="pw-stat-val"
+             style="width:100%;text-align:center;font-size:38px;font-weight:500;line-height:1.0;">
+          Total Intro + Meetings = ${m.imAct}
+        </div>
+      </div>
+    </div>
+    <div class="pw-pts-block">
+      <div class="pw-pts-val">${m.pts}</div>
+    </div>
+  </div>
+</div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+/* â”€â”€ Render Top Converters cards â”€â”€ */
+function renderTopConvertersCards(rows) {
+  const members = extractPastWeekData(rows)
+    .slice()
+    .sort((a, b) => b.ccRpt - a.ccRpt || b.pts - a.pts);
+  const top3 = members.slice(0, 3);
+  const container = document.getElementById('convCards');
+  if (!top3.length) { container.innerHTML = '<div class="pw-loading">NO DATA</div>'; return; }
+
+  const cardClasses = ['pw-card-1','pw-card-2','pw-card-3'];
+  const rankClasses = ['pw-rank-1','pw-rank-2','pw-rank-3'];
+  const medals = ['&#x1F947;','&#x1F948;','&#x1F949;'];
+
+  let html = '';
+  top3.forEach((m, i) => {
+    html += `
+<div class="pw-card ${cardClasses[i]}">
+  <div class="pw-card-stripe"></div>
+  <div class="pw-card-inner">
+    <div class="pw-rank-badge ${rankClasses[i]}">${i+1}</div>
+    <div class="pw-name-block">
+      <div class="pw-name">${medals[i]} ${m.name}</div>
+      <div class="pw-subtitle">PAST WEEK CONVERTER</div>
+    </div>
+    <div class="pw-pts-block">
+      <div class="pw-pts-lbl">NEW CLIENT ACQUIRED</div>
+      <div class="pw-pts-val">${m.ccRpt}</div>
+    </div>
+  </div>
+</div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+/* â”€â”€ Group by team â”€â”€ */
+function groupByTeam(members){
+  const lookup=buildTeamLookup();
+  const buckets=TEAMS.map(()=>[]);
+  const others=[];
+  members.forEach(m=>{ const ti=lookup.get(m.name.trim().toLowerCase()); ti!==undefined?buckets[ti].push(m):others.push(m); });
+  buckets.forEach(b=>b.sort((a,b_)=>b_.pts-a.pts));
+  others.sort((a,b_)=>b_.pts-a.pts);
+  return {buckets,others};
+}
+
+/* â”€â”€ Compute team stats â”€â”€ */
+function computeTeamStats(buckets){
+  return TEAMS.map((team,ti)=>{
+    const members=buckets[ti];
+    if(!members.length) return null;
+    const totalPts  = members.reduce((s,m)=>s+m.pts,0);
+    const totalImAct= members.reduce((s,m)=>s+m.imAct,0);
+    const totalImTgt= members.reduce((s,m)=>s+m.imTgt,0);
+    const totalRpt  = members.reduce((s,m)=>s+m.ccRpt,0);
+    const count     = members.length;
+    const avgImAct  = members.length ? Math.round((totalImAct/members.length)*10)/10 : 0;
+    const avgImTgt  = members.length ? Math.round((totalImTgt/members.length)*10)/10 : 0;
+    const imPct     = totalImTgt ? Math.min(Math.round((totalImAct/totalImTgt)*100),100) : 0;
+    return { key:team.key, label:TEAM_LABELS[team.key], totalPts, avgImAct, avgImTgt, imPct, totalRpt, count };
+  }).filter(Boolean);
+}
+
+/* â”€â”€ Rank badge class â”€â”€ */
+function rankBadgeClass(rank){ return rank===0?'tsp-rank-1':rank===1?'tsp-rank-2':'tsp-rank-3'; }
+
+/* â”€â”€ Bar fill class â”€â”€ */
+function barClsFromPct(p){ return p>=100?'good':p>=60?'ok':'bad'; }
+
+/* â•â• Sync card heights to table row groups â•â• */
+function syncCardHeightsToTableRows(teamOrder){
+  const cardsContainer = document.getElementById('tspCards');
+  const tbody = document.getElementById('tableBody');
+  if(!cardsContainer || !tbody) return;
+
+  const BETWEEN_TEAMS_GAP = 12;
+  cardsContainer.style.gap = BETWEEN_TEAMS_GAP + 'px';
+
+  const teamRowMap = new Map();
+  teamOrder.forEach(({team}) => {
+    const rows = Array.from(tbody.querySelectorAll(`tr.${team.rowClass}`));
+    if(rows.length) teamRowMap.set(team.key, rows);
+  });
+
+  const cards = document.querySelectorAll('#tspCards .tsp-card[data-team-key]');
+  cards.forEach(card => {
+    const teamKey = card.dataset.teamKey;
+    const rows = teamRowMap.get(teamKey);
+    if(!rows || !rows.length) return;
+
+    const firstRow = rows[0];
+    const lastRow  = rows[rows.length - 1];
+    const firstRect = firstRow.getBoundingClientRect();
+    const lastRect  = lastRow.getBoundingClientRect();
+    const height    = lastRect.bottom - firstRect.top;
+
+    card.style.height = '';
+    const naturalH = card.scrollHeight;
+    card.style.height = height + 'px';
+
+    const scale = Math.min(1, Math.max(0.55, height / naturalH));
+    card.style.setProperty('--scale', scale);
+  });
+}
+
+/* â”€â”€ Render team summary cards â”€â”€ */
+function renderTeamSummaryCards(buckets, teamOrder){
+  const container=document.getElementById('tspCards');
+  if(!container) return;
+
+  const oldPositions=captureCardPositions();
+
+  const stats = computeTeamStats(buckets).sort(
+    (a, b) => (b.totalPts / b.count) - (a.totalPts / a.count)
+  );
+  const maxPts=stats.length?stats[0].totalPts||1:1;
+
+  let html='';
+  stats.forEach((t,rank)=>{
+    const ptsBarPct=Math.min(Math.round((t.totalPts/maxPts)*100),100);
+    const imBarCls=barClsFromPct(t.imPct);
+
+    html+=`
+<div class="tsp-card tsp-card-${t.key}" data-team-key="${t.key}">
+  <div class="tsp-card-stripe"></div>
+  <div class="tsp-card-inner">
+    <div class="tsp-card-head">
+      <div class="tsp-rank-badge ${rankBadgeClass(rank)}">${rank+1}</div>
+      <div class="tsp-team-name">${t.label}</div>
+      <div class="tsp-member-count">${t.count} members</div>
+    </div>
+    <div class="tsp-pts-block">
+      <div class="tsp-pts-label">AVG POINTS</div>
+      <div class="tsp-pts-val tsp-pts-${t.key}">${(t.totalPts / t.count).toFixed(1)}</div>
+    </div>
+    <div class="tsp-divider"></div>
+    <div class="tsp-stat-row">
+      <div class="tsp-stat-body">
+        <div class="tsp-stat-label">AVG INTRO + MEETINGS</div>
+        <div class="tsp-stat-nums">
+          <span class="tsp-act ${imBarCls}">${t.avgImAct}</span>
+        </div>
+      </div>
+    </div>
+    <div class="tsp-stat-row">
+           <div class="tsp-stat-body">
+        <div class="tsp-stat-label">CLIENTS CREATED</div>
+        <div class="tsp-rpt-val tsp-pts-${t.key}">${t.totalRpt}</div>
+      </div>
+    </div>
+  </div>
+</div>`;
+  });
+
+  container.innerHTML=html;
+  animateCardMoves(oldPositions);
+
+  requestAnimationFrame(()=>{
+    syncCardHeightsToTableRows(teamOrder);
+  });
+}
+
+/* â”€â”€ Render table â”€â”€ */
+function render(rows){
+  const {members,totalRow}=extractData(rows);
+  const {buckets,others}=groupByTeam(members);
+  const oldPositions=captureRowPositions();
+  const tableColumnCount = 10;
+
+  const teamOrder = TEAMS
+    .map((team, ti) => ({
+      team,
+      ti,
+      totalPts: buckets[ti].reduce((s, m) => s + (Number(m.pts) || 0), 0),
+      avgPts:
+        buckets[ti].length
+          ? buckets[ti].reduce((s, m) => s + (Number(m.pts) || 0), 0) / buckets[ti].length
+          : 0
+    }))
+    .filter(item => buckets[item.ti].length)
+    .sort((a, b) => b.avgPts - a.avgPts);
+
+  let bodyHTML='';
+  teamOrder.forEach(({team,ti})=>{
+    const group=buckets[ti]; const maxPts=group[0].pts||1;
+    group.forEach((m,i)=>{
+      bodyHTML+=`
+        <tr class="${team.rowClass}" data-row-key="${rowKey(team.key,m.name)}" data-team-key="${team.key}">
+          <td class="center">${rankCircle(i)}</td>
+          <td><div class="member-name">${m.name}</div></td>
+          <td class="center big">${m.yIM}</td>
+          <td class="center big">${m.yClient}</td>
+          <td class="center big">${m.tIM}</td>
+          <td class="center big">${m.tClient}</td>
+          <td>${pairMetricHTML(m.discoveryMeetings,m.discoveryPoints)}</td>
+          <td>${pairMetricHTML(m.qualifyingMeetings,m.qualifyingPoints)}</td>
+          <td>${pairMetricHTML(m.ccTgt,m.ccRpt)}</td>
+          <td class="center"><div class="pts-badge ${ptsClass(m.pts,maxPts)}">${m.pts}</div></td>
+        </tr>`;
+    });
+    const vacantCount = Math.max(0, team.members.length - group.length);
+    for(let v=0; v<vacantCount; v++){
+      bodyHTML+=`
+        <tr class="vacant-row ${team.rowClass}" data-row-key="${rowKey(team.key,`vacant-${v}`)}" data-team-key="${team.key}">
+          <td class="vacant-cell" colspan="${tableColumnCount}">-----POSITION VACANT-----</td>
+        </tr>`;
+    }
+
+  });
+
+  if(others.length){
+    const maxPts=others[0].pts||1;
+    others.forEach((m,i)=>{
+      bodyHTML+=`
+        <tr data-row-key="${rowKey('other',m.name)}">
+          <td class="center">${rankCircle(i)}</td>
+          <td><div class="member-name">${m.name}</div></td>
+          <td class="center big">${m.yIM}</td>
+          <td class="center big">${m.yClient}</td>
+          <td class="center big">${m.tIM}</td>
+          <td class="center big">${m.tClient}</td>
+          <td>${pairMetricHTML(m.discoveryMeetings,m.discoveryPoints)}</td>
+          <td>${pairMetricHTML(m.qualifyingMeetings,m.qualifyingPoints)}</td>
+          <td>${pairMetricHTML(m.ccTgt,m.ccRpt)}</td>
+          <td class="center"><div class="pts-badge ${ptsClass(m.pts,maxPts)}">${m.pts}</div></td>
+        </tr>`;
+    });
+  }
+
+  if(totalRow){
+    bodyHTML+=`
+      <tr class="total-row" data-row-key="week-total">
+        <td></td>
+        <td class="total-label">WEEK TOTAL</td>
+        <td class="center big">${totalRow[1]}</td>
+        <td class="center big">${totalRow[2]}</td>
+        <td class="center big">${totalRow[3]}</td>
+        <td class="center big">${totalRow[4]}</td>
+        <td>${pairMetricHTML(totalRow[6],totalRow[7])}</td>
+        <td>${pairMetricHTML(totalRow[8],totalRow[9])}</td>
+        <td>${pairMetricHTML(totalRow[10],totalRow[11])}</td>
+        <td class="center big" style="color:var(--gold);">${totalRow[12]}</td>
+      </tr>`;
+  }
+
+  document.getElementById('tableBody').innerHTML=bodyHTML;
+  animateRowMoves(oldPositions);
+
+  renderTeamSummaryCards(buckets, teamOrder);
+  renderPastWeekCards(rows);
+  renderTopConvertersCards(rows);
+}
+
+/* â”€â”€ Load & countdown â”€â”€ */
+async function load(restartCountdown=true){
+  try{
+    const res=await fetch(CSV_URL+'&t='+Date.now());
+    const text=await res.text();
+    const rows=parseCSV(text);
+    const sheetRange = extractReportRangeFromSheet(rows);
+    if(sheetRange){
+      saveReportRange(sheetRange.from, sheetRange.to);
+    }
+    updateReportRangeBadge();
+    render(rows);
+    document.getElementById('lastUpdated').textContent='Last updated '+new Date().toLocaleTimeString();
+    if(restartCountdown) startCountdown();
+  }catch(err){
+    console.error('Load error:',err);
+    if(restartCountdown) startCountdown();
+  }
+}
+
+function startCountdown(){
+  clearInterval(cdTimer); cdVal=REFRESH;
+  document.getElementById('cdNum').textContent=cdVal;
+  cdTimer=setInterval(()=>{
+    cdVal--; document.getElementById('cdNum').textContent=cdVal;
+    if(cdVal<=0){ clearInterval(cdTimer); load(); }
+  },1000);
+}
+
+load();
+currentReportRange = loadSavedReportRange();
+updateReportRangeBadge();
+</script>
+</body>
+</html>
