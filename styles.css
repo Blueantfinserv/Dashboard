@@ -17,7 +17,7 @@
   --blue:  #2458d3;
   --team-harsh:     #1d4ed8;
   --team-alok:      #047857;
-  --team-ashutosh:  #7c2d12;
+  --team-sachin:     #7c2d12;
   --shadow-soft: 0 14px 32px rgba(31, 45, 71, 0.12);
   --shadow-row:  0 16px 34px rgba(31, 45, 71, 0.18);
 }
@@ -338,7 +338,7 @@ body {
 }
 .loading-progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, var(--blue), var(--team-ashutosh));
+  background: linear-gradient(90deg, var(--blue), var(--team-sachin));
   border-radius: 3px;
   width: 0%;
   transition: width 0.4s ease;
@@ -388,7 +388,7 @@ table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 6px;
-  min-width: 2100px;       /* ← increased from 1720px */
+  min-width: 2350px;
   height: 2300px;
   table-layout: fixed;
 }
@@ -439,7 +439,7 @@ tbody tr.row-alok {
     linear-gradient(90deg, rgba(4,120,87,0.34), rgba(15,118,110,0.25) 28%, rgba(255,255,255,0.87) 50%, rgba(153,246,228,0.32) 75%, rgba(4,120,87,0.22) 100%),
     #ffffff;
 }
-tbody tr.row-ashutosh {
+tbody tr.row-sachin {
   background:
     linear-gradient(90deg, rgba(124,45,18,0.34), rgba(154,52,18,0.24) 28%, rgba(255,255,255,0.87) 50%, rgba(254,215,170,0.36) 75%, rgba(124,45,18,0.22) 100%),
     #ffffff;
@@ -447,7 +447,7 @@ tbody tr.row-ashutosh {
 
 tbody tr.row-harsh    td:first-child { box-shadow: inset 6px 0 0 var(--team-harsh),    inset 12px 0 0 rgba(59,130,246,0.32); }
 tbody tr.row-alok     td:first-child { box-shadow: inset 6px 0 0 var(--team-alok),     inset 12px 0 0 rgba(15,118,110,0.30); }
-tbody tr.row-ashutosh td:first-child { box-shadow: inset 6px 0 0 var(--team-ashutosh), inset 12px 0 0 rgba(154,52,18,0.30);  }
+tbody tr.row-sachin td:first-child { box-shadow: inset 6px 0 0 var(--team-sachin), inset 12px 0 0 rgba(154,52,18,0.30);  }
 
 tbody td {
   padding: 8px 8px;
@@ -522,10 +522,10 @@ tbody td:last-child {
 .member-name { font-size: 70px; font-weight: bolder; color: #182235; }
 tbody tr.row-harsh    .member-name { color: #1d4ed8; }
 tbody tr.row-alok     .member-name { color: #047857; }
-tbody tr.row-ashutosh .member-name { color: #7c2d12; }
+tbody tr.row-sachin .member-name { color: #7c2d12; }
 tbody tr.row-harsh    .big { color: #1e3a8a; }
 tbody tr.row-alok     .big { color: #065f46; }
-tbody tr.row-ashutosh .big { color: #7c2d12; }
+tbody tr.row-sachin .big { color: #7c2d12; }
 
 /* ── Metric cells ── */
 .metric {
@@ -545,12 +545,40 @@ tbody tr.row-ashutosh .big { color: #7c2d12; }
   width: 100%;
 }
 .metric-subheads {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  justify-items: center;
+  column-gap: 12px;
+  width: 100%;
   font-family: 'DM Mono', monospace;
   font-size: 30px;
   letter-spacing: 0.8px;
   color: #7b8799;
   white-space: nowrap;
 }
+.metric-subheads span {
+  width: 100%;
+  text-align: center;
+}
+.metric-subheads span:nth-child(1) {
+  transform: translateX(10px);
+}
+.metric-subheads span:nth-child(2) {
+  transform: translateX(-10px);
+}
+.metric-subheads span:nth-child(3) {
+  transform: translateX(-20px);
+}
+.metric-caption {
+  font-family: 'DM Mono', monospace;
+  font-size: 20px;
+  color: #7b8799;
+  text-transform: none;
+}
+.metric-subheads-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.metric-subheads-2 span:nth-child(1),
+.metric-subheads-2 span:nth-child(2) { transform: none; }
 .metric-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -651,21 +679,21 @@ tbody tr.row-ashutosh .big { color: #7c2d12; }
 
 tbody tr.row-harsh    .pts-top { background:linear-gradient(135deg,#dbeafe,#bae6fd); color:#1d4ed8; border-color:rgba(37,99,235,0.34); }
 tbody tr.row-alok     .pts-top { background:linear-gradient(135deg,#d1fae5,#ccfbf1); color:#047857; border-color:rgba(5,150,105,0.34);  }
-tbody tr.row-ashutosh .pts-top { background:linear-gradient(135deg,#ffedd5,#fed7aa); color:#7c2d12; border-color:rgba(154,52,18,0.34);  }
+tbody tr.row-sachin .pts-top { background:linear-gradient(135deg,#ffedd5,#fed7aa); color:#7c2d12; border-color:rgba(154,52,18,0.34);  }
 tbody tr.row-harsh    .pts-mid { background:linear-gradient(135deg,#eff6ff,#cffafe); color:#2563eb; }
 tbody tr.row-alok     .pts-mid { background:linear-gradient(135deg,#ecfdf5,#ccfbf1); color:#047857; }
-tbody tr.row-ashutosh .pts-mid { background:linear-gradient(135deg,#fff7ed,#ffedd5); color:#9a3412; }
+tbody tr.row-sachin .pts-mid { background:linear-gradient(135deg,#fff7ed,#ffedd5); color:#9a3412; }
 tbody tr.row-harsh    .pts-low { background:linear-gradient(135deg,#fff1f2,#dbeafe); color:#be123c; }
 tbody tr.row-alok     .pts-low { background:linear-gradient(135deg,#fff7ed,#ccfbf1); color:#b45309; }
-tbody tr.row-ashutosh .pts-low { background:linear-gradient(135deg,#fef2f2,#ffedd5); color:#b91c1c; }
+tbody tr.row-sachin .pts-low { background:linear-gradient(135deg,#fef2f2,#ffedd5); color:#b91c1c; }
 
 tbody tr.row-harsh    .pts-badge { border-color:rgba(37,99,235,0.34);  }
 tbody tr.row-alok     .pts-badge { border-color:rgba(5,150,105,0.34);  }
-tbody tr.row-ashutosh .pts-badge { border-color:rgba(154,52,18,0.34);  }
+tbody tr.row-sachin .pts-badge { border-color:rgba(154,52,18,0.34);  }
 
 /* ── Vacant rows ── */
 .vacant-row td {
-  background: #fc4e42 !important;
+  background: #ef1111 !important;
   color: #ffffff !important;
   border-top: 1px solid #c70d0d !important;
   border-bottom: 1px solid #c70d0d !important;
@@ -708,11 +736,12 @@ tbody tr.row-ashutosh .pts-badge { border-color:rgba(154,52,18,0.34);  }
 
 /* ══ TEAM SUMMARY PANEL ══════════════════════════════════════ */
 .team-summary-panel {
-  flex: 0 0 450px;
-  width: 450px;
+  flex: 0 0 640px;
+  width: 640px;
   display: flex;
   flex-direction: column;
   align-self: flex-start;
+  margin-top: 25px;
 }
 
 /* ── Panel header ── */
@@ -956,17 +985,17 @@ tbody tr.row-ashutosh .pts-badge { border-color:rgba(154,52,18,0.34);  }
   border-color: rgba(4,120,87,0.08);
 }
 
-.tsp-card-ashutosh {
+.tsp-card-sachin {
   background: #fff8f4;
   border: 1px solid rgba(124,45,18,0.18);
 }
-.tsp-card-ashutosh .tsp-card-stripe {
+.tsp-card-sachin .tsp-card-stripe {
   background: linear-gradient(180deg, #7c2d12, #fb923c);
 }
-.tsp-card-ashutosh .tsp-pts-block {
+.tsp-card-sachin .tsp-pts-block {
   background: rgba(124,45,18,0.07);
 }
-.tsp-card-ashutosh .tsp-stat-row {
+.tsp-card-sachin .tsp-stat-row {
   background: rgba(124,45,18,0.04);
   border-color: rgba(124,45,18,0.08);
 }
@@ -979,18 +1008,18 @@ tbody tr.row-ashutosh .pts-badge { border-color:rgba(154,52,18,0.34);  }
 /* ── Team name colours ── */
 .tsp-card-harsh    .tsp-team-name { color: #1d4ed8; }
 .tsp-card-alok     .tsp-team-name { color: #047857; }
-.tsp-card-ashutosh .tsp-team-name { color: #7c2d12; }
+.tsp-card-sachin .tsp-team-name { color: #7c2d12; }
 
 /* ── Points gradient text ── */
 .tsp-pts-harsh    { color: #1d4ed8; }
 .tsp-pts-alok     { color: #047857; }
-.tsp-pts-ashutosh { color: #7c2d12; }
+.tsp-pts-sachin { color: #7c2d12; }
 
 /* ── Points bar fill ── */
 .tsp-pts-bar-fill { height: 100%; border-radius: 20px; transition: width 0.7s cubic-bezier(0.22,1,0.36,1); }
 .tsp-fill-harsh    { background: linear-gradient(90deg,#60a5fa,#1d4ed8); }
 .tsp-fill-alok     { background: linear-gradient(90deg,#34d399,#047857); }
-.tsp-fill-ashutosh { background: linear-gradient(90deg,#fb923c,#7c2d12); }
+.tsp-fill-sachin { background: linear-gradient(90deg,#fb923c,#7c2d12); }
 
 /* ── Percent pill ── */
 .tsp-pct-pill {
@@ -1004,13 +1033,13 @@ tbody tr.row-ashutosh .pts-badge { border-color:rgba(154,52,18,0.34);  }
 }
 .tsp-pct-harsh    { background:rgba(29,78,216,0.12); color:#1d4ed8; }
 .tsp-pct-alok     { background:rgba(4,120,87,0.12);  color:#047857; }
-.tsp-pct-ashutosh { background:rgba(124,45,18,0.12); color:#7c2d12; }
+.tsp-pct-sachin { background:rgba(124,45,18,0.12); color:#7c2d12; }
 
 .tsp-mini-bar-fill { height: 100%; border-radius: 20px; transition: width 0.7s cubic-bezier(0.22,1,0.36,1); }
 
 /* ══ RESPONSIVE ════════════════════════════════════════════ */
 @media (max-width: 1400px) {
-  .team-summary-panel { flex: 0 0 300px; width: 300px; }
+  .team-summary-panel { flex: 0 0 460px; width: 460px; }
 }
 @media (max-width: 1200px) {
   .board-outer { flex-direction: column; }
